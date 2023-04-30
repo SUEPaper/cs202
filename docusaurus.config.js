@@ -54,6 +54,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: "/",
           sidebarPath: require.resolve("./sidebars.js"),
           remarkPlugins: [math],
           rehypePlugins: [katex],
@@ -92,56 +93,26 @@ const config = {
           {
             type: "docSidebar",
             position: "left",
-            sidebarId: "HTMLSidebar",
-            label: "HTML",
+            sidebarId: "frontendSidebar",
+            label: "Web前端开发",
           },
           {
             type: "docSidebar",
             position: "left",
-            sidebarId: "CSSSidebar",
-            label: "CSS",
+            sidebarId: "backendSidebar",
+            label: "Web后端开发",
           },
           {
             type: "docSidebar",
             position: "left",
-            sidebarId: "JavaScriptSidebar",
-            label: "JavaScript",
+            sidebarId: "devopsSidebar",
+            label: "DevOps",
           },
           {
             type: "docSidebar",
             position: "left",
-            sidebarId: "VueSidebar",
-            label: "Vue.js",
-          },
-          {
-            type: "docSidebar",
-            position: "left",
-            sidebarId: "FastAPISidebar",
-            label: "FastAPI",
-          },
-          {
-            type: "docSidebar",
-            position: "left",
-            sidebarId: "MySQLSidebar",
-            label: "MySQL",
-          },
-          {
-            type: "docSidebar",
-            position: "left",
-            sidebarId: "DockerSidebar",
-            label: "Docker",
-          },
-          {
-            type: "docSidebar",
-            position: "left",
-            sidebarId: "deploySidebar",
-            label: "部署",
-          },
-          {
-            type: "docSidebar",
-            position: "left",
-            sidebarId: "mallSidebar",
-            label: "项目实战待开发",
+            sidebarId: "projectSidebar",
+            label: "项目实战(待开发)",
           },
           {
             type: "docSidebar",
