@@ -9,6 +9,12 @@ sidebar_position: 3
 
 ## FastAPI 中的资源和嵌套路由
 
-## 使用 Pydantic 定义请求和响应模型
+## 请求体（Request Body）与 Pydantic
+
+## JSON、表单和文件上传处理
+
+## 响应模型和数据序列化
+
+## 自定义响应头和状态码
 
 ## 实现 CRUD 操作的 API

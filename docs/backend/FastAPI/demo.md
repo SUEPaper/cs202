@@ -10,5 +10,3 @@ sidebar_position: 2
 # 路由与 HTTP 方法
 
 # 路径参数与查询参数
-
-# JSON 响应与模板渲染

@@ -1,9 +1,9 @@
 ---
 id: deploy
-sidebar_position: 7
+sidebar_position: 20
 ---
 
-# FastAPI 部署
+# 应用部署
 
 ## FastAPI 应用部署方法
 
