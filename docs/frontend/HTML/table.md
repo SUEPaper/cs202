@@ -3,8 +3,10 @@ id: table
 sidebar_position: 7
 ---
 
-# 表格标签
+# 表格
 
-## table、tr、th、td 等标签
+## 表格基础
 
-## 表格属性：border、cellpadding、cellspacing 等
+## 表头、表身和表脚
+
+## 表格跨行和跨列

@@ -3,10 +3,12 @@ id: form
 sidebar_position: 8
 ---
 
-# 表单标签
+# 表单
 
-## form、input、label、select、option 等标签
+## 创建表单
 
-## input 类型：text、password、radio、checkbox 等
+## 输入类型和属性
 
-## 表单属性：action、method 等
+## 下拉列表、单选按钮和复选框
+
+## 表单验证和提交
