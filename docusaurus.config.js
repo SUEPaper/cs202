@@ -8,7 +8,7 @@ const katex = require("rehype-katex");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Web 应用开发",
+  title: "现代 Web 应用开发",
   tagline: "纸上得来终觉浅",
   url: "https://suepaper.github.io",
   baseUrl: "/cs202",
@@ -82,7 +82,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "CS 202: Web 应用开发",
+        title: "CS 202: 现代Web应用开发",
         items: [
           {
             type: "docSidebar",

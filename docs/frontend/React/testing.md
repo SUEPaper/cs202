@@ -9,4 +9,4 @@ sidebar_position: 13
 
 ## 端到端测试（如 Cypress 或 Nightwatch）
 
-## Vue.js 开发者工具
+## React.js 开发者工具
