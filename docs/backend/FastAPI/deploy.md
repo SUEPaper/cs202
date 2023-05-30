@@ -1,6 +1,6 @@
 ---
 id: deploy
-sidebar_position: 20
+sidebar_position: 11
 ---
 
 # 应用部署
