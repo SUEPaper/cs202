@@ -1,6 +1,6 @@
 ---
 id: index
-sidebar_position: 17
+sidebar_position: 1
 ---
 
 # FastAPI 概述
