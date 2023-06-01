@@ -3,10 +3,11 @@ id: index
 sidebar_position: 1
 ---
 
-# JavaScript 简介
+# JavaScript
 
 ---
-
+## JavaScript简介
+---
 **JavaScript**是一种广泛应用于网页开发的脚本编程语言。它被用于为网页添加交互性和动态功能，使得网页可以对用户的操作做出响应并提供动态的内容。
 
 **JavaScript**最初由Netscape公司的布兰登·艾克（Brendan Eich）开发，最早称为LiveScript。后来，为了利用当时非常受欢迎的Java语言的名气，Netscape将其改名为JavaScript。JavaScript在1995年首次在Netscape Navigator浏览器上发布。
