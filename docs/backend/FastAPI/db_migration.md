@@ -58,25 +58,25 @@ Alembic 是一个用于对 SQLAlchemy 模型和数据库架构进行管理和更
 1. 初始化 Alebic 环境并创建版本库:
 
 ```bash
-    alembic init alembic
+alembic init alembic
 ```
 
 2. 编写迁移脚本:
 
 ```bash
-    alembic revision --autogenerate -m "add user table"
+alembic revision --autogenerate -m "add user table"
 ```
 
 3. 将脚本升级至最新版本:
 
 ```bash
-    alembic upgrade head
+alembic upgrade head
 ```
 
 4. 管理员想要回滚最后一次迁移:
 
 ```bash
-    alembic downgrade -1
+alembic downgrade -1
 ```
 
 所以,Alembic 是一个轻量但强大的数据库迁移工具,适用于绝大部分项目场景。
@@ -85,8 +85,8 @@ Alembic 是一个用于对 SQLAlchemy 模型和数据库架构进行管理和更
 Django 的 ORM 框架内置了一套数据库迁移机制,可以直接使用。当我们更改 Django 模型时,可以运行:
 
 ```python
-    python manage.py makemigrations
-    python manage.py migrate
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 这将同步模型的变更到数据库,实现迁移
@@ -114,7 +114,7 @@ Django 迁移的优点是简单方便,不过只适用于 Django 项目,不具备
 1. 安装 Alembic:
 
 ```bash
-    pip install alembic
+pip install alembic
 ```
 
 ### 初始化 Alembic 环境
@@ -122,7 +122,7 @@ Django 迁移的优点是简单方便,不过只适用于 Django 项目,不具备
 2. 初始化 Alembic 环境:
 
 ```bash
-    alembic init alembic
+alembic init alembic
 ```
 
 这会在项目根目录下创建 `alembic` 文件夹,包含 Alembic 配置文件。
@@ -132,15 +132,15 @@ Django 迁移的优点是简单方便,不过只适用于 Django 项目,不具备
 3. 在 `alembic.ini` 文件中配置 SQLAlchemy 引擎:
 
 ```ini
-    [alembic]# 所选的SQL工具
-    sqlalchemy.url = sqlite:///database.db 
-    ...
+[alembic]# 所选的SQL工具
+sqlalchemy.url = sqlite:///database.db 
+...
 ```
 
 4. 定义模型后,生成首个迁移脚本:
 
 ```bash
-    alembic revision --autogenerate -m "first_revision"
+alembic revision --autogenerate -m "first_revision"
 ```
 
 这会创建一个版本文件 `versions/xxxxxxx_first_revision.py`。
@@ -148,7 +148,7 @@ Django 迁移的优点是简单方便,不过只适用于 Django 项目,不具备
 5. 将脚本与数据库同步:
 
 ```bash
-    alembic upgrade head
+alembic upgrade head
 ```
 
 6. 以后每当模型有变更,重复第 4 步生成新脚本,第 5 步同步变更。
@@ -156,8 +156,8 @@ Django 迁移的优点是简单方便,不过只适用于 Django 项目,不具备
 7. 如需回滚,使用:
 
 ```bash
-    alembic downgrade -1      # 回滚最后一次迁移 
-    alembic downgrade 3ce5a9 # 回滚到特定版本号的迁移  
+alembic downgrade -1      # 回滚最后一次迁移 
+alembic downgrade 3ce5a9 # 回滚到特定版本号的迁移  
 ```
 
 ### 执行数据迁移
@@ -165,7 +165,7 @@ Django 迁移的优点是简单方便,不过只适用于 Django 项目,不具备
 8. 迁移部署到生产环境使用:
 
 ```bash
-    alembic upgrade <revision_id>   # 升级到指定 ID 的最新版本
+alembic upgrade <revision_id>   # 升级到指定 ID 的最新版本
 ```
 
 所以,在 FastAPI 项目中使用 Alembic 进行数据迁移的工作流是:

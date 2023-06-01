@@ -12,28 +12,28 @@ sidebar_position: 5
 使用 `HTTPBasic` 认证类来验证用户名和密码:
 
 ```python
-    from fastapi import Depends, FastAPI, HTTPException, status
-    from fastapi.security import HTTPBasic, HTTPBasicCredentials
-    
-    app = FastAPI()
-    security = HTTPBasic()
-    
-    def verify_password(credentials: HTTPBasicCredentials):
-        username = credentials.username
-        password = credentials.password
-        # 在这里你要验证用户名和密码 
-        if username == "test" and password == "test": 
-            return True
-        else:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, 
-                detail="Incorrect username or password"
-            )
-    
-    @app.get("/items/")
-    def read_items(credentials: HTTPBasicCredentials = Depends(security)):
-        verify_password(credentials)
-        # 验证成功后可以访问该路由
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+
+app = FastAPI()
+security = HTTPBasic()
+
+def verify_password(credentials: HTTPBasicCredentials):
+    username = credentials.username
+    password = credentials.password
+    # 在这里你要验证用户名和密码 
+    if username == "test" and password == "test": 
+        return True
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, 
+            detail="Incorrect username or password"
+        )
+
+@app.get("/items/")
+def read_items(credentials: HTTPBasicCredentials = Depends(security)):
+    verify_password(credentials)
+    # 验证成功后可以访问该路由
 ```
 
 使用方法:
@@ -64,42 +64,42 @@ sidebar_position: 5
 安装 `python-jose` 和 `passlib` 用于 JWT 和密码加密:
 
 ```dax
-    pip install python-jose[cryptography] passlib[bcrypt]
+pip install python-jose[cryptography] passlib[bcrypt]
 ```
 
 定义用户模型和加密密码:
 
 ```python
-    from passlib.context import CryptContext
-    
-    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-    
-    users = {
-        "test": {
-            "username": "test",
-            "hashed_password": pwd_context.hash("test"),
-            "full_name": "Test User"
-        } 
-    }
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+users = {
+    "test": {
+        "username": "test",
+        "hashed_password": pwd_context.hash("test"),
+        "full_name": "Test User"
+    } 
+}
 ```
 
 定义获取 JWT 令牌的路径:
 
 ```python
-    from fastapi import Depends, FastAPI, HTTPException, status
-    from fastapi.security import OAuth2PasswordRequestForm
-    from jose import jwt, JWTError
-    
-    SECRET_KEY = "secret"
-    ALGORITHM = "HS256"
-    
-    @app.post("/token")
-    def login(form_data: OAuth2PasswordRequestForm = Depends()):
-        user = authenticate_user(form_data.username, form_data.password)
-        if not user:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
-        access_token = create_access_token(user["username"])
-        return {"access_token": access_token, "token_type": "bearer"} 
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
+from jose import jwt, JWTError
+
+SECRET_KEY = "secret"
+ALGORITHM = "HS256"
+
+@app.post("/token")
+def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = authenticate_user(form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password")
+    access_token = create_access_token(user["username"])
+    return {"access_token": access_token, "token_type": "bearer"} 
 ```
 
 该路径接收用户名和密码,如果正确则生成 JWT 令牌返回。
@@ -107,12 +107,12 @@ sidebar_position: 5
 定义验证 JWT 令牌的路径:
 
 ```python
-    def verify_password(credentials: str = Header(...)): 
-        ...
-    
-    @app.get("/items/") 
-    def read_items(user=Depends(verify_password)): 
-        ... 
+def verify_password(credentials: str = Header(...)): 
+    ...
+
+@app.get("/items/") 
+def read_items(user=Depends(verify_password)): 
+    ... 
 ```
 
 这会在 `Authorization` 头中检查 `Bearer` 令牌,如果有效则允许访问该路由。
@@ -136,21 +136,21 @@ sidebar_position: 5
 一个简单示例:
 
 ```python
-    from fastapi import Depends, FastAPI
-    
-    app = FastAPI()
-    
-    def query_extractor(q: str): 
-        return q
-    
-    def query_or_default(q: str = None): 
-        if q:
-            return q 
-        return "default"
-    
-    @app.get("/items/")
-    def read_items(query: str = Depends(query_or_default)): 
-        return query_extractor(query) 
+from fastapi import Depends, FastAPI
+
+app = FastAPI()
+
+def query_extractor(q: str): 
+    return q
+
+def query_or_default(q: str = None): 
+    if q:
+        return q 
+    return "default"
+
+@app.get("/items/")
+def read_items(query: str = Depends(query_or_default)): 
+    return query_extractor(query) 
 ```
 
 这里我们有:
@@ -185,12 +185,12 @@ sidebar_position: 5
 定义用户角色模型:
 
 ```python
-    from enum import Enum
-    
-    class UserRole(str, Enum):
-        admin = "admin"
-        moderator = "moderator"
-        user = "user"
+from enum import Enum
+
+class UserRole(str, Enum):
+    admin = "admin"
+    moderator = "moderator"
+    user = "user"
 ```
 
 我们定义了 `admin`、`moderator` 和 user 三个角色。
@@ -198,34 +198,34 @@ sidebar_position: 5
 存储用户与角色的映射:
 
 ```python
-    users = {
-        1: {
-            "username": "john",  
-            "role": UserRole.admin
-        },
-        2: {
-            "username": "jane",
-            "role": UserRole.moderator
-        },
-        3: {        
-            "username": "jack",
-            "role": UserRole.user
-        }
-    } 
+users = {
+    1: {
+        "username": "john",  
+        "role": UserRole.admin
+    },
+    2: {
+        "username": "jane",
+        "role": UserRole.moderator
+    },
+    3: {        
+        "username": "jack",
+        "role": UserRole.user
+    }
+} 
 ```
 
 获取当前登录用户的角色:
 
 ```python
-    from fastapi import Depends, Header, HTTPException
-    
-    async def get_current_user(token: str = Header(None)):
-        if token is None:
-            raise HTTPException(status_code=400, detail="Invalid authentication token") 
-        return users[int(token)]
-    
-    async def get_current_user_role(user=Depends(get_current_user)): 
-        return user["role"] 
+from fastapi import Depends, Header, HTTPException
+
+async def get_current_user(token: str = Header(None)):
+    if token is None:
+        raise HTTPException(status_code=400, detail="Invalid authentication token") 
+    return users[int(token)]
+
+async def get_current_user_role(user=Depends(get_current_user)): 
+    return user["role"] 
 ```
 
 这会从 `Authorization` 头的令牌中获取当前用户,并返回其角色。
@@ -233,23 +233,23 @@ sidebar_position: 5
 在路径操作函数中检查用户角色:
 
 ```python
-    from fastapi import FastAPI
-    
-    app = FastAPI()
-    
-    @app.get("/admin/", dependencies=[Depends(is_admin)])    
-    def admin_items(): 
-        ...
-    
-    @app.get("/moderator/", dependencies=[Depends(is_moderator)])  
-    def mod_items():
-        ...   
-    
-    def is_admin(role=Depends(get_current_user_role)):
-        assert role == UserRole.admin, "Admin access required"
-    
-    def is_moderator(role=Depends(get_current_user_role)):
-        assert role == UserRole.moderator, "Moderator access required"  
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/admin/", dependencies=[Depends(is_admin)])    
+def admin_items(): 
+    ...
+
+@app.get("/moderator/", dependencies=[Depends(is_moderator)])  
+def mod_items():
+    ...   
+
+def is_admin(role=Depends(get_current_user_role)):
+    assert role == UserRole.admin, "Admin access required"
+
+def is_moderator(role=Depends(get_current_user_role)):
+    assert role == UserRole.moderator, "Moderator access required"  
 ```
 
 这里我们编写了检查用户角色的依赖项,并在路径操作函数中使用 `dependencies` 参数将其绑定,这样只有当角色符合要求时才会执行相应路径操作函数。  
