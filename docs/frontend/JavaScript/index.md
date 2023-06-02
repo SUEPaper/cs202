@@ -3,10 +3,10 @@ id: index
 sidebar_position: 1
 ---
 
-# JavaScript 简介
+# JavaScript
 
+## JavaScript简介
 ---
-
 **JavaScript**是一种广泛应用于网页开发的脚本编程语言。它被用于为网页添加交互性和动态功能，使得网页可以对用户的操作做出响应并提供动态的内容。
 
 **JavaScript**最初由Netscape公司的布兰登·艾克（Brendan Eich）开发，最早称为LiveScript。后来，为了利用当时非常受欢迎的Java语言的名气，Netscape将其改名为JavaScript。JavaScript在1995年首次在Netscape Navigator浏览器上发布。
@@ -15,17 +15,17 @@ sidebar_position: 1
 
 JavaScript具有以下特点：
 
-1. **客户端脚本语言：**JavaScript主要在客户端执行，也就是在用户的浏览器中运行。它可以通过在HTML页面中嵌入`<script>`标签来引入并执行脚本代码。
+1. **客户端脚本语言：** JavaScript主要在客户端执行，也就是在用户的浏览器中运行。它可以通过在HTML页面中嵌入`<script>`标签来引入并执行脚本代码。
 
-2. **与HTML和CSS配合：**JavaScript可以与HTML和CSS相结合，通过操作HTML元素和修改样式，实现动态页面效果。
+2. **与HTML和CSS配合：** JavaScript可以与HTML和CSS相结合，通过操作HTML元素和修改样式，实现动态页面效果。
 
-3. **事件驱动：**JavaScript通过监听用户的交互事件（如点击、鼠标移动等），来触发相应的动作和功能。
+3. **事件驱动：** JavaScript通过监听用户的交互事件（如点击、鼠标移动等），来触发相应的动作和功能。
 
-4. **跨平台性：**JavaScript是一种跨平台的语言，可以在不同的操作系统和设备上运行。
+4. **跨平台性：** JavaScript是一种跨平台的语言，可以在不同的操作系统和设备上运行。
 
-5. **强大的功能库：**JavaScript拥有丰富的第三方库和框架，如jQuery、React、Angular等，可以大大提高开发效率。
+5. **强大的功能库：** JavaScript拥有丰富的第三方库和框架，如jQuery、React、Angular等，可以大大提高开发效率。
 
-6. **前后端开发：**随着Node.js的出现，JavaScript不仅可以用于前端开发，还可以用于后端开发，构建整个Web应用。
+6. **前后端开发：** 随着Node.js的出现，JavaScript不仅可以用于前端开发，还可以用于后端开发，构建整个Web应用。
 
 总的来说，**JavaScript**是一种广泛应用于Web开发的脚本编程语言，它为网页带来了交互性和动态性，并且具有简单易学的语法和强大的功能库。
 
