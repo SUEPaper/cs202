@@ -3,9 +3,40 @@ id: dom
 sidebar_position: 5
 ---
 
-# DOM 简介
+# DOM 
 
-## 一、获取 DOM 元素
+## 一、DOM 简介
+
+---
+
+DOM（文档对象模型）是一种表示和操作HTML、XML和XHTML文档的标准编程接口。它将Web页面视为由层次结构的节点组成的文档，并提供了一组方法和属性，使开发人员可以通过JavaScript脚本动态地访问和修改文档的内容、结构和样式。
+
+DOM以树状结构表示文档，其中每个节点都是文档的一部分，可以是元素、文本、注释、属性等。DOM节点可以通过JavaScript脚本进行遍历、查询和操作。
+
+JavaScript中的DOM提供了一些重要的对象和方法
+>例如：
+1. document对象：
+   表示整个文档，是DOM树的根节点。可以使用document对象获取和修改文档的各个元素和属性。
+2. 元素对象：
+   表示HTML文档中的元素，如 `<div>` 、 `<p>` 、 `<a>` 等。可以使用元素对象的属性和方法来访问和修改元素的内容、样式和属性。
+3. 事件对象：
+   在JavaScript中，事件对象提供了有关事件的详细信息，如事件类型、触发的元素、鼠标位置等。可以使用事件对象来处理用户的交互操作。
+
+通过JavaScript中的DOM，我们可以通过编程的方式实现以下功能：
+
+- 动态地创建、插入和删除HTML元素。
+- 修改元素的文本内容、属性和样式。
+- 操作表单元素，获取和设置用户输入的值。
+- 注册事件监听器，响应用户的交互操作。
+- 遍历和搜索文档中的元素，进行查询和操作。
+- 与服务器进行交互，动态更新页面内容。
+
+
+DOM在JavaScript中扮演着重要的角色，使开发人员能够通过脚本语言操作和控制网页的结构和内容，实现交互性和动态性的Web应用程序。
+
+
+
+## 二、获取 DOM 元素
 
 ---
 要获取 DOM 元素（Document Object Model element）的引用，可以使用以下几种常见的方式：
@@ -89,7 +120,7 @@ let elements = document.getElementsByClassName('className');
 let element = elements[index];
 ```
 
-## 二、操作 DOM 元素属性
+## 三、操作 DOM 元素属性
 
 ---
 
@@ -189,7 +220,7 @@ let element = document.getElementById('elementId');
 element.innerHTML = '<p>New HTML Content</p>';
 ```
 
-## 三、操作 DOM 元素样式
+## 四、操作 DOM 元素样式
 
 ---
 
@@ -276,7 +307,7 @@ element.className = 'className';
 
 
 
-## 四、DOM 元素的创建、插入与删除
+## 五、DOM 元素的创建、插入与删除
 
 ---
 
@@ -309,6 +340,8 @@ parentElement.appendChild(newElement);
 let referenceElement = document.getElementById('referenceElementId');
 parentElement.insertBefore(newElement, referenceElement);
 ```
+
+
 ### 4. 删除元素
 可以使用父元素的 `removeChild(childElement)` 方法从父元素中移除一个子元素。
 
