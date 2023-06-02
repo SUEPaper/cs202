@@ -36,9 +36,11 @@ Python官网地址为:https://www.python.org/
 
 ![](./img/windows_python_4.png)
 
-:::danger
-一定要勾选 `Add python.exe to PATH`
-:::
+
+**一定要勾选 `Add python.exe to PATH`**
+
+**重要的事情说三遍！！！请勾选`Add python.exe to PATH`**
+
 
 3.当出现"Setup was successful"时则安装结束
 
