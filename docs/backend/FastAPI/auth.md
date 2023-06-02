@@ -7,6 +7,16 @@ sidebar_position: 5
 
 ## 基本身份验证（Basic Auth）
 
+基本身份验证的工作原理如下：
+:::tip
+
+1.  客户端发送HTTP请求到服务器。
+2. 服务器返回一个401 Unauthorized的响应状态码，并在响应头中包含一个WWW-Authenticate字段，指示要求身份验证，并指定身份验证方案为"Basic"。
+3. 客户端收到401响应后，将用户名和密码进行Base64编码，并添加到请求头的Authorization字段中，形成"Basic base64(username:password)"的格式。
+4. 客户端重新发送带有Authorization头的HTTP请求。
+5. 服务器收到带有Authorization头的请求后，解码Base64编码的用户名和密码，并与存储的凭据进行比较。如果匹配成功，服务器会授予请求访问所需的权限。
+:::
+
 在 FastAPI 中,你可以很容易地实现基本身份验证(Basic Auth)。
 
 使用 `HTTPBasic` 认证类来验证用户名和密码:
@@ -49,15 +59,28 @@ def read_items(credentials: HTTPBasicCredentials = Depends(security)):
 所以,通过 `HTTPBasic` 认证类,我们可以轻松实现基本身份验证,保护 FastAPI 应用中的敏感路由。
 主要步骤是:
 
+:::note
+
 - 定义一个 verify_password 函数来验证用户名和密码。
 - 使用 Depends 将 verify_password 函数关联到 security 认证类中。
 - FastAPI 会自动检查传入请求的 Authorization 头,并调用 verify_password 函数进行验证。
 - 验证成功后允许访问路由,否则返回 401 响应。
 
+:::
+
+:::info
 这使我们可以非常简单地为 FastAPI 应用添加基本的身份验证和访问控制机制,提高安全性。
+:::
+
 希望这个简短示例能帮助你理解如何在 FastAPI 中实现基本身份验证。FastAPI 为身份验证和授权提供了丰富的支持,我们将在后续示例中进一步学习。
 
 ## OAuth2 和 JWT 令牌
+
+:::tip
+OAuth2是一种开放标准的授权协议，用于允许用户授权第三方应用访问他们在另一个服务提供者上存储的资源，而无需将用户名和密码提供给第三方应用。它的工作原理涉及三个主要角色：资源所有者（用户）、客户端应用程序（第三方应用）和授权服务器（服务提供者）。OAuth2使用访问令牌（Access Token）来代表授权和访问权限，并通过授权码授权流程或隐式授权流程来获取访问令牌。
+
+JWT（JSON Web Token）是一种用于安全传输信息的开放标准。它是一种轻量级的令牌格式，由三个部分组成：头部（Header）、负载（Payload）和签名（Signature）。JWT是使用签名算法对头部和负载进行签名的，以确保数据的完整性和验证。JWT可以用于身份验证和授权，作为令牌在客户端和服务器之间传递，并包含有关用户或实体的相关信息。由于JWT是自包含的，服务器可以验证令牌的有效性和真实性，而无需在后端存储令牌信息。
+:::
 
 在 FastAPI 中,你可以轻松实现 OAuth2 和 JWT 令牌认证。这里我们主要介绍 OAuth2 密码授权流的实现。
 
@@ -118,13 +141,18 @@ def read_items(user=Depends(verify_password)):
 这会在 `Authorization` 头中检查 `Bearer` 令牌,如果有效则允许访问该路由。
 所以,通过这些机制,我们实现了一个完整的 OAuth2 密码授权流认证系统:
 
+:::note
+
 - 定义用户信息和加密密码
 - `/token` 路径验证用户名密码,并返回JWT令牌
 - 使用 `Depends` 装饰器将令牌验证函数与路由绑定
 - FastAPI 会自动检查 `Authorization` 头中的令牌并调用验证函数
 - 如果令牌有效,允许访问路由,否则返回401响应
-
+:::
+:::info
 这使我们可以轻松为 FastAPI 应用添加 OAuth2 和 JWT 令牌认证支持,实现更高级的身份验证和访问控制逻辑。
+:::
+
 希望这个示例能帮助你理解 FastAPI 中 OAuth2 和 JWT 认证的实现。我们将在后续继续深入探讨 FastAPI 的安全机制。
 
 ## 依赖项注入系统（Depends）
@@ -155,27 +183,40 @@ def read_items(query: str = Depends(query_or_default)):
 
 这里我们有:
 
+:::note
+
 - `query_extractor` - 一个提取查询字符串的函数
 - `query_or_default` - 一个检索查询字符串或返回默认值的函数,我们使用 `Depends` 将其设置为依赖项
 - `read_items` 路径操作函数接收 `query` 参数,该参数的值来自 `query_or_default` 依赖项
+:::
 
 所以,实际执行过程是:
+
+:::note
 
 - 调用 `/items/` 路径
 - FastAPI 调用 `query_or_default` 函数获取 `query` 的值
 - `query` 的值作为参数传递给 `read_items` 函数
 - `read_items` 内部调用 `query_extractor` 函数使用该值
+:::
 
 `Depends` 允许我们将常用的逻辑抽出为依赖项,然后在多处重复使用,这大大提高了代码重用性和可维护性。
 
 此外,依赖项可以是:
 
+:::note
+
 - 路径操作参数
 - 其他依赖项的参数
 - 类方法(通过 `Depends(SomeClass.method)`)
+:::
+
+:::info
 
 我们还可以编写高阶依赖项——接收其他依赖项作为参数的依赖项。
 所以,通过 `Depends` 系统,我们可以构建出一个灵活的依赖关系网,将应用逻辑解耦为可重用的模块。这是 FastAPI 之所以简洁高效的重要原因之一。
+:::
+
 希望这个简短示例能帮助你理解 FastAPI 的依赖项注入系统。
 
 ## 用户权限和角色控制
@@ -193,7 +234,7 @@ class UserRole(str, Enum):
     user = "user"
 ```
 
-我们定义了 `admin`、`moderator` 和 user 三个角色。
+我们定义了 `admin`、`moderator` 和 `user` 三个角色。
 
 存储用户与角色的映射:
 
@@ -254,6 +295,7 @@ def is_moderator(role=Depends(get_current_user_role)):
 
 这里我们编写了检查用户角色的依赖项,并在路径操作函数中使用 `dependencies` 参数将其绑定,这样只有当角色符合要求时才会执行相应路径操作函数。  
 所以,通过这种简单机制,我们实现了 FastAPI 应用的基于角色访问控制:
+:::note
 
 - 定义用户角色 Enum 类
 - 存储用户与角色映射
@@ -261,6 +303,9 @@ def is_moderator(role=Depends(get_current_user_role)):
 - 编写检查角色的依赖项
 - 在路径操作函数中绑定这些依赖项
 - 只有当角色经依赖项验证后,路径函数才会被执行
+:::
 
+:::info
 这使我们可以灵活地基于用户角色控制 FastAPI 应用的访问权限,提高安全性。
+:::
 希望这个简短示例能帮助你理解如何在 FastAPI 中实现基于角色的访问控制。我们将在后续继续深入学习更高级的 FastAPI 权限和授权机制。
