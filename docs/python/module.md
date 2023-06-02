@@ -19,20 +19,22 @@
 例如，使用您最喜欢的文本编辑器在当前目录中创建一个名为fibo.py以下内​​容的文件：
 
 '''
-def fib(n):    # 写出斐波那契数列直到n。
+{
+    def fib(n):    # 写出斐波那契数列直到n。
     a, b = 0, 1
     while a < n:
         print(a, end=' ')
         a, b = b, a+b
     print()
 
-def fib2(n):   # 返回斐波那契数列直到n。
+    def fib2(n):   # 返回斐波那契数列直到n。
     result = []
     a, b = 0, 1
     while a < n:
         result.append(a)
         a, b = b, a+b
     return result
+}
 '''
 
 现在进入 Python 解释器并使用以下命令导入此模块:
@@ -43,20 +45,24 @@ def fib2(n):   # 返回斐波那契数列直到n。
 你可以运行以下步骤：
 
 '''
->>> fibo.fib(1000)
-0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987
->>> fibo.fib2(100)
-[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
->>> fibo.__name__
-'fibo'
+{
+    >>> fibo.fib(1000)
+    0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987
+    >>> fibo.fib2(100)
+    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+    >>> fibo.__name__
+    'fibo'
+}
 '''
 
 如果你打算经常使用一个函数，你可以将它分配给一个本地名称：
 
 '''
->>>fib = fibo.fib
->>>fib(500)
-0 1 1 2 3 5 8 13 21 34 55 89 144 233 377
+{
+    >>>fib = fibo.fib
+    >>>fib(500)
+    0 1 1 2 3 5 8 13 21 34 55 89 144 233 377
+}
 '''
 
 
@@ -77,17 +83,21 @@ def fib2(n):   # 返回斐波那契数列直到n。
 如想要导入模块support.py，需要把命令放在脚本的顶端：
 
 '''
-# 导入模块
-import support
- 
-# 现在可以调用模块里包含的函数了
-support.print_func("Runoob")
+{
+    # 导入模块
+    import support
+    
+    # 现在可以调用模块里包含的函数了
+    support.print_func("Runoob")
+}
 '''
 
 输出结果：
 
 '''
-Hello : Runoob
+{
+    Hello : Runoob
+}
 '''
 
 
@@ -153,22 +163,26 @@ dir()函数一个排好序的字符串列表内容是一个模块里定义过的
 返回的列表容纳了在一个模块里定义的所有模块，变量和函数。如下一个简单的实例：
 
 '''
-# 导入内置math模块
-import math
- 
-content = dir(math)
- 
-print content;
+{
+    # 导入内置math模块
+    import math
+    
+    content = dir(math)
+    
+    print content;
+}
 '''
 
 以上实例输出结果：
 
 '''
-['__doc__', '__file__', '__name__', 'acos', 'asin', 'atan', 
-'atan2', 'ceil', 'cos', 'cosh', 'degrees', 'e', 'exp', 
-'fabs', 'floor', 'fmod', 'frexp', 'hypot', 'ldexp', 'log',
-'log10', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 
-'sqrt', 'tan', 'tanh']
+{
+    ['__doc__', '__file__', '__name__', 'acos', 'asin', 'atan', 
+    'atan2', 'ceil', 'cos', 'cosh', 'degrees', 'e', 'exp', 
+    'fabs', 'floor', 'fmod', 'frexp', 'hypot', 'ldexp', 'log',
+    'log10', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 
+    'sqrt', 'tan', 'tanh']
+}
 '''
 
 在这里，特殊字符串变量__name__指向模块的名字，__file__指向该模块的导入文件名。
