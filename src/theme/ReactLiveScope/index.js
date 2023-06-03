@@ -10,12 +10,12 @@ import {
   List1,
   TeaSet1,
   TeaSet2,
-} from "../../../docs/frontend/React/components/Describ_1.js";
+} from "../../../docs/frontend/React/components/Describ_0.js";
 
 import {
-  Profile1_2_1,
-  Gallery1_2_1,
-} from "../../../docs/frontend/React/components/Describ_2.js";
+  Profile1_1_1,
+  Gallery1_1_1,
+} from "../../../docs/frontend/React/components/Describ_1.js";
 
 const ReactLiveScope = {
   React,
@@ -29,8 +29,8 @@ const ReactLiveScope = {
   List1,
   TeaSet1,
   TeaSet2,
-  Profile1_2_1,
-  Gallery1_2_1,
+  Profile1_1_1,
+  Gallery1_1_1,
 };
 
 export default ReactLiveScope;

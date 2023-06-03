@@ -66,7 +66,7 @@ export default function Profile1_2_1() {
 </Tabs>
 
 ```jsx live
-< Profile1_2_1 />
+< Profile1_1_1 />
 ```
 
 以下是构建组件的方法：
@@ -113,7 +113,7 @@ return (
 <TabItem value="App.js"  label="App.js">
 
 ```jsx
-function Profile1_2_2() {
+function Profile1_1_2() {
   return (
     <img
       src="https://i.imgur.com/MK3eW3As.jpg"
@@ -122,13 +122,13 @@ function Profile1_2_2() {
   );
 }
 
-export default function Gallery1_2_1() {
+export default function Gallery1_1_1() {
   return (
     <section>
       <h1>了不起的科学家</h1>
-      <Profile1_2_2 />
-      <Profile1_2_2 />
-      <Profile1_2_2 />
+      <Profile1_1_2 />
+      <Profile1_1_2 />
+      <Profile1_1_2 />
     </section>
   );
 }
@@ -139,7 +139,7 @@ export default function Gallery1_2_1() {
 </Tabs>
 
 ```jsx live
-<Gallery1_2_1 />
+<Gallery1_1_1 />
 ```
 
 ## 浏览器所看到的
