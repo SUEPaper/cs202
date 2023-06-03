@@ -93,6 +93,12 @@ const config = {
           {
             type: "docSidebar",
             position: "left",
+            sidebarId: "pythonbar",
+            label: "python",
+          },
+          {
+            type: "docSidebar",
+            position: "left",
             sidebarId: "frontendSidebar",
             label: "Web前端开发",
           },
