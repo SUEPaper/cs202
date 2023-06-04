@@ -1,6 +1,6 @@
 import React from "react";
-import { Profile2, getImageUrl, getImageUrl2 } from "./Describ_other.js";
-import { people } from "./Describ_data.js";
+import { Profile2, getImageUrl, getImageUrl2 } from "./Describ0_other.js";
+import { people } from "./Describ0_data.js";
 
 function Profile1() {
   return <img src="https://i.imgur.com/MK3eW3As.jpg" alt="Katherine Johnson" />;
