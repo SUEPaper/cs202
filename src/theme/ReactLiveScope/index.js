@@ -10,8 +10,12 @@ import {
   List1,
   TeaSet1,
   TeaSet2,
-} from "../../../docs/frontend/React/components/Describ_0.js";
+} from "../../../docs/frontend/React/components/Describ/Describ_0.js";
 
+import {
+  Profile1_1_1,
+  Gallery1_1_1,
+} from "../../../docs/frontend/React/components/Describ/Describ_1.js";
 
 import {
   Form3_0_1,
@@ -70,7 +74,6 @@ import {
   TeaGathering1_9_4,
 } from "../../../docs/frontend/React/components/Describ/Describ_9.js";
 
-
 const ReactLiveScope = {
   React,
   ...React,
@@ -93,7 +96,7 @@ const ReactLiveScope = {
   Messenger3_0_6,
   TaskApp3_0_7,
   Page3_0_8,
-  TaskApp3_0_9
+  TaskApp3_0_9,
   App1_2_1,
   App1_2_2,
   TodoList1_2_1,
