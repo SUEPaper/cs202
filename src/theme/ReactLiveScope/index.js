@@ -93,7 +93,7 @@ const ReactLiveScope = {
   Messenger3_0_6,
   TaskApp3_0_7,
   Page3_0_8,
-  TaskApp3_0_9
+  TaskApp3_0_9,
   App1_2_1,
   App1_2_2,
   TodoList1_2_1,
