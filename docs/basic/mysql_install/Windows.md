@@ -7,7 +7,7 @@ sidebar_position: 1
 
 ## 下载 MySQL 安装程序
 
-[MySQl官方下载页面](https://dev.mysql.com/downloads/installer/)
+[MySQl 官方下载页面](https://dev.mysql.com/downloads/installer/)
 
 ![1](./img/1.png)
 
@@ -69,11 +69,11 @@ sidebar_position: 1
 
 Config Type: 配置类型
 
-* Development Computer: 开发计算机，占用最少的资源。
+- Development Computer: 开发计算机，占用最少的资源。
 
-* Server Computer: 服务器计算机，可以和其他服务器软件一同安装，比如 web 服务器等。中等资源占用。
+- Server Computer: 服务器计算机，可以和其他服务器软件一同安装，比如 web 服务器等。中等资源占用。
 
-* Dedicated Computer: 专用计算机，可最大限度的占用资源。
+- Dedicated Computer: 专用计算机，可最大限度的占用资源。
 
 Connectivity：可以控制客户端如何连接到 MySQL 数据库
 
@@ -91,16 +91,17 @@ Connectivity：可以控制客户端如何连接到 MySQL 数据库
 
 在 Accounts and Roles 界面上，您可以指定 MySQL 的 root 帐户密码。MySQL root 帐户是默认的 sysadmin 帐户，为了安全，一般要禁用它。
 
-:::tip
-<font color="red">建议同学们把自己的root密码使用默认的"passward"！！！
-使用其他密码的出现问题我们概不负责</font>
+:::danger MySQL 密码设置推荐
+**建议同学们把自己的 root 密码使用默认的"passward"！！！**
+
+_使用其他密码的出现问题我们概不负责_
 :::
 
 ![13](./img/13.png)
 
 ### 配置 Windows 服务
 
-在Windows 服务界面上，可以将 MySQL 服务器配置为作为 Windows 服务运行。我们可以自定义服务器的名称以及是否随机自启动服务。
+在 Windows 服务界面上，可以将 MySQL 服务器配置为作为 Windows 服务运行。我们可以自定义服务器的名称以及是否随机自启动服务。
 
 ![14](./img/14.png)
 
@@ -140,5 +141,5 @@ Connectivity：可以控制客户端如何连接到 MySQL 数据库
 
 完成后， MySQL 安装程序在数据库中导入了 world 和 sakila 数据库：
 
-* world 数据库是一个包含了世界国家和城市的数据。
-* sakila 数据库是关于 DVD（电影）租赁店业务的数据库。
+- world 数据库是一个包含了世界国家和城市的数据。
+- sakila 数据库是关于 DVD（电影）租赁店业务的数据库。
