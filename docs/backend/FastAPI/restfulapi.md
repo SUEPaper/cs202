@@ -7,9 +7,11 @@ sidebar_position: 3
 
 ## RESTful API 简介
 
+:::tip
 RESTful API 是一种软件架构风格,用于设计网络 API。
 
 REST 是 Representational State Transfer 的缩写,意思是"表现层状态转化"。
+:::
 
 RESTful API 的主要特征有:
 :::note
