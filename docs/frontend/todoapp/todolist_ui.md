@@ -10,6 +10,7 @@ sidebar_position: 6
 
 **本章只讲UI设计**
 
+
 ## 路由
 在路由中可以看到
 ```jsx
@@ -43,6 +44,9 @@ export default App;
 ```
 这是组件`App`的构成，函数`App()`返回一个`JSX`语句，一个`<div>`中包含了两个组件，`<Heading />`,`<ToDoList />`
 
+:::tip
+`React` 中的`UI`是由组件`return` 的 `JSX`构建，渲染
+:::
 ## Heading 组件构成
 
 ```jsx
@@ -64,6 +68,8 @@ export default Heading;
 ## ToDoList 组件构成
 
 在文件`frontend\src\components\ToDOList.jsx`中可以看到函数`ToDoList`return了很长的`JSX`代码，
+
+
 
 主要分为三大部分
 1. 没有task时
