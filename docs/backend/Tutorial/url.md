@@ -3,243 +3,136 @@ id: "url"
 sidebar_position: 3
 ---
 
-# 具有URL的端点
-在路径`backend/api/……`文件夹中我们采用了封装的特性，使用`api.py`调用`auth.py`,`todos.py`,`users.py`,分别对应UI界面的各部分
+# URL路径参数和类型提示
+
+本节内容，我们会定义带参数的API，并对其进行测试，为此我们在前一节的`main.py`文件中进行小部分修改：
+
+:::note 步骤
+
+1. 我们在字典列表中创建了一些示例配方数据。目前，这是最简单的数据，但符合我们的学习目的。在本教程系列的后面部分，我们将展开 此数据集并将其存储在数据库中。`RECIPE`
+
+```python
+# 1
+RECIPES = [
+    {
+        "id": 1,
+        "label": "Chicken Vesuvio",
+        "source": "Serious Eats",
+        "url": "http://www.seriouseats.com/recipes/2011/12/chicken-vesuvio-recipe.html",
+    },
+    {
+        "id": 2,
+        "label": "Chicken Paprikash",
+        "source": "No Recipes",
+        "url": "http://norecipes.com/recipe/chicken-paprikash/",
+    },
+    {
+        "id": 3,
+        "label": "Cauliflower and Tofu Curry Recipe",
+        "source": "Serious Eats",
+        "url": "http://www.seriouseats.com/recipes/2011/02/cauliflower-and-tofu-curry-recipe.html",
+    },
+]
+
+# skipping ahead ...
+```
+
+将上述代码插入到`main.py`的导入语句之后。
+
+2. 我们创建了一个新的端点。这里的大括号表示 参数值，需要与端点函数采用的参数之一匹配。`GET/recipe/{recipe_id}fetch_recipe`
+
+```python
+# 2 - New addition, path parameter
+# https://fastapi.tiangolo.com/tutorial/path-params/
+@api_router.get("/recipe/{recipe_id}", status_code=200)
+```
+
+将上述代码插入到根路由资源之后。
+
+3. 该函数定义新终结点的逻辑。函数的类型提示 FastAPI 使用与 URL 路径参数匹配的参数来执行自动验证和转换。 我们稍后会看看这个实际操作。`fetch_recipe`
+
+```python
+def fetch_recipe(*, recipe_id: int) -> dict:  # 3
+    """
+    Fetch a single recipe by ID
+    """
+
+```
+
+将上述代码接入第二步之后。
+
+4. 我们模拟通过 ID 从数据库中按 ID 获取数据，并使用 ID 条件检查进行简单的列表推导。 然后，数据被序列化，并由 FastAPI 作为 JSON 返回。
+
+```python
+# 4
+    result = [recipe for recipe in RECIPES if recipe["id"] == recipe_id]
+    if result:
+        return result[0]
+```
+
+最后将第四步代码接入第三步之后。
+
+访问前记得保证自己的API处于运行状态。
+:::
+
+:::info 访问
+
+导航到localhost:8000/docs,我们可以看到：
 
 ![](./img/U1.png)
 
-```python
-api.py
-from fastapi import APIRouter
-from api.todos import router as todos_router
-from api.users import router as users_router
-from api.auth import router as auth_router
-
-api_router = APIRouter()
-api_router.include_router(todos_router, prefix="/todos", tags=["todos"])
-api_router.include_router(users_router, prefix="/users", tags=["users"])
-api_router.include_router(auth_router, tags=["auth"])
-```
-
-```python
-auth.py
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
-from api import deps
-from crud import crud_user
-from schemas import token as schemas_token
-from core import security
-
-router = APIRouter()
-
-
-@router.post("/login/access_token", response_model=schemas_token.Token)
-def login_access_token(
-    db: Session = Depends(deps.get_db), form_data: OAuth2PasswordRequestForm = Depends()
-):
-
-    user = crud_user.authenticate(
-        db, email=form_data.username, password=form_data.password
-    )
-
-    if not user:
-        raise HTTPException(
-            status_code=400,
-            detail="Incorrect email or password"
-        )
-    access_token = security.create_access_token(user.id)
-    return {
-        "access_token": access_token,
-        "token_type": "bearer"
-    }
-
-```
-
-```python
-deps.py
-from typing import Generator
-from db.config import SessionLocal
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
-from pydantic import ValidationError
-from sqlalchemy.orm import Session
-from jose import jwt
-from core import security
-from crud import crud_user
-from schemas import token as schemas_token
-
-reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl="/login/access_token"
-)
-
-
-def get_db() -> Generator:
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-def get_current_user(
-    db: Session = Depends(get_db),
-    token: str = Depends(reusable_oauth2)
-):
-    try:
-        payload = jwt.decode(
-            token, security.SECRET_KEY, algorithms=[security.ALGORITHM]
-        )
-        token_data = schemas_token.TokenPayload(**payload)
-    except (jwt.JWTError, ValidationError):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Could not validate credentials"
-        )
-
-    user = crud_user.get_by_id(db, id=token_data.sub)
-
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found"
-        )
-
-    return user
-
-```
-
-```python
-todos.py
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from api import deps
-from crud import crud_todo
-from schemas import todo as schemas_todo
-
-
-router = APIRouter()
-
-
-@router.get("/", response_model=list[schemas_todo.TodoInDB])
-def get_all_todos(
-    db: Session = Depends(deps.get_db),
-    current_user = Depends(deps.get_current_user)
-):
-    todos = crud_todo.get_all_by_user_id(db=db, user_id=current_user.id)
-    return todos
-
-
-@router.post("/", response_model=schemas_todo.TodoInDB)
-def create_todo(
-    todo_params: schemas_todo.TodoCreate,
-    db: Session = Depends(deps.get_db),
-    current_user = Depends(deps.get_current_user)
-):
-    todo = crud_todo.create(db=db, user_id=current_user.id, todo_params=todo_params)
-    return todo
-
-
-@router.put("/{todo_id}", response_model=schemas_todo.TodoInDB)
-def update_todo(
-    todo_id: int,
-    todo_params: schemas_todo.TodoCreate,
-    db: Session = Depends(deps.get_db),
-    current_user = Depends(deps.get_current_user)
-):
-    todo = crud_todo.get_by_id_with_user_id(db=db, id=todo_id, user_id=current_user.id)
-
-    if not todo:
-        raise HTTPException(status_code=404, detail="Todo not found")
-
-    todo = crud_todo.update(db=db, id=todo_id, user_id=current_user.id, todo_params=todo_params)
-    return todo
-
-
-@router.delete("/{todo_id}", response_model=schemas_todo.TodoInDB)
-def delete_todo(
-    todo_id: int,
-    db: Session = Depends(deps.get_db),
-    current_user = Depends(deps.get_current_user)
-):
-
-    todo = crud_todo.get_by_id_with_user_id(db=db, id=todo_id, user_id=current_user.id)
-
-    if not todo:
-        raise HTTPException(status_code=404, detail="Todo not found")
-    todo = crud_todo.remove(db=db, id=todo_id)
-
-    return todo
-
-```
-
-```python
-users.py
-
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from api import deps
-from crud import crud_user
-from schemas import user as schemas_user
-
-
-router = APIRouter()
-
-
-@router.post("/", response_model=schemas_user.UserInDB)
-def create_user(
-    user_params: schemas_user.UserCreate,
-    db: Session = Depends(deps.get_db)
-):
-    user = crud_user.get_by_email(db=db, email=user_params.email)
-    if user:
-        raise HTTPException(
-            status_code=400,
-            detail="The user with this email already exists in the system."
-        )
-    user = crud_user.create(db=db, user_params=user_params)
-    return user
-
-
-@router.put("/name", response_model=schemas_user.UserInDB)
-def update_user(
-    user_params: schemas_user.UserUpdateName,
-    db: Session = Depends(deps.get_db),
-    current_user = Depends(deps.get_current_user)
-):
-    user = crud_user.update_name(db=db, id=current_user.id, user_params=user_params)
-    return user
-
-
-@router.put("/password", response_model=schemas_user.UserInDB)
-def update_user(
-    user_params: schemas_user.UserUpdatePassword,
-    db: Session = Depends(deps.get_db),
-    current_user = Depends(deps.get_current_user)
-):
-    user = crud_user.update_password(db=db, id=current_user.id, user_params=user_params)
-    return user
-
-```
-
-让我们分解一下：
-
-我们在字典列表中创建了一些示例配方数据。目前，这是基本的 和最小，但符合我们的学习目的。在本教程系列的后面部分，我们将展开 此数据集并将其存储在数据库中。
-
-我们创建了一个新的端点。这里的大括号表示 参数值，需要与端点函数采用的参数之一匹配。
-
-该函数定义新终结点的逻辑。函数的类型提示 FastAPI 使用与 URL 路径参数匹配的参数来执行自动验证和转换。 我们稍后会看看这个实际操作。
-我们模拟通过 ID 从数据库中按 ID 获取数据，并使用 ID 条件检查进行简单的列表推导。 然后，数据被序列化，并由 FastAPI 作为 JSON 返回。
-
-之后，导航到`localhost:8001/docs`
+您发现比起前一节，此时多出了一个带参数路由的API。
 
 尝试使用终结点：
 
-- 通过单击展开 PUT 端点
+- 通过单击展开 GET 端点
 - 点击“试用”按钮
-- 输入值“1”作为todo_id
+- 输入值“1”作为recipe_id
 - 按下大的“执行”按钮
 - 按出现的较小的“执行”按钮
 
-![](./img/U2.png)
+![](img/U2.png)
 
+试试其他参数得到的反应叭~
+:::
+
+:::tip 基本类型提示问题
+
+让我们添加一个 print 语句来进一步了解端点中发生的情况：
+
+```python
+@api_router.get("/recipe/{recipe_id}", status_code=200)
+def fetch_recipe(*, recipe_id: int) -> dict:
+    """
+    Fetch a single recipe by ID
+    """
+    print(type(recipe_id))  # ADDED
+
+    result = [recipe for recipe in RECIPES if recipe["id"] == recipe_id]
+    if result:
+        return result[0]
+```
+
+现在，当您试用端点时，您将在终端中看到：
+
+![](img/U3.png)
+
+现在将类型提示更改为字符串：
+
+```python
+def fetch_recipe(*, recipe_id: str) -> dict:
+# skipping...
+```
+
+现在，在终端中，当您调用端点时，您将看到正在打印的字符串。
+
+这是因为 FastAPI 根据函数参数类型提示强制输入参数类型。 这是防止输入错误的便捷方法。 您会注意到，将recipe_id更改为字符串后，您将不再获得对 API 调用的响应。
+
+请思考为什么会有这样的结果。
+:::
+
+:::warning 答案
+由于 是字符串，因此列表推导式中的匹配项不再与整数 ID 匹配 字典列表中的值。这是一个非常简单的例子，说明 FastAPI 如何与类型提示集成 可以防止许多输入错误，而无需我们在代码中编写额外的检查（更少的代码意味着更少的错误）。`recipe_id==RECIPES`
+:::
+
+我们只是触及了 FastAPI 如何使用类型提示的表面，在接下来的几个中将对此进行更多介绍教程的部分内容。
