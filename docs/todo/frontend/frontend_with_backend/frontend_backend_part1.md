@@ -1,8 +1,8 @@
 ---
-sidebar_position: 10
+sidebar_position: 1
 ---
 
-# 1
+# fetch api
 
 目前我们已经做完纯前端的todolist，现在需要将后端链接起来，从后端得到数据，这就需要`fetch`
 
@@ -50,29 +50,66 @@ fetch('https://api.example.com/data')
 
 在vscode中启动后端服务器，浏览器中输入[localhost:8000/docs](http://localhost:8000/docs)，即可看到我们的api文档。
 
-![](img/10_1.png)
+![](img/1_1.png)
 
 点开`GET`,点击Try it out
 
-![](img/10_2.png)
+![](img/1_2.png)
 
 点击`Execute`
 
-![](img/10_3.png)
+![](img/1_3.png)
 
 可以看到其`Responses`
 
-![](img/10_5.png)
+![](img/1_5.png)
 
 红色的部分是我们发出的api请求
 
-紫色的部分是我们收到的回应
 
 ```bash
 curl -X 'GET' \
   'http://localhost:8000/api/todos/' \
   -H 'accept: application/json'
 ```
+
+将其变成fetch
+
+```jsx
+fetch("http://localhost:8000/todos/")
+```
+
+紫色的部分是我们收到的回应
+
+用fetch对其进行处理
+
+```jsx
+    fetch("http://localhost:8000/api/todos/")
+      .then((response) => response.json())
+      .then((data) => {
+        const todoArray = data.map((item) => ({
+          task: item.content,
+          id: item.id,
+          completed: item.is_done,
+        }));
+        dispatch(setTodoList(todoArray));
+        console.log(todoArray);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+```
+
+这段代码使用了 Fetch API 来从 `http://localhost:8000/api/todos/` 发起一个 GET 请求，并处理返回的 JSON 数据。
+
+代码的执行步骤如下：
+
+1. 使用 `fetch` 函数发起一个 GET 请求到 `http://localhost:8000/api/todos/`。
+2. 在第一个 `then` 方法中，使用 `response.json()` 方法将响应数据解析为 JSON 格式。
+3. 在第二个 `then` 方法中，使用 `data.map()` 方法遍历解析后的数据数组，并为每个数组元素创建一个新的对象。在这里，我们为每个待办事项项创建一个包含 `task`、`id` 和 `completed` 属性的对象。
+4. 调用 `dispatch(setTodoList(todoArray))`，将提取的 `todoArray` 数组传递给 `setTodoList` 动作创建函数（假设这是 Redux 中的一个动作）。
+5. 使用 `console.log` 打印提取的 `todoArray`。
+6. 如果发生错误，使用 `catch` 方法捕获错误并输出到控制台。
 
 
 
