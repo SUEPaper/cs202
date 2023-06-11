@@ -74,6 +74,8 @@ return {"results": RECIPES[:max_results]}  # 6
 按下按钮（只是通过引擎盖下的卷曲发出请求）后，您 可以向下滚动以查看来自 FastAPI 的响应：`executeGET`
 
 请注意，只返回了两个鸡肉食谱。使用关键字重试以查看 “花椰菜豆腐咖喱”食谱回归。然后尝试调整参数。`cauliflowermax_results`
+
+尝试用更多的关键词测试查询参数API叭~
 :::
 
 在本教程的下一部分中，我们将介绍使用 Pydantic 模型进行更高级的终结点输入和输出验证， 以及处理 POST 端点和请求正文数据。
