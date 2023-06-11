@@ -124,3 +124,7 @@ sidebar_position: 6
 ![](img/7_7.png)
 
 比上一版好看些
+
+## 总结
+
+通过创造一个`sortTodoList`数组对todolist进行筛选，并使用`sortTodoList.map()`函数，为每一个单独的todolist创造一个`<div>`,再对其添加两个按钮及css样式
