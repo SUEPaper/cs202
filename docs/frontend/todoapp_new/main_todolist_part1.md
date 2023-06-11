@@ -36,11 +36,12 @@ import ToDoList from "./components/ToDoList";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setTodoList,
-  updateTodo,
-  sortTodo,
-  toggleCompleted,
-} from "../ToDoSlice";
+    setTodoList,
+    addTodo,
+    updateTodo,
+    sortTodo,
+    toggleCompleted,
+  } from "../ToDoSlice";
 import { TiPencil } from "react-icons/ti";
 import { BsTrash } from "react-icons/bs";
 import empty from "../assets/empty.jpg";
@@ -69,11 +70,12 @@ export default ToDoList;
 ```jsx
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setTodoList,
-  updateTodo,
-  sortTodo,
-  toggleCompleted,
-} from "../ToDoSlice";
+    setTodoList,
+    addTodo,
+    updateTodo,
+    sortTodo,
+    toggleCompleted,
+  } from "../ToDoSlice";
 import { TiPencil } from "react-icons/ti";
 import { BsTrash } from "react-icons/bs";
 import empty from "../assets/empty.jpg";
