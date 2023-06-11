@@ -23,6 +23,8 @@ sidebar_position: 0
 6. 如何科学提问：https://ysyx.oscc.cc/docs/prestudy/0.1.html
 7. 什么样的问题我不想回答：https://zhuanlan.zhihu.com/p/381820481
 8. 提问模版：https://ysyx.oscc.cc/docs/misc/ask.html
+9. “大学除了专业知识，还应该学些什么？” 南京大学《SICP》课堂李樾老师的絮絮叨叨：https://www.bilibili.com/video/BV1uR4y167pA/
+10. 读完《上海交通大学生存手册》立志篇：https://survivesjtu.gitbook.io/survivesjtumanual/
 
 :::caution
 课程所有实验需严格准守学术诚信原则，如果不能遵守学术诚信原则，作为一个成年人你应该感到 Shame（[什么是 Shame?](https://en.wikipedia.org/wiki/Shame)）。
@@ -60,6 +62,56 @@ graph
 **请仔细阅读：Nodejs、Python、git、MySQL、VS Code 的安装教程，并安装对应的环境。**
 
 :::
+
+### 快速入门视频教程推荐
+
+#### 一小时 Git 教程
+
+<iframe src="//player.bilibili.com/player.html?aid=528356813&bvid=BV1HM411377j&cid=1121354061&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+视频链接：https://www.bilibili.com/video/BV1HM411377j
+
+#### 为初学者准备的：HTML 速成
+
+<iframe src="//player.bilibili.com/player.html?aid=28878158&bvid=BV1vs411M7aT&cid=50057072&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+视频链接：https://www.bilibili.com/video/BV1vs411M7aT
+
+#### 为初学者准备的：CSS 速成
+
+<iframe src="//player.bilibili.com/player.html?aid=29469349&bvid=BV1bW411R7hg&cid=51235718&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+视频链接：https://www.bilibili.com/video/BV1bW411R7hg
+
+#### 为初学者准备的：JavaScript 速成
+
+<iframe src="//player.bilibili.com/player.html?aid=37254160&bvid=BV1Jt411D7j6&cid=65472017&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+视频链接：https://www.bilibili.com/video/BV1bW411R7hg
+
+#### 完整的现代 React 教程
+
+<iframe src="//player.bilibili.com/player.html?aid=560709137&bvid=BV1Me4y1h7bQ&cid=837645211&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+视频链接：https://www.bilibili.com/video/BV1Me4y1h7bQ
+
+#### 3 小时快速入门 Python
+
+<iframe src="//player.bilibili.com/player.html?aid=976148468&bvid=BV1944y1x7SW&cid=429328810&page=2&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+视频链接：https://www.bilibili.com/video/BV1944y1x7SW?p=2
+
+#### 1 小时速成 MySQL
+
+<iframe src="//player.bilibili.com/player.html?aid=252537014&bvid=BV1qY411H7SR&cid=466393122&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+视频链接：https://www.bilibili.com/video/BV1qY411H7SR
+
+#### 从 0 到 1 学习 FastAPI 框架的所有知识点
+
+<iframe src="//player.bilibili.com/player.html?aid=501770841&bvid=BV1iN411X72b&cid=302128826&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+视频链接：https://www.bilibili.com/video/BV1iN411X72b
 
 ## 关于遇到问题的搜索
 

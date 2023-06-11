@@ -111,6 +111,12 @@ const config = {
           {
             type: "docSidebar",
             position: "left",
+            sidebarId: "todoSidebar",
+            label: "Todo应用开发",
+          },
+          {
+            type: "docSidebar",
+            position: "left",
             sidebarId: "projectSidebar",
             label: "项目实战(待开发)",
           },
