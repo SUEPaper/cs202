@@ -28,6 +28,37 @@ sidebar_position: 0
 课程所有实验需严格准守学术诚信原则，如果不能遵守学术诚信原则，作为一个成年人你应该感到 Shame（[什么是 Shame?](https://en.wikipedia.org/wiki/Shame)）。
 :::
 
+## 现代 Web Application 开发学习路径
+
+:::tip
+
+本课程采用的 Web 前后端开发的技术栈为：`React.js + Tailwind CSS + FastAPI + MySQL` 。
+使用 git 进行代码版本管理，GitHub 为代码远程仓库，Docker 进行应用部署。
+
+:::
+
+<div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
+
+```mermaid
+graph
+    A[HTML] --> B[CSS]
+    B --> C[JavaScript]
+    C --> D[React.js]
+    D --> E[Tailwind CSS]
+    E --> F[Python]
+    F --> G[MySQL]
+    G --> H[FastAPI]
+    H --> I[Todo List Web应用开发]
+```
+
+</div>
+
+:::info
+
+**请仔细阅读：Nodejs、Python、git、Mysql、VS Code 的安装教程，并安装对应的环境。**
+
+:::
+
 ## 关于遇到问题的搜索
 
 我们想通过必读材料的阅读，你应该知道搜索的重要性了。你会发现你不太容易搜索到相关的中文资料，所以你需要适应查阅英文资料。

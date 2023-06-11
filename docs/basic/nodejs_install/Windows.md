@@ -3,7 +3,7 @@ id: Windows
 sidebar_position: 1
 ---
 
-# Windows
+# Windows 安装
 
 ## 下载
 

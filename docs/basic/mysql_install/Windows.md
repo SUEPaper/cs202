@@ -3,7 +3,7 @@ id: Windows
 sidebar_position: 1
 ---
 
-# Windows
+# Windows 安装
 
 ## 下载 MySQL 安装程序
 
@@ -92,9 +92,11 @@ Connectivity：可以控制客户端如何连接到 MySQL 数据库
 在 Accounts and Roles 界面上，您可以指定 MySQL 的 root 帐户密码。MySQL root 帐户是默认的 sysadmin 帐户，为了安全，一般要禁用它。
 
 :::danger MySQL 密码设置推荐
-**建议同学们把自己的 root 密码使用默认的"passward"！！！**
+
+**建议同学们把自己的 root 密码设置为：`password`**
 
 _使用其他密码的出现问题我们概不负责_
+
 :::
 
 ![13](./img/13.png)
