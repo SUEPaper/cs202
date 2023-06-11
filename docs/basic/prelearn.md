@@ -34,6 +34,8 @@ sidebar_position: 0
 
 本课程采用的 Web 前后端开发的技术栈为：`React.js + Tailwind CSS + FastAPI + MySQL` 。
 使用 git 进行代码版本管理，GitHub 为代码远程仓库，Docker 进行应用部署。
+(受限于课程实践和课改内容为完全准备好，本学期课程不教授 git 代码版本管理和 docker 进行
+应用部署的内容，感兴趣的同学可以自行学习相关内容。)
 
 :::
 
@@ -55,7 +57,7 @@ graph
 
 :::info
 
-**请仔细阅读：Nodejs、Python、git、Mysql、VS Code 的安装教程，并安装对应的环境。**
+**请仔细阅读：Nodejs、Python、git、MySQL、VS Code 的安装教程，并安装对应的环境。**
 
 :::
 
