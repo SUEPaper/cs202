@@ -43,3 +43,4 @@ onClick={() => handleDeleteToDo(todo.id)}
 ## 总结
 
 通过创建`handleDeleteToDo`函数，删除对应id的todolist，并调用 `dispatch` 函数触发 `setTodoList` action，将新的 `updatedToDoList` 数组作为 payload 传递给 action，更新状态管理中的待办事项列表。当点击按钮时`onClick={() => handleDeleteToDo(todo.id)}`，触发`handleDeleteToDo`函数，从待办事项列表中删除该项，并更新状态管理和本地存储中的数据。
+
