@@ -3,23 +3,31 @@ id: MacOS
 sidebar_position: 3
 ---
 
-# MacOS
+# MacOS 安装
 
-在 MacOS 上有两种方式安装 MySQL 服务器：通过 brew 安装和通过安装包安装。
+:::caution
 
-## 通过 brew 安装 MySQL
+_非常重要，请仔细阅读完本文以后再进行相关操作。（因未仔细阅读完本文，出现任何错误后果自负， 逃～～～逃～～～逃_
+
+:::
 
 在 MacOS 上，我们可以通过 brew 很容易地安装 MySQL。
 
+:::note
+
+Homebrew 是啥？请看[Mac 必备神器 Homebrew](https://zhuanlan.zhihu.com/p/59805070)
+
+:::
+
 ### 安装 MySQL
 
-```pyhton
+```bash
 brew install mysql
 ```
 
 ### 启动 MySQL 服务器
 
-```pyhton
+```bash
 brew services start mysql
 ```
 
@@ -27,13 +35,23 @@ brew services start mysql
 
 我们需要运行以下脚本配置 MySQL 服务器的安全性：
 
-```python
+```bash
 mysql_secure_installation
 ```
 
-在这个过程中，你可以设置 root 的密码，配置一些选项以增强 MySQL 服务器的安全性。你会看到如下类似的输出：
+在这个过程中，你可以设置 root 的密码，配置一些选项以增强 MySQL 服务器的安全性。
 
-```python
+:::danger MySQL 密码设置推荐
+
+**建议同学们把自己的 root 密码设置为：`password`**
+
+_使用其他密码的出现问题我们概不负责_
+
+:::
+
+你会看到如下类似的输出：
+
+```bash
 Securing the MySQL server deployment.
 
 Connecting to MySQL using a blank password.
@@ -104,36 +122,8 @@ All done!
 
 brew 提供了实用的命令可以管理 MySQL 服务器。
 
-* ```brew services start mysql```: 启动 MySQL 服务器，并设置为自启动。
-* ```brew services stop mysql```: 停止 MySQL 服务器，并设置为不自启动。
-* ```brew services run mysql```: 只启动 MySQL 服务器。
-* ```mysql.server start```: 启动 MySQL 服务器。
-* ```mysql.server stop```: 停止 MySQL 服务器。
-
-## 通过安装包安装 MySQL
-
-通过安装包安装 MySQL 的过程有友好的 UI 界面，更加的方便快捷。
-
-### 下载安装包
-
-请点击[这里](https://dev.mysql.com/downloads/mysql/)去下载 MySQL 社区版的 dmg 文件，它包含了 MySQL 的安装器。
-
-### 安装  MySQL
-
-下载安装包后，请按照以下步骤进行安装：
-
-1. 双击下载 dmg 文件。双击后，会看到 MySQL 安装器文件，比如： mysql-8.0.26-macos-10.13-x86_64.pkg。双击 MySQL 安装器文件。
-
-2. 在介绍页面，直接点击 “继续” 按钮。
-
-3. 在 “许可” 页面，直接点击 “继续” 按钮。
-
-4. 在 “安装类型” 页面，可以直接点击 “安装” 按钮，也可以先点击 “自定义” 按钮选择要安装的组件后再点击 “安装” 按钮。
-
-5. 在 “配置” 页面，密码加密方式选择 Use Strong Password Entryption。然后，输入 root 用户的密码。点击 “Finish” 按钮就完成安装了.
-
-### 管理 MySQL
-
-MySQL 偏好窗格会被默认安装。你可以在 系统偏好 窗口中找到它。MySQL 偏好窗格允许你启动、停止和配置 MySQL。
-
-![22](./img/22.png)
+- `brew services start mysql`: 启动 MySQL 服务器，并设置为自启动。
+- `brew services stop mysql`: 停止 MySQL 服务器，并设置为不自启动。
+- `brew services run mysql`: 只启动 MySQL 服务器。
+- `mysql.server start`: 启动 MySQL 服务器。
+- `mysql.server stop`: 停止 MySQL 服务器。

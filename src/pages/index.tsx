@@ -26,7 +26,9 @@ export default function Home(): JSX.Element {
       description="Description will go into a meta tag in <head />"
     >
       <HomepageHeader />
-      <main className="bg-slate-100">{/* <HomepageFeatures /> */}</main>
+      <main className="bg-slate-100">
+        <HomepageFeatures />
+      </main>
     </Layout>
   );
 }
