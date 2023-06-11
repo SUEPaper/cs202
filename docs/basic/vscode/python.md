@@ -33,7 +33,7 @@ VS Code 是由微软推出的一款轻量级但功能强大的源代码编辑器
 
 通过前面的教程，你应该在你电脑安装好了 Python 环境，接下来就需要你搭建一个 Python 开发环境。首先第一步就是安装 VS Code。
 
-VS Code 的下载地址：https://code.visualstudio.com。 鉴于你已经开始进入编程的世界，并且已经读了我们[预学习](../../../basic/prelearn.md)阶段的内容，我们相信你可以通过自己的自我探索在你的电脑上成功安装 VS Code。我们在此不提供保姆级的教程。
+VS Code 的下载地址：https://code.visualstudio.com。 鉴于你已经开始进入编程的世界，并且已经读了我们[预学习](../prelearn.md)阶段的内容，我们相信你可以通过自己的自我探索在你的电脑上成功安装 VS Code。我们在此不提供保姆级的教程。
 
 ## 安装 Python 拓展
 
@@ -128,7 +128,7 @@ VS Code 中运行 hello.py 很简单，只需单击编辑器右上角的 `Run Py
 
 ## Debug 代码
 
-建议你开始对 Python 语法有了一些初步认知以后，学习一下 VS Code 里面 Debug Python 代码。一个合格的程序员应该知道如何 Debug 自己写的代码，课程网站提供[用 VS Code Debug Python 代码的教程](../debug.md)
+建议你开始对 Python 语法有了一些初步认知以后，学习一下 VS Code 里面 Debug Python 代码。一个合格的程序员应该知道如何 Debug 自己写的代码。
 
 ## 推荐观看视频
 
