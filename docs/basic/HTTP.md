@@ -6,7 +6,7 @@ sidebar_position: 2
 # HTTP 和 HTTPS
 
 本文复制于：
-  1. https://www.cloudflare.com/zh-cn/learning/ssl/why-is-http-not-secure/
+  1. [HTTP 与 HTTPS：有什么区别？](https://www.cloudflare.com/zh-cn/learning/ssl/why-is-http-not-secure/)
 
 HTTPS 是支持加密和验证的 HTTP。两种协议的唯一区别是HTTPS 使用 TLS (SSL) 来加密普通的 HTTP 请求和响应，并对这些请求和响应进行数字签名。因此，HTTPS 比 HTTP 安全得多。使用 HTTP 的网站的 URL 中带有 http://，而使用 HTTPS 的网站则带有 https://。
 
@@ -93,7 +93,7 @@ TLS 使用一种称为[公钥加密](https://www.cloudflare.com/zh-cn/learning/s
 - [在途攻击](https://www.cloudflare.com/zh-cn/learning/security/threats/on-path-attack/)
 - [DNS 劫持](https://www.cloudflare.com/zh-cn/learning/dns/dns-security/)
 - [BGP 劫持](https://www.cloudflare.com/zh-cn/learning/security/glossary/bgp-hijacking/)
-- [域欺骗](cloudflare.com/zh-cn/learning/ssl/what-is-domain-spoofing/)
+- [域欺骗](https://www.cloudflare.com/zh-cn/learning/ssl/what-is-domain-spoofing/)
   
 此外，SSL 证书由签发它的证书颁发机构进行数字签名。这可以确认服务器就是它声称的身份。
 
