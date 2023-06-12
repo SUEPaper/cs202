@@ -204,19 +204,12 @@ E:.
 └─backend
     │  main.py
     │
-    ├─api
-    │  │  api.py
-    │  │  todos.py
-    │  │  users.py
-    │  │  __init__.py
-    │  │
-    │  └─__pycache__
-    │          api.cpython-311.pyc
-    │          todos.cpython-311.pyc
-    │          users.cpython-311.pyc
-    │          __init__.cpython-311.pyc
-    │
-    └─__pycache__
-            main.cpython-311.pyc
+    └─api
+      │api.py
+      │  todos.py
+      │  users.py
+      └─ __init__.py
+      
+
 
 ```
