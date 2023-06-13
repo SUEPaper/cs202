@@ -1,6 +1,6 @@
 ---
 id: "jwt"
-sidebar_position: 11
+sidebar_position: 10
 ---
 
 # 通过JSON Web令牌（JWT）进行身份验证
@@ -487,3 +487,77 @@ def get_current_user(
 
 至此，我们后端的学习内容已经结束。
 
+本节文件目录图：
+
+```bash
+
+E:.
+│  .gitignore
+│  main.py
+│  package-lock.json
+│  requirements.txt
+│  __init__.py
+│  
+├─.vscode
+│      settings.json
+│
+├─api
+│      api.py
+│      auth.py
+│      deps.py
+│      todos.py
+│      users.py
+│      __init__.py
+│
+├─core
+│      security.py
+│      __init__.py
+│
+├─crud
+│      base.py
+│      todo.py
+│      user.py
+│      __init__.py
+│
+├─db
+│  │  alembic.ini
+│  │  config.py
+│  │  __init__.py
+│  │
+│  ├─alembic
+│  │  │  env.py
+│  │  │  README
+│  │  │  script.py.mako
+│  │  │
+│  │  └─versions
+│  └─migrations
+│      │  alembic.ini
+│      │  env.py
+│      │  README
+│      │  script.py.mako
+│      │
+│      ├─versions
+│      │  │  627ad3ae9268_create_user_table.py
+│      │  │  ba7950cbec98_add_user_id_in_todo_table.py
+│      │  │  bb9dd166b2ca_create_todo_table.py
+│      │  │
+│      │  └─__pycache__
+│      │          627ad3ae9268_create_user_table.cpython-311.pyc
+│      │          ba7950cbec98_add_user_id_in_todo_table.cpython-311.pyc
+│      │          bb9dd166b2ca_create_todo_table.cpython-311.pyc
+│      │
+│      └─__pycache__
+│              env.cpython-311.pyc
+│
+├─models
+│      todo.py
+│      user.py
+│      __init__.py
+│
+└─schemas
+        todo.py
+        token.py
+        user.py
+        __init__.py
+
+```
