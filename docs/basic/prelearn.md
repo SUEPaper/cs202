@@ -63,6 +63,24 @@ graph
 
 :::
 
+### 技术栈的官方文档
+
+:::tips
+
+**官方文档是最好的学习资料，本课程网站受限多种原因，可能部分教程未能及时更新到最新版本，如有问题请以官方文档为准**
+
+:::
+
+- HTML：https://developer.mozilla.org/en-US/docs/Web/HTML
+- CSS：https://developer.mozilla.org/en-US/docs/Web/CSS
+- JavaScript：https://developer.mozilla.org/en-US/docs/Web/JavaScript
+- React.js：https://react.dev/learn
+- Tailwind CSS：https://tailwindcss.com/docs/utility-first
+- Python：https://docs.python.org/3.10/tutorial/index.html
+- FastAPI：https://fastapi.tiangolo.com/lo/
+- Alembic：https://alembic.sqlalchemy.org/en/latest/tutorial.html
+- SQLAlchemy：https://docs.sqlalchemy.org/en/14/orm/tutorial.html
+
 ### 快速入门视频教程推荐
 
 #### 一小时 Git 教程
