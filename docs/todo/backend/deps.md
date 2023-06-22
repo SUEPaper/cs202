@@ -1,6 +1,6 @@
 ---
 id: "deps"
-sidebar_position: 9
+sidebar_position: 10
 ---
 
 # 依赖注入和 FastAPI 依赖

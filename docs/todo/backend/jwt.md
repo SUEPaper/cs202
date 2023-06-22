@@ -1,6 +1,6 @@
 ---
 id: "jwt"
-sidebar_position: 10
+sidebar_position: 8
 ---
 
 # 通过JSON Web令牌（JWT）进行身份验证
