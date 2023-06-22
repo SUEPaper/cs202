@@ -75,7 +75,7 @@ alembic init alembic
 2. 编写迁移脚本:
 
 ```bash
-alembic revision --autogenerate -m "add user table"
+alembic revision -m "creat a table"
 ```
 
 3. 将脚本升级至最新版本:
@@ -154,7 +154,7 @@ sqlalchemy.url = sqlite:///database.db
 4. 定义模型后,生成首个迁移脚本:
 
 ```bash
-alembic revision --autogenerate -m "first_revision"
+alembic revision -m "first_revision"
 ```
 
 这会创建一个版本文件 `versions/xxxxxxx_first_revision.py`。
