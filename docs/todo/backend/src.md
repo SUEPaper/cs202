@@ -1,60 +1,7 @@
 ---
-id: "SRC查询参数"
+id: SRC
 sidebar_position: 4
 ---
-
-:::tip 源代码改动
-
-为了不污染后续所要实现功能的路由对象，我们将上一节中的测试API和数据字典移至`main.py`（default对象）中，顺便更改了定义的函数名。
-
-只需要改变所属对象的名称即可
-
-```python
-main.py
-
-import uvicorn
-from fastapi import FastAPI
-from api.api import api_router
-
-app = FastAPI()
-app.include_router(api_router, prefix="/api")
-
-# 移动的数据字典
-RECIPES = [
-    {
-        "id": 1,
-        "title": "Apple Pie",
-        "ingredients": ["apple", "pie"],
-        "instructions": "Boil apples",
-    },
-    {
-        "id": 2,
-        "title": "Apple Pie",
-        "ingredients": ["apple", "salad"],
-        "instructions": "Raw apples",
-    },
-]
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-# 更改对象名字为app,更改定义函数名为app_match
-@app.get("/test/{id}", status_code=200)
-def api_match(*, id: int) -> dict:
-    # print(type(id))  # added
-    result = [recipe for recipe in RECIPES if recipe["id"] == id]
-    if result:
-        return result[0]
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", reload=True, host="localhost", port=8000)
-
-```
-
-:::
 
 # SRC查询参数
 
@@ -67,27 +14,12 @@ main.py
 
 import uvicorn
 from fastapi import FastAPI
-from api.api import api_router
 # 导入新的需要使用的类
+from recipe_data import RECIPES
 from typing import Optional
 
 app = FastAPI()
-app.include_router(api_router, prefix="/api")
 
-RECIPES = [
-    {
-        "id": 1,
-        "title": "Apple Pie",
-        "ingredients": ["apple", "pie"],
-        "instructions": "Boil apples",
-    },
-    {
-        "id": 2,
-        "title": "Apple Salad",
-        "ingredients": ["apple", "salad"],
-        "instructions": "Raw apples",
-    },
-]
 
 
 @app.get("/")
@@ -137,27 +69,88 @@ if __name__ == "__main__":
 尝试用更多的关键词测试查询参数API叭~
 :::
 
-在本教程的下一部分中，我们将介绍使用 Pydantic 模型进行更高级的终结点输入和输出验证， 以及处理 POST 端点和请求正文数据。
+# 实现todolist的增删改查功能
+增加`./backend/api/todos.py`和`./backend/api/api.py`
+:::note
+```python
 
-本节课程的文件路径图
+todos.py
 
-```bash
-E:.
-│  .gitignore
-│  LICENSE
-│  README.md
-│
-├─.vscode
-│      settings.json
-│
-└─backend
-    │  main.py
-    │
-    └─api
-       │  api.py
-       │  todos.py
-       │  users.py
-       └─  __init__.py
-      
+from fastapi import APIRouter
+
+router = APIRouter()
+
+
+@router.get("/")
+def get_all_todos():
+    return {"get": "todos"}
+
+
+@router.post("/")
+def create_todo():
+    return {"post": "todos"}
+
+
+@router.put("/{todo_id}")
+def update_todo():
+    pass
+
+
+@router.delete("/{todo_id}")
+def delete_todo():
+    pass
+```
+
+```python
+api.py
+
+from fastapi import APIRouter
+from api.todos import router as todos_router
+
+api_router = APIRouter()
+api_router.include_router(todos_router, prefix="/todos", tags=["todos"])
 
 ```
+
+```python
+main.py
+
+import uvicorn
+from fastapi import FastAPI
+from api.api import api_router
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+app.include_router(api_router, prefix="/api")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", reload=True, host="localhost", port=8000)
+
+
+```
+
+我们之所以对文件进行拆分，是因为：所有代码放到一个文件里有着存储维护等问题，为了面向对象编程，我们采用大量的封装保持代码整洁。
+
+跨域请求常见的解决方案之一是使用中间件（`middleware`）来处理。中间件是一个在请求到达服务器之前或响应发送给客户端之前对请求或响应进行处理的组件。
+
+`include_router` 是 FastAPI 框架中用于将路由器（router）包含在应用程序中的方法。它允许你将路由器中定义的路由和处理函数与 FastAPI 应用程序进行关联，以便这些路由能够被应用程序处理。
+
+通常，你会将路由器定义在单独的模块中，并使用 `include_router` 方法将其包含在主应用程序中。这样可以将应用程序的路由逻辑进行模块化，使代码更加清晰和易于维护。
+
+:::
+
+下一节内容我们会学习数据库迁移。
