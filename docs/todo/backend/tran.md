@@ -1,290 +1,106 @@
 ---
 id: tran
-sidebar_position: 7
+sidebar_position: 5
 ---
 
 
-# 增加中级难度所需要的代码
+# 数据迁移
 
-在之后的FastAPI教程中，我们先不要用到更多相关fastapi操作，比如model和crud
+:::tip
 
-这是中级阶段的第一篇文章。我们将在这篇文章中涵盖相当多的内容，因为有很多部分都是一起工作的，因此如果孤立地介绍，会更加令人困惑（因为如果没有所有的部分，你就不能轻易地在本地旋转和运行它）。
+使用 Python 和 Alembic 而不是直接使用 SQL 语句有几个主要的原因：
 
-在`./backend/`路径创建`models`和`crud`文件夹。
+1. 方便版本控制： Alembic 是一个数据库迁移工具，它提供了一种管理数据库架构变更的方式。通过使用 Alembic，你可以将数据库变更操作封装在 Python 脚本中，并使用版本控制系统（如 Git）进行跟踪和管理。这使得团队协作和版本控制变得更加容易，可以轻松地跟踪和回滚数据库的变更。
 
-`models`文件夹中创建`todo.py`,`user.py`,`__init__.py`文件，代表单个user的单个todo数据模型
+2. 易于维护： 使用 Python 和 Alembic 可以提高代码的可读性和可维护性。你可以使用 Python 的面向对象编程和强大的编程能力来定义数据库模型和变更操作，以及编写复杂的数据库迁移脚本。这种编程式的方式使得代码更具可读性和可维护性，便于理解和修改。
 
-:::note 代码
+3. 数据库无关性： Alembic 提供了一种与数据库无关的方法来管理数据库架构变更。它使用 SQLAlchemy 作为数据库访问工具，可以与多种关系型数据库（如 MySQL、PostgreSQL、SQLite 等）进行交互。这意味着你可以在不同的数据库上运行相同的迁移脚本，而不需要修改 SQL 语句。
 
-```python
-todo.py
+4. 自动化和错误检测： Alembic 提供了一些自动化功能和错误检测机制，可以帮助你更轻松地管理数据库架构变更。例如，它可以自动检测数据库中已经应用的迁移脚本，以避免重复应用；还可以检测到迁移脚本中的错误，例如无效的 SQL 语句或数据类型不匹配等。
 
-# 导入datetime类和sqlalchemy包，方面用于后续的数据库操作
-from datetime import datetime
-from sqlalchemy import TIMESTAMP, Boolean, Column, Integer, Text, ForeignKey
-
-# 定义Todo数据模型
-class Todo:
-    __tablename__ = "todos" # 表名
-
-    id = Column(Integer, primary_key=True, index=True) # 属性
-    is_done = Column(Boolean, default=False)
-    content = Column(Text, nullable=False)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    created_at = Column(
-        TIMESTAMP(timezone=True), nullable=False, default=datetime.utcnow
-    )
-    updated_at = Column(
-        TIMESTAMP(timezone=True),
-        nullable=False,
-        onupdate=datetime.utcnow,
-        default=datetime.utcnow,
-    )
-
-```
-
-```python
-user.py
-# 同上
-from datetime import datetime
-from sqlalchemy import TIMESTAMP, Column, Integer, String
-
-
-class User:
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(200), nullable=False)
-    email = Column(String(200), unique=True, index=True, nullable=False)
-    hashed_password = Column(String(200), nullable=False)
-    created_at = Column(
-        TIMESTAMP(timezone=True), nullable=False, default=datetime.utcnow
-    )
-    updated_at = Column(
-        TIMESTAMP(timezone=True),
-        nullable=False,
-        onupdate=datetime.utcnow,
-        default=datetime.utcnow,
-    )
-```
-
-`user.py`与`todo.py` 变更类似。
-
-```python
-__init__.py
-
-from models.todo import Todo
-from models.user import User
-```
-
-此处`__init__.py`必须加上上面两个语句，否则代码无法运行。
+总的来说，使用 Python 和 Alembic 可以提供更好的版本控制、易于维护的数据库架构管理方式，同时也具备数据库无关性和自动化的特性。这使得开发团队能够更高效地进行数据库开发和维护，并降低了维护成本和错误风险。
 :::
 
-`crud`文件夹中创建`todo.py`,`user.py`,`__init__.py`,用于定义数据操作的数据模型
+使用 Alembic 进行数据迁移,我们先在`./backend/`路径下创建db文件夹
 
-在下一节我们会详细编辑crud中的代码。
+然后在db文件夹下数据迁移，具体步骤如下：
 
-在`./backend/`路径，打开`main.py`,为了保证代码整洁，我们删除掉与需求分析无关功能的代码。
-
-:::note 代码
-
-```python
-main.py
-
-import uvicorn
-from fastapi import FastAPI
-from api.api import api_router
-
-
-app = FastAPI()
-app.include_router(api_router, prefix="/api")
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", reload=True, host="localhost", port=8000)
-
-```
-
-:::
-
-:::info 访问
-进入API管理界面：
-
-![](./img/T1.png)
-
-准备进入下一节。
-
-:::
-
-本节文件目录图：
+:::note
+1. 安装配置Alembic
 
 ```bash
-E:.
-│  .gitignore
-│  LICENSE
-│  README.md
-│
-├─.vscode
-│      settings.json
-│
-└─backend
-    │  main.py
-    │  __init__.py
-    │
-    ├─api
-    │  │  api.py
-    │  │  todos.py
-    │  │  users.py
-    │  └─  __init__.py
-    │
-    ├─crul
-    │      todo.py
-    │      user.py
-    │      __init__.py
-    │
-    ├─models
-    │      todo.py
-    │      user.py
-    │      __init__.py
-    │
-    └─schemas
-       │  todo.py
-       │  token.py
-       │  user.py
-       └─  __init__.py
- 
+pip install alembic
 ```
 
-##  Pydantic DB 模式和 CRUD 实用程序
+2. 初始化环境
 
-在crud文件夹中创建`todo.py`,`user.py`,`base.py`文件。
+```bash
+alembic init alembic
+```
 
-:::note 代码
+这一步需要保证终端路径在`./backend/db/`
+
+3. 创建和管理迁移脚本
+在`alembic.ini`文件中配置SQLalchemy引擎
+
+```ini
+[alembic]# 所选的SQL工具
+sqlalchemy.url = sqlite:///database.db 
+...
+
+```
+
+定义模型后创建首个迁移脚本
+
+```bash
+alembic revision -m "first_revision"
+
+```
+这会创建一个版本文件。
+
+我们要编写脚本文件，以todolist项目为例，我们需要创建两个表todos和users。
 
 ```python
-todo.py
-
-from fastapi.encoders import jsonable_encoder
-from sqlalchemy.orm import Session
-from crud.base import CRUDBase
-from models import Todo as ModelsTodo
-from typing import Any, Optional
-
-
-class CRUDTodo(CRUDBase):
-
-    def get_by_id_with_user_id(self, db:Session, id: Any, user_id: Any):
-        return db.query(self.model).filter(self.model.id == id).filter(self.model.user_id == user_id).first()
-
-    def get_all_by_user_id(self, db: Session, user_id: Any):
-         return db.query(self.model).filter(self.model.user_id == user_id).all()
-
-    def create(self, db: Session, user_id: Any, todo_params):
-        todo_data = jsonable_encoder(todo_params)
-        todo = self.model(**todo_data)
-        todo.user_id = user_id
-        db.add(todo)
-        db.commit()
-        db.refresh(todo)
-        return todo
-
-    def update(self, db: Session, id: Any, user_id: Any, todo_params):
-
-        todo = db.query(self.model).filter(self.model.id == id).filter(self.model.user_id == user_id).first()
-
-        todo_params_dict = todo_params.dict(exclude_unset=True)
-        for key, value in todo_params_dict.items():
-            setattr(todo, key, value)
-
-        db.commit()
-        db.refresh(todo)
-        return todo
+def upgrade() -> None:
+    op.create_table(
+        "users",
+        sa.Column("id", sa.Integer, primary_key=True, index=True),
+        sa.Column("name", sa.String(200), nullable=False),
+        sa.Column("email", sa.String(200), unique=True,
+                  index=True, nullable=False),
+        sa.Column("hashed_password", sa.String(200), nullable=False),
+        sa.Column("created_at", sa.TIMESTAMP, nullable=False),
+        sa.Column("updated_at", sa.TIMESTAMP, nullable=False)
+    )
 
 
-crud_todo = CRUDTodo(ModelsTodo)
-
+def downgrade() -> None:
+    op.drop_table("users")
 ```
 
-```python
-user.py
+需要在文件内进行一些编辑。
 
-from fastapi.encoders import jsonable_encoder
-from sqlalchemy.orm import Session
-from crud.base import CRUDBase
-from models import User as ModelsUser
+然后将脚本与数据库同步：
 
-
-class CRUDUser(CRUDBase):
-    def get_by_email(self, db: Session, email: str):
-        return db.query(self.model).filter(self.model.email == email).first()
-
-    def create(self, db: Session, user_params):
-        user = ModelsUser(
-            name=user_params.name,
-            email=user_params.email,
-            hashed_password=get_password_hash(user_params.password),
-        )
-        db.add(user)
-        db.commit()
-        db.refresh(user)
-        return user
-
-    def authenticate(self, db: Session, email, password):
-        user = self.get_by_email(db, email=email)
-        if not user:
-            return None
-        if not verify_password(password, user.hashed_password):
-            return None
-        return user
-
-    def update_name(self, db: Session, id, user_params):
-        user = self.get_by_id(db=db, id=id)
-        user.name = user_params.name
-        db.commit()
-        db.refresh(user)
-        return user
-
-    def update_password(self, db: Session, id, user_params):
-        user = self.get_by_id(db=db, id=id)
-        user.hashed_password = get_password_hash(user_params.password)
-        db.commit()
-        db.refresh(user)
-        return user
-
-
-crud_user = CRUDUser(ModelsUser)
-
+```bash
+alembic upgrade head
 ```
 
-```python
-base.py
+然后大家可以连接到自己的mysql数据库，看到自己创建的表啦
 
+以后每当模型有变更,重复第 4 步生成新脚本,第 5 步同步变更。
 
-from typing import Any, Optional
-from sqlalchemy.orm import Session
+如果需要回滚，使用：
 
-
-class CRUDBase:
-    def __init__(self, model) -> None:
-        self.model = model
-
-    def get_by_id(self, db: Session, id: Any):
-        return db.query(self.model).filter(self.model.id == id).first()
-
-    def get_all(self, db: Session):
-        return db.query(self.model).all()
-
-    def remove(self, db: Session, id: Any):
-        obj = db.query(self.model).get(id)
-        db.delete(obj)
-        db.commit()
-        return obj
-
+```bash
+alembic downgrade -1      # 回滚最后一次迁移 
+alembic downgrade 3ce5a9 # 回滚到特定版本号的迁移
 ```
 
-::;
+迁移部署到生产环境使用:
+
+```bash
+alembic upgrade <revision_id>   # 升级到指定 ID 的最新版本
+```
+
+:::

@@ -1,16 +1,9 @@
 ---
 id: orm
-sidebar_position: 8
+sidebar_position: 6
 ---
 
-
-# 使用SQLAlchemy和Alembic设置数据库
-
-在FastAPI教程的第7部分，我们将看看如何设置一个数据库*
-
-这是中级阶段的第一篇文章。我们将在这篇文章中涵盖相当多的内容，因为有很多部分都是一起工作的，因此如果孤立地介绍，会更加令人困惑（因为如果没有所有的部分，你就不能轻易地在本地旋转和运行它）。
-
-## 理论第一节--SQLAlchemy的快速介绍
+# SQLAlchemy的快速介绍
 
 SQLAlchemy是使用最广泛、质量最高的Python第三方库之一。它为应用程序开发者提供了在他们的Python代码中与关系数据库工作的简单方法。
 
@@ -24,7 +17,7 @@ SQLAlchemy由两个不同的组件组成：
 
 在本教程中，我们将使用这两个组件，尽管你可以调整方法不使用ORM。
 
-## 实用部分1--用SQLAlchemy设置数据库表
+# 实用部分1--用SQLAlchemy设置数据库表
 
 在本教程中，到目前为止，我们还不能在服务器重启后继续保存数据，因为我们所有的POST操作只是更新了内存中的数据结构。我们将通过引入一个关系型数据库来改变这种情况。
 
@@ -46,190 +39,9 @@ pip install SQLAlchemy
 
 ![](./img/O2.png)
 
-现在，让我们将注意力转向新目录。在`./backend/`路径下创建`db`文件夹。
-
-`db`中创建`alembic`和`migrations`文件夹，以及`config.py`和`__init__.py`文件。
-
-在新建的两个文件夹中分别创建`envy.py`文件
+现在，让我们将注意力转向新目录。在`./backend/db/`路径下创建`config.py`和`__init__.py`文件。
 
 :::note 代码
-
-```python
-./alembic/envy.py
-
-from logging.config import fileConfig
-
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
-from alembic import context
-
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
-config = context.config
-
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
-
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-target_metadata = None
-
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
-
-
-def run_migrations_offline() -> None:
-    """Run migrations in 'offline' mode.
-
-    This configures the context with just a URL
-    and not an Engine, though an Engine is acceptable
-    here as well.  By skipping the Engine creation
-    we don't even need a DBAPI to be available.
-
-    Calls to context.execute() here emit the given string to the
-    script output.
-
-    """
-    url = config.get_main_option("sqlalchemy.url")
-    context.configure(
-        url=url,
-        target_metadata=target_metadata,
-        literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
-    )
-
-    with context.begin_transaction():
-        context.run_migrations()
-
-
-def run_migrations_online() -> None:
-    """Run migrations in 'online' mode.
-
-    In this scenario we need to create an Engine
-    and associate a connection with the context.
-
-    """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
-
-    with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
-
-        with context.begin_transaction():
-            context.run_migrations()
-
-
-if context.is_offline_mode():
-    run_migrations_offline()
-else:
-    run_migrations_online()
-
-```
-
-```python
-./migrations/envy.py
-
-from logging.config import fileConfig
-
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-
-from alembic import context
-
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
-config = context.config
-
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
-
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
-target_metadata = None
-
-# other values from the config, defined by the needs of env.py,
-# can be acquired:
-# my_important_option = config.get_main_option("my_important_option")
-# ... etc.
-
-
-def run_migrations_offline() -> None:
-    """Run migrations in 'offline' mode.
-
-    This configures the context with just a URL
-    and not an Engine, though an Engine is acceptable
-    here as well.  By skipping the Engine creation
-    we don't even need a DBAPI to be available.
-
-    Calls to context.execute() here emit the given string to the
-    script output.
-
-    """
-    url = config.get_main_option("sqlalchemy.url")
-    context.configure(
-        url=url,
-        target_metadata=target_metadata,
-        literal_binds=True,
-        dialect_opts={"paramstyle": "named"},
-    )
-
-    with context.begin_transaction():
-        context.run_migrations()
-
-
-def run_migrations_online() -> None:
-    """Run migrations in 'online' mode.
-
-    In this scenario we need to create an Engine
-    and associate a connection with the context.
-
-    """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
-
-    with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
-
-        with context.begin_transaction():
-            context.run_migrations()
-
-
-if context.is_offline_mode():
-    run_migrations_offline()
-else:
-    run_migrations_online()
-
-```
-
-./alembic/envy.py和./migrations/envy.py包含了使用Alembic和SQLAlchemy运行数据库迁移所需的必要代码。这些文件中的代码设置了使用SQLAlchemy连接到数据库所需的必要配置，并提供了运行迁移所需的必要工具。config对象提供了对正在使用的.ini文件中的值的访问，target_metadata变量可以设置为数据库模型的元数据以支持“自动生成”。
-
-run_migrations_offline函数在“离线”模式下运行迁移，该模式仅使用URL而不是引擎来配置上下文。当不需要引擎时，使用此函数，并且对context.execute()的调用将将给定字符串发出到脚本输出。
-
-run_migrations_online函数在“在线”模式下运行迁移，该模式创建引擎并将连接与上下文关联。当需要引擎时，通过使用config.get_section和poolclass参数分别设置为config.config_ini_section, {}和pool.NullPool调用engine_from_config函数创建connectable变量。
-
-总的来说，这些文件包含了使用Alembic和SQLAlchemy运行数据库迁移所需的必要代码。 
-
 
 ```python
 config.py
@@ -251,6 +63,14 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 ```
+
+./alembic/envy.py包含了使用Alembic和SQLAlchemy运行数据库迁移所需的必要代码。这些文件中的代码设置了使用SQLAlchemy连接到数据库所需的必要配置，并提供了运行迁移所需的必要工具。`config`对象提供了对正在使用的`.ini`文件中的值的访问，target_metadata变量可以设置为数据库模型的元数据以支持“自动生成”。
+
+`run_migrations_offline`函数在“离线”模式下运行迁移，该模式仅使用URL而不是引擎来配置上下文。当不需要引擎时，使用此函数，并且对context.execute()的调用将将给定字符串发出到脚本输出。
+
+`run_migrations_online`函数在“在线”模式下运行迁移，该模式创建引擎并将连接与上下文关联。当需要引擎时，通过使用config.get_section和poolclass参数分别设置为config.config_ini_section, {}和pool.NullPool调用engine_from_config函数创建connectable变量。
+
+总的来说，这些文件包含了使用Alembic和SQLAlchemy运行数据库迁移所需的必要代码。
 
 :::
 
@@ -455,14 +275,166 @@ def delete_todo(
     return todo
 
 ```
+
 代码定义了待办事项API的路由，并使用crud_todo模块与数据库交互。
 
 get_all_todos函数检索当前用户的所有待办事项，而create_todo函数为当前用户创建新的待办事项。update_todo函数更新当前用户的现有待办事项，而delete_todo函数删除当前用户的现有待办事项。
 
 所有这些函数都使用deps模块获取当前用户和数据库会话。schemas_todo模块定义了待办事项API的输入和输出模式。
-
-增加一个deps.py
-
-文件我们下节内容会用到
 :::
 
+然后在`./backend/crud/`文件夹中创建base.py,todo.py,user.py实现我们的crud操作：
+
+:::note
+
+```python
+base.py
+
+from typing import Any, Optional
+from sqlalchemy.orm import Session
+
+
+class CRUDBase:
+    def __init__(self, model) -> None:
+        self.model = model
+
+    def get_by_id(self, db: Session, id: Any):
+        return db.query(self.model).filter(self.model.id == id).first()
+
+    def get_all(self, db: Session):
+        return db.query(self.model).all()
+
+    def remove(self, db: Session, id: Any):
+        obj = db.query(self.model).get(id)
+        db.delete(obj)
+        db.commit()
+        return obj
+
+```
+
+```python
+todo.py
+
+from fastapi.encoders import jsonable_encoder
+from sqlalchemy.orm import Session
+from crud.base import CRUDBase
+from models import Todo as ModelsTodo
+from typing import Any, Optional
+
+
+class CRUDTodo(CRUDBase):
+    def get_by_id_with_user_id(self, db: Session, id: Any, user_id: Any):
+        return (
+            db.query(self.model)
+            .filter(self.model.id == id)
+            .filter(self.model.user_id == user_id)
+            .first()
+        )
+
+    def get_all_by_user_id(self, db: Session, user_id: Any):
+        return db.query(self.model).filter(self.model.user_id == user_id).all()
+
+    def create(self, db: Session, user_id: Any, todo_params):
+        todo_data = jsonable_encoder(todo_params)
+        todo = self.model(**todo_data)
+        todo.user_id = user_id
+        db.add(todo)
+        db.commit()
+        db.refresh(todo)
+        return todo
+
+    def update(self, db: Session, id: Any, user_id: Any, todo_params):
+        todo = (
+            db.query(self.model)
+            .filter(self.model.id == id)
+            .filter(self.model.user_id == user_id)
+            .first()
+        )
+
+        todo_params_dict = todo_params.dict(exclude_unset=True)
+        for key, value in todo_params_dict.items():
+            setattr(todo, key, value)
+
+        db.commit()
+        db.refresh(todo)
+        return todo
+
+
+crud_todo = CRUDTodo(ModelsTodo)
+
+```
+
+```python
+user.py
+
+from fastapi.encoders import jsonable_encoder
+from sqlalchemy.orm import Session
+from crud.base import CRUDBase
+from models import User as ModelsUser
+from core.security import get_password_hash, verify_password
+
+
+class CRUDUser(CRUDBase):
+    def get_by_email(self, db: Session, email: str):
+        return db.query(self.model).filter(self.model.email == email).first()
+
+    def create(self, db: Session, user_params):
+        user = ModelsUser(
+            name=user_params.name,
+            email=user_params.email,
+            hashed_password=get_password_hash(user_params.password),
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+        return user
+
+    def authenticate(self, db: Session, email, password):
+        user = self.get_by_email(db, email=email)
+        if not user:
+            return None
+        if not verify_password(password, user.hashed_password):
+            return None
+        return user
+
+    def update_name(self, db: Session, id, user_params):
+        user = self.get_by_id(db=db, id=id)
+        user.name = user_params.name
+        db.commit()
+        db.refresh(user)
+        return user
+
+    def update_password(self, db: Session, id, user_params):
+        user = self.get_by_id(db=db, id=id)
+        user.hashed_password = get_password_hash(user_params.password)
+        db.commit()
+        db.refresh(user)
+        return user
+
+
+crud_user = CRUDUser(ModelsUser)
+
+```
+
+:::
+
+:::info
+SQLAlchemy是一个流行的Python ORM（对象关系映射）库，它提供了一种方便的方式来操作关系型数据库。
+
+SQLAlchemy具有以下特点和功能：
+
+- 对多种数据库后端的支持：SQLAlchemy支持多种主流的关系型数据库后端，包括MySQL、PostgreSQL、SQLite、Oracle等，可以在不同的数据库系统之间无缝切换。
+
+- 完整的ORM功能：SQLAlchemy提供了完整的ORM功能，包括对象映射、关联关系、事务管理、数据一致性等。开发者可以使用Python类来表示数据库表，通过对这些类的操作来实现对数据库的增删改查操作。
+
+- 灵活的查询语法：SQLAlchemy提供了强大而灵活的查询语法，可以通过方法链式调用来构建复杂的查询条件和排序规则。开发者可以使用SQLAlchemy的查询API来执行各种查询操作，并获得查询结果。
+
+- 事务支持：SQLAlchemy支持事务的管理，开发者可以通过事务机制来确保数据的一致性和完整性。可以使用commit和rollback方法来提交或回滚事务。
+
+- 数据库连接池：SQLAlchemy提供了连接池的支持，可以在应用程序和数据库之间建立连接池，以提高数据库操作的性能和效率。
+
+支持原生SQL语句：除了提供ORM功能外，SQLAlchemy还支持执行原生SQL语句，以满足一些特定的数据库操作需求。
+
+:::
+
+更多有关SQLAlembic的基础知识请看后端fastapi教程中的ORM部分
