@@ -49,6 +49,12 @@ class Todo(Base):
 - `created_at = Column(TIMESTAMP(timezone=True), nullable=False, default=datetime.utcnow)`: 定义一个名为 `created_at` 的列，它是带有时区的时间戳类型，并且不能为空。`default=datetime.utcnow` 表示如果没有提供值，则默认为当前的 UTC 时间。
 - `updated_at = Column(TIMESTAMP(timezone=True), nullable=False, onupdate=datetime.utcnow, default=datetime.utcnow)`: 定义一个名为 `updated_at` 的列，它是带有时区的时间戳类型，并且不能为空。`onupdate=datetime.utcnow` 表示在更新记录时自动更新为当前的 UTC 时间。`default=datetime.utcnow` 表示如果没有提供值，则默认为当前的 UTC 时间。
 
+VS Code 打开  `models/__init__.py`， 输入如下代码：
+
+```python
+from models.todo import Todo
+```
+
 # 实现todos表的CRUD操作
 
 在 `crud` 文件夹里面新建一个 `base.py` 文件， 用 VS Code 打开， 输入如下代码：
@@ -121,6 +127,12 @@ crud_todo = CRUDTodo(ModelsTodo)
 - `def update(self, db: Session, id: Any, todo_params):`: 定义一个方法 `update`，用于更新数据库中的记录。
 - `crud_todo = CRUDTodo(ModelsTodo)`: 创建一个 `CRUDTodo` 类的实例，传入一个名为 `ModelsTodo` 的数据库模型作为参数。
 
+
+VS Code 打开  `crud/__init__.py`， 输入如下代码：
+
+```python
+from crud.todo import crud_todo
+```
 
 :::tip
 
