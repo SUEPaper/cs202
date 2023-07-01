@@ -134,6 +134,29 @@ VS Code 打开  `crud/__init__.py`， 输入如下代码：
 from crud.todo import crud_todo
 ```
 
+VS Code 打开  `schemas/todo.py`， 改成如下代码：
+
+```python
+from datetime import datetime
+from pydantic import BaseModel
+
+class TodoCreate(BaseModel):
+    content: str
+    is_done: bool
+
+class Todo(TodoCreate):
+    id: int
+
+class TodoInDB(Todo):
+    user_id: int
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+```
+
+
 :::tip
 
 可以切换 `backend_orm_finished` 分支，查看最终正确实现的代码。
