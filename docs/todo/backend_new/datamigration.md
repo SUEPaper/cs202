@@ -5,7 +5,14 @@ sidebar_position: 7
 
 # 数据库迁移
 
+:::tip
+
+本课程网站内容请仔细阅读后再进行实操。因未仔细阅读内容，出现任何错误后果自负（逃～～～逃～～～逃
+
 请切换到 `backend_db_migration_start` 分支，开始此教程代码的编写。
+:::
+
+
 
 数据库迁移（Database Migration）是一种管理数据库模式（Schema）和结构变化的技术。它允许开发人员在数据库模式发生变化时，通过编程方式自动地迁移和更新数据库，而无需手动执行繁琐的脚本或手动修改数据库。
 
@@ -35,7 +42,7 @@ pip install alembic sqlalchemy mysqlclient
 
 ### 初始化环境
 
-打开终端，并且进入 `backend/db/` 文件夹，输入如下命令。
+打开终端，并且进入 `db/` 文件夹，输入如下命令。
 
 ```bash
 alembic init migrations
@@ -73,7 +80,7 @@ sqlalchemy.url = mysql://root:password@localhost:3306/todoapp
 
 到目前为止，我们的代码中的 TODOS 都存在内存里面，当 FastAPI 程序重启以后，TODOS里面的数据都丢失了。接下来我们要将 TODOS 的数据存到数据库里面，在实现数据库操作之前我们需要在 MySQL 数据库中新建一张 `todos` 表，用来存储 TODOS 的数据。
 
-打开终端，并且进入 `backend/db/` 文件夹，输入如下命令
+打开终端，并且进入 `db/` 文件夹，输入如下命令
 
 ```bash
 alembic revision -m "create_todos_table"
@@ -187,7 +194,7 @@ def downgrade() -> None:
 ### 创建 `todos` 表
 
 
-打开终端，并且进入 `backend/db/` 文件夹，输入如下命令
+打开终端，并且进入 `db/` 文件夹，输入如下命令
 
 ```bash
 alembic upgrade head
@@ -198,8 +205,13 @@ alembic upgrade head
 ![](./img/db_migration_02.png)
 
 
-:::tip 
+:::note
 alembic 详细教程请看官方文档：https://alembic.sqlalchemy.org/en/latest/tutorial.html
 :::
 
-可以切换 backend_db_migration_finished 分支，查看最终正确实现的代码。
+
+:::tip
+
+可以切换 `backend_db_migration_finished` 分支，查看最终正确实现的代码。
+
+:::

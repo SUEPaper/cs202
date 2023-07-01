@@ -7,6 +7,12 @@ sidebar_position: 2
 
 ## 安装FastAPI的依赖
 
+:::tip
+
+本课程网站内容请仔细阅读后再进行实操。因未仔细阅读内容，出现任何错误后果自负（逃～～～逃～～～逃
+
+:::
+
 ```bash
 pip install fastapi
 pip install "uvicorn[standard]"
