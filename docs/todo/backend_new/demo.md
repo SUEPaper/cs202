@@ -183,6 +183,14 @@ VS Code Debug FastAPI 应用程序的教程请查阅如下链接：
 
 ![](./img/fastapi_docs.png)
 
+:::note Swagger UI
+
+Swagger UI 是一个开源工具，用于可视化和交互式地测试和文档化 RESTful Web API。它通过解析 API 的 Swagger 或 OpenAPI 规范（两者是同一概念的不同版本），生成一个动态的用户界面，显示 API 的终端点、请求参数、响应内容以及其他相关信息。
+
+Swagger UI 利用 Swagger 规范中的信息，将 API 的文档内容以交互式的方式呈现给开发者。它提供了一个易于浏览和测试 API 的界面，包括 API 的终端点列表、每个终端点支持的 HTTP 方法、请求参数和响应示例等等。开发者可以直接在 Swagger UI 中执行 API 请求，并查看请求的结果和响应的内容。
+
+:::
+
 ### 测试 get todos API
 
 ![](./img/docs_demo01.png)
