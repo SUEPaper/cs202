@@ -5,9 +5,19 @@ sidebar_position: 4
 
 # HTTP GET 请求
 
-## 最简单的 `HTTP GET` 请求
+`HTTP GET` 请求是一种用于从服务器获取数据的方法。它是 HTTP 协议中的一种请求方法，用于向服务器请求特定资源的数据。
 
-`GET`方法请求一个指定资源的表示形式，使用`GET`的请求应该只被用于获取数据。
+`GET` 请求的特点如下：
+
+- 数据传输通过 URL 的查询参数进行，以键值对的形式附加在 URL 末尾。
+- `GET` 请求通常用于获取数据，而不对服务器端的数据进行修改。
+- `GET` 请求是幂等的，即多次重复相同的 `GET` 请求不会对服务器端的数据产生影响，只是获取相同的响应结果。
+- `GET` 请求的数据通常会被缓存，以提高性能和效率。
+- 当客户端发送 `GET` 请求时，会在请求头中指定请求的目标 URL，以及其他必要的头部信息，如 Host（指定服务器的域名或 IP 地址）、User-Agent（指定客户端的信息）等。
+
+客户端可以在 URL 中使用查询参数，通过键值对的方式传递额外的数据，例如 `?key1=value1&key2=value2`。服务器端可以根据这些查询参数的值来返回相应的数据。`GET` 请求通常用于获取特定资源的信息，例如获取文章列表、获取用户信息等。
+
+## 最简单的 `HTTP GET` 请求
 
 让我们来看一下这段代码：
 
@@ -88,7 +98,7 @@ def get_todo_by_id(todo_id: int):
 
 让我们解释这段代码：
 
-- 我们创建了一个新的 `GET` API, 其 URL 是：`/todos/{todo_id}`。这里的花括号表示参数值，它需要与端点函数 `get_todo_by_id` 接受的参数之一匹配，也就是说两处地方的名字都得一样，示例代码中就是 `todo_id`。
+- 我们创建了一个新的 `GET` API, 其路径是：`/todos/{todo_id}`。这里的花括号表示参数值，它需要与端点函数 `get_todo_by_id` 接受的参数之一匹配，也就是说两处地方的名字都得一样，示例代码中就是 `todo_id`。
 - 函数定义了API的逻辑。函数参数的类型提示与 URL 路径参数匹配，FastAPI 使用它们来执行自动验证和转换，我们不需要关系URL 路径参数中的 `todo_id` 如何转换成函数 `get_todo_by_id` 中参数 `todo_id`的。当然如果你实在是想知道转化的原理，可以去看 FastAPI 的源代码。（*这就是开源社区的好处，只要是开源的项目，我们都可以通过阅读源代码知道其底层实现的原理，同时我们也可以学习世界上最好的程序员之一是如何写代码的*）
 - 我们通过一个简单的for循环和一个 ID 条件检查来模拟从数据库按 ID 获取数据的过程。然后，FastAPI 将数据序列化并以 JSON 格式返回。
 
@@ -185,7 +195,7 @@ if __name__ == "__main__":
 @app.get("/todos/search/")
 def search_todos(
     keyword: Optional[str] = None, max_results: Optional[int] = 10  
-) -> dict:
+):
     """
     Search for todos based on keyword
     """
@@ -200,7 +210,7 @@ def search_todos(
 
 让我们解释这段代码：
 
-- 我们新建了一个 `GET` API，它的 URL是：`/todos/search`。请注意这是一个不带路径参数的URL。
+- 我们新建了一个 `GET` API，它的路径是：`/todos/search`。请注意这是一个不带路径参数的URL。
 - search_todos 函数定义了新API 的逻辑。它的参数表示端点的查询参数。有两个参数：keyword 和 max_results。这意味着使用这两个查询参数的查询可能如下所示：`http://localhost:8000/todos/search/?keyword=init&max_results=3`
 - 请注意，对于每个参数，我们指定了它的类型和默认值。这两者都是 Optional，来自于 Python 标准库的 typing 模块。FastAPI 能够使用这些原生的 Python 类型声明来理解参数不需要被设置（如果我们希望参数是必需的，我们将省略 Optional）。
 - 这两个参数还有一个默认值，通过 = 符号指定。例如，max_result 查询参数的默认值是 10。如果请求中没有指定这些参数，将使用默认值。
