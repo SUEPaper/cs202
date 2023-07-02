@@ -81,6 +81,9 @@ def delete_todo(
     return todo
 ```
 
+接下来是测试阶段，请用浏览器打开 http://localhost:8000/docs(打开 URL 前请确保我们的FastAPI 应用是运行起来的)对更新todo和删除todo API进行测试。
+
+![](./img/http_put_delete_01.png)
 
 :::tip
 

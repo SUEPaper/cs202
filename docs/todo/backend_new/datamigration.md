@@ -141,26 +141,9 @@ def downgrade() -> None:
 
 ### 实现新建`todos`表的迁移代码
 
-将`xxx_create_todos_table.py`代码替换成如下代码：
+将`xxx_create_todos_table.py`中的`upgrade`、`downgrade` 函数替换成如下代码：
 
 ```python
-"""create_todos_table
-
-Revision ID: 0f54f99f8360
-Revises: 
-Create Date: 2023-07-01 14:49:20.393541
-
-"""
-from alembic import op
-import sqlalchemy as sa
-
-
-# revision identifiers, used by Alembic.
-revision = '0f54f99f8360'
-down_revision = None
-branch_labels = None
-depends_on = None
-
 def upgrade() -> None:
     op.create_table(
         "todos",
@@ -171,14 +154,13 @@ def upgrade() -> None:
         sa.Column("updated_at", sa.TIMESTAMP, nullable=False)
     )
 
-
 def downgrade() -> None:
     op.drop_table("todos")
 ```
 
 - `op.create_table`: 新建一张表，第一个参数是表的名字，此处为："todos"。
 - `op.drop_table`: 删除表，此处删除的表是: "todos"。
-- `sa.Column("id", sa.Integer, primary_key=True, index=True)`: `todos`表中包含 `id` 字段，该字段是 `Integer` 型，是主键，并且有索引。
+- `sa.Column("id", sa.Integer, primary_key=True, index=True)`: `todos`表中包含 `id` 字段，该字段是 `Integer` 型，是主键，采用MySQL自增的方式自动生成，并且有索引。
 - `sa.Column("is_done", sa.Boolean, default=False, nullable=False)`: `todos`表中包含 `is_done` 字段，该字段是 `Boolean` 型，默认值是`False`, 非空。
 - `sa.Column("content", sa.Boolean, default=False, nullable=False)`: `todos`表中包含 `content` 字段，该字段是 `Text` 型，无默认值，非空。
 - `sa.Column("created_at", sa.TIMESTAMP, nullable=False)`: `todos`表中包含 `created_at` 字段，该字段是 `TIMESTAMP` 型，无默认值，非空。
