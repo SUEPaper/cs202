@@ -107,7 +107,7 @@ db
 
 `0f54f99f8360_create_todos_table.py`是我们第一个数据库迁移文件，请用VS Code 打开代码文件。(**也许在你的电脑里面文件名不是`0f54f99f8360_`开头的，这个取决于你的电脑随机生成的数字和字母的组合， 本教程用`xxx_create_todos_table.py`指代你本地对应的文件**)
 
-```python
+```python showLineNumbers
 """create_todos_table
 
 Revision ID: 0f54f99f8360
@@ -143,7 +143,7 @@ def downgrade() -> None:
 
 将`xxx_create_todos_table.py`中的`upgrade`、`downgrade` 函数替换成如下代码：
 
-```python
+```python showLineNumbers
 def upgrade() -> None:
     op.create_table(
         "todos",

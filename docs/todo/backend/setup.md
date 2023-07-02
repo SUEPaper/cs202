@@ -34,7 +34,7 @@ uvicorn main:app --reload
 
 如下是一个代码实例：
 
-```python
+```python showLineNumbers
 # 0. Import Python Library
 from fastapi import FastAPI
 from pydantic import BaseModel

@@ -125,7 +125,7 @@ def get_todo_by_id(todo_id: int):
 
 除了上述我们想获取一个具体TODO的详细信息的需求，我们可能还会搜索包含某一个关键字的Todo。这该如何实现呢，请看如下代码。
 
-```python
+```python showLineNumbers
 # 0. Import Python Library
 import uvicorn
 from fastapi import FastAPI

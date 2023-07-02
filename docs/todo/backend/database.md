@@ -26,7 +26,7 @@ SQLAlchemy提供了两个核心组件：
 
 在 `db/` 文件夹下新建一个 `config.py` 文件，用 VS Code 打开，输入如下代码：
 
-```python
+```python showLineNumbers
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -49,7 +49,7 @@ Base = declarative_base()
 
 在 `api/` 文件夹下新建一个 `deps.py` 文件，用 VS Code 打开，输入如下代码：
 
-```python
+```python showLineNumbers
 from typing import Generator
 from db.config import SessionLocal
 

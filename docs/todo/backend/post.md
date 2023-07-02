@@ -24,7 +24,7 @@ sidebar_position: 5
 
 ## POST 请求案例
 
-```python
+```python showLineNumbers
 # 0. Import Python Library
 import uvicorn
 from fastapi import FastAPI
@@ -173,7 +173,7 @@ def create_todo(todo_in: TodoCreate):
 
 为了实现数据校验，我们需要在之前GET请求代码中加入 Pydantic 模式的类。修改后的代码如下所示：
 
-```python
+```python showLineNumbers
 # 0. Import Python Library
 import uvicorn
 from fastapi import FastAPI

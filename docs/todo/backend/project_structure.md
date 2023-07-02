@@ -118,7 +118,7 @@ E:.
 ```
 用 VS Code 打开 `api/todos.py` 文件，输入如下代码：
 
-``` python
+``` python showLineNumbers
 from fastapi import APIRouter
 from schemas import todos as schemas_todo
 
@@ -191,7 +191,7 @@ def create_todo(*, todo_in: TodoCreate):  # 2
 
 用 VS Code 打开 `api/api.py` 文件，输入如下代码：
 
-```python
+```python showLineNumbers
 from fastapi import APIRouter
 from api.todos import router as todos_router
 
@@ -211,7 +211,7 @@ def hello_world():
 
 用 VS Code 打开 `main.py` 文件，将代码更改成如下内容：
 
-```python
+```python showLineNumbers
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

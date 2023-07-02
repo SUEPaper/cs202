@@ -16,7 +16,7 @@ sidebar_position: 10
 
 用 VS Code 打开 `api/todos.py`，将代码改成如下：
 
-```python
+```python showLineNumbers
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
@@ -75,7 +75,6 @@ def create_todo(
 ## 运行和测试 API
 
 接下来是测试阶段，请用浏览器打开 http://localhost:8000/docs(打开 URL 前请确保我们的FastAPI 应用是运行起来的)对我们迁移到数据库版本的API进行测试，同时请用MySQL的命令行工具，查看数据库表中是否有对应的数据。
-
 
 
 :::tip

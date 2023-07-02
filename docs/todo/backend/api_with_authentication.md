@@ -30,7 +30,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 
 用 VS Code 打开 `api/deps.py`，将代码修改成如下：
 
-```python
+```python showLineNumbers
 from typing import Generator
 from db.config import SessionLocal
 from fastapi import Depends, HTTPException, status
@@ -95,7 +95,7 @@ reusable_oauth2 = OAuth2PasswordBearer(
 
 用 VS Code 打开 `api/users.py` 文件，将代码修改如下：
 
-```python
+```python showLineNumbers
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from api import deps
@@ -187,7 +187,7 @@ db
 
 请用 VS Code 打开 `xxx_add_user_id_in_todo_table.py`，将代码文件中的`upgrade`、`downgrade` 函数替换成如下代码：
 
-```python
+```python showLineNumbers
 def upgrade() -> None:
     op.add_column('todos', sa.Column('user_id', sa.Integer))
     op.create_foreign_key(
@@ -205,7 +205,7 @@ def downgrade() -> None:
 
 请用 VS Code 打开 `models/todo.py`，将代码函数替换成如下代码：
 
-```python
+```python showLineNumbers
 from datetime import datetime
 from sqlalchemy import TIMESTAMP, Boolean, Column, Integer, Text, ForeignKey
 from sqlalchemy.orm import relationship
@@ -227,7 +227,7 @@ class Todo(Base):
 
 请用 VS Code 打开 `models/user.py`，将代码函数修改成如下代码：
 
-```python
+```python showLineNumbers
 from datetime import datetime
 from sqlalchemy import TIMESTAMP, Column, Integer, String
 from sqlalchemy.orm import relationship
@@ -249,7 +249,7 @@ class User(Base):
 
 请用 VS Code 打开 `crud/todo.py`，将代码函数修改成如下代码：
 
-```python
+```python showLineNumbers
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from crud.base import CRUDBase
@@ -291,7 +291,7 @@ crud_todo = CRUDTodo(ModelsTodo)
 
 最后请用 VS Code 打开 `api/todos.py`，将代码函数修改成如下代码：
 
-```python
+```python showLineNumbers
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from api import deps

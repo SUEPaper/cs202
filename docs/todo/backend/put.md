@@ -19,7 +19,7 @@ sidebar_position: 11
 
 用 VS Code 打开 `api/todos.py` 文件，将代码更改成如下代码：
 
-```python 
+```python showLineNumbers
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
