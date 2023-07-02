@@ -249,7 +249,7 @@ from schemas import user as schemas_user
 
 router = APIRouter()
 
-@router.post("/", response_model=schemas_user.UserInDB)
+@router.post("/users", response_model=schemas_user.UserInDB)
 def create_user(
     user_params: schemas_user.UserCreate,
     db: Session = Depends(deps.get_db)
@@ -436,3 +436,9 @@ def hello_world():
 接下来是测试阶段，请用浏览器打开 http://localhost:8000/docs(打开 URL 前请确保我们的FastAPI 应用是运行起来的)测试用户登陆的API。
 
 ![](./img/user_auth_02.png)
+
+:::tip
+
+可以切换 `backend_user_finished` 分支，查看最终正确实现的代码。
+
+:::
