@@ -1,301 +1,68 @@
 ---
 id: orm
-sidebar_position: 6
+sidebar_position: 9
 ---
 
-# SQLAlchemy的快速介绍
+# SQLAlchemy 对象关系映射
 
-SQLAlchemy是使用最广泛、质量最高的Python第三方库之一。它为应用程序开发者提供了在他们的Python代码中与关系数据库工作的简单方法。
+:::tip
 
-SQLAlchemy认为数据库是一个关系代数引擎，而不仅仅是一个表的集合。行不仅可以从表中选择，还可以从连接和其他选择语句中选择；任何这些单元都可以组成一个更大的结构。SQLAlchemy的表达式语言从核心上建立了这个概念。
+本课程网站内容请仔细阅读后再进行实操。因未仔细阅读内容，出现任何错误后果自负（逃～～～逃～～～逃
 
-SQLAlchemy由两个不同的组件组成：
-
-- 核心--一个功能齐全的SQL抽象工具箱
-
-- ORM（Object Relational Mapper 对象关系映射器）--它是可选的
-
-在本教程中，我们将使用这两个组件，尽管你可以调整方法不使用ORM。
-
-# 实用部分1--用SQLAlchemy设置数据库表
-
-在本教程中，到目前为止，我们还不能在服务器重启后继续保存数据，因为我们所有的POST操作只是更新了内存中的数据结构。我们将通过引入一个关系型数据库来改变这种情况。
-
-:::tip 提示
-开始之前，要在 FastAPI 项目中使用 SQLAlchemy,首先需要安装它:
-
-```bash
-pip install SQLAlchemy
-```
-
-:::
-**FastAPI SQL炼金图**
-
-我们正在努力实现的目标的整体图如下所示：
-
-![](./img/O1.png)
-
-首先，我们将查看ORM和数据访问层：
-
-![](./img/O2.png)
-
-现在，让我们将注意力转向新目录。在`./backend/db/`路径下创建`config.py`和`__init__.py`文件。
-
-:::note 代码
-
-```python
-config.py
-# 从SQLAlchemy库中导入create_engine函数。此函数用于创建一个连接到指定数据库URL的数据库引擎。
-from sqlalchemy import create_engine 
-from sqlalchemy.ext.declarative import declarative_base # 从SQLAlchemy库中导入declarative_base函数。此函数用于创建一个基类，用于声明类定义。
-from sqlalchemy.orm import sessionmaker # 从SQLAlchemy库中导入sessionmaker函数。此函数用于创建一个会话工厂，可用于创建新会话以与数据库交互。
-
-# SQLALCHEMY_DATABASE_URL变量包含应用程序将连接到的MySQL数据库的URL。此URL包括用户名、密码、主机、端口和数据库名称。
-SQLALCHEMY_DATABASE_URL = "mysql://root:password@localhost:3306/todoapp"
-
-# engine变量是通过使用SQLALCHEMY_DATABASE_URL变量作为参数调用create_engine函数创建的。这将创建一个数据库引擎，可用于连接到MySQL数据库。
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-
-# SessionLocal变量是通过使用autocommit、autoflush和bind参数分别设置为False、False和engine调用sessionmaker函数创建的。这将创建一个会话工厂，可用于创建新会话以与数据库交互。
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-# Base变量是通过调用declarative_base函数创建的。这将创建一个基类，用于声明类定义的结构。
-Base = declarative_base()
-
-```
-
-./alembic/envy.py包含了使用Alembic和SQLAlchemy运行数据库迁移所需的必要代码。这些文件中的代码设置了使用SQLAlchemy连接到数据库所需的必要配置，并提供了运行迁移所需的必要工具。`config`对象提供了对正在使用的`.ini`文件中的值的访问，target_metadata变量可以设置为数据库模型的元数据以支持“自动生成”。
-
-`run_migrations_offline`函数在“离线”模式下运行迁移，该模式仅使用URL而不是引擎来配置上下文。当不需要引擎时，使用此函数，并且对context.execute()的调用将将给定字符串发出到脚本输出。
-
-`run_migrations_online`函数在“在线”模式下运行迁移，该模式创建引擎并将连接与上下文关联。当需要引擎时，通过使用config.get_section和poolclass参数分别设置为config.config_ini_section, {}和pool.NullPool调用engine_from_config函数创建connectable变量。
-
-总的来说，这些文件包含了使用Alembic和SQLAlchemy运行数据库迁移所需的必要代码。
-
+请切换到 `backend_orm_start` 分支，开始此教程代码的编写。
 :::
 
-然后更改models文件夹中的文件：
 
-:::note 代码
+对象关系映射（Object-Relational Mapping，ORM）是一种编程技术，用于将关系型数据库中的表格和记录映射到面向对象的编程语言中的对象和类。ORM允许开发人员使用面向对象的方式进行数据库操作，而无需直接编写和执行SQL语句。
 
-```python
-todo.py
+ORM的主要目标是将数据库和应用程序的数据模型相连接，通过将数据库表格映射为类，行映射为对象的实例，列映射为类的属性，以及通过关联和关系映射表达数据库之间的关系，从而实现数据的持久化和操作。
 
-# 导入新的包类
+
+## 实现todos表的ORM
+
+在 `models` 文件夹里面新建一个 `todo.py` 文件， 用 VS Code 打开， 输入如下代码：
+
+```python showLineNumbers
 from datetime import datetime
 from sqlalchemy import TIMESTAMP, Boolean, Column, Integer, Text, ForeignKey
-from sqlalchemy.orm import relationship
 from db.config import Base
 
-# 增加数据模型的属性
 class Todo(Base):
     __tablename__ = "todos"
 
     id = Column(Integer, primary_key=True, index=True)
     is_done = Column(Boolean, default=False)
     content = Column(Text, nullable=False)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=True)
-    created_at = Column(
-        TIMESTAMP(timezone=True), nullable=False, default=datetime.utcnow
-    )
-    updated_at = Column(
-        TIMESTAMP(timezone=True),
-        nullable=False,
-        onupdate=datetime.utcnow,
-        default=datetime.utcnow,
-    )
-    user = relationship("User", back_populates="todos")
-
+    created_at = Column(TIMESTAMP(timezone=True),
+                        nullable=False, default=datetime.utcnow)
+    updated_at = Column(TIMESTAMP(timezone=True), nullable=False,
+                        onupdate=datetime.utcnow, default=datetime.utcnow)
 ```
 
-```python
-user.py
+- `class Todo(Base):`: 定义一个名为 `Todo` 的类，该类是一个数据库表的映射模型。这个类继承自 `Base` 类。
+- `__tablename__ = "todos"`: 定义表格的名称为 "todos"，这个属性将会被 SQLAlchemy 用来创建和管理与该模型对应的数据库表格。
+- `id = Column(Integer, primary_key=True, index=True)`: 定义一个名为 `id` 的列，它是整数类型，并且被设置为主键。`primary_key=True` 表示这个列是表格的主键，`index=True` 表示为这个列创建索引，以提高查询效率。
+- `is_done = Column(Boolean, default=False)`: 定义一个名为 `is_done` 的列，它是布尔类型，并且默认值为 `False`。这个列表示一个任务是否已完成。
+- `content = Column(Text, nullable=False)`: 定义一个名为 `content` 的列，它是文本类型，并且不能为空。这个列存储任务的内容。
+- `created_at = Column(TIMESTAMP(timezone=True), nullable=False, default=datetime.utcnow)`: 定义一个名为 `created_at` 的列，它是带有时区的时间戳类型，并且不能为空。`default=datetime.utcnow` 表示如果没有提供值，则默认为当前的 UTC 时间。
+- `updated_at = Column(TIMESTAMP(timezone=True), nullable=False, onupdate=datetime.utcnow, default=datetime.utcnow)`: 定义一个名为 `updated_at` 的列，它是带有时区的时间戳类型，并且不能为空。`onupdate=datetime.utcnow` 表示在更新记录时自动更新为当前的 UTC 时间。`default=datetime.utcnow` 表示如果没有提供值，则默认为当前的 UTC 时间。
 
-from datetime import datetime
-from sqlalchemy import TIMESTAMP, Column, Integer, String
-from sqlalchemy.orm import relationship
-from db.config import Base
+VS Code 打开  `models/__init__.py`， 输入如下代码：
 
-
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(200), nullable=False)
-    email = Column(String(200), unique=True, index=True, nullable=False)
-    hashed_password = Column(String(200), nullable=False)
-    created_at = Column(
-        TIMESTAMP(timezone=True), nullable=False, default=datetime.utcnow
-    )
-    updated_at = Column(
-        TIMESTAMP(timezone=True),
-        nullable=False,
-        onupdate=datetime.utcnow,
-        default=datetime.utcnow,
-    )
-    todos = relationship("Todo", uselist=True, back_populates="user")
-
-
+```python showLineNumbers
+from models.todo import Todo
 ```
 
-user与todo改变类似。这些数据模型将允许您在应用程序中创建用户和待办事项，并将它们关联起来。这些模型还将允许您轻松地查询用户和待办事项，并查找它们之间的关系。
+# 实现todos表的CRUD操作
 
-:::
+在 `crud` 文件夹里面新建一个 `base.py` 文件， 用 VS Code 打开， 输入如下代码：
 
-对应要更改api，打开api文件夹。
-
-:::note 代码
-
-```python
-todos.py
-
-from fastapi import APIRouter, Depends, HTTPException
+```python showLineNumbers
+from typing import Any
 from sqlalchemy.orm import Session
-from api import deps
-from crud import crud_todo
-from schemas import todo as schemas_todo
-
-
-router = APIRouter()
-
-
-@router.get("/", response_model=list[schemas_todo.TodoInDB])
-def get_all_todos(
-    db: Session = Depends(deps.get_db), current_user=Depends(deps.get_current_user)
-):
-    todos = crud_todo.get_all_by_user_id(db=db, user_id=current_user.id)
-    return todos
-
-
-@router.post("/", response_model=schemas_todo.TodoInDB)
-def create_todo(
-    todo_params: schemas_todo.TodoCreate,
-    db: Session = Depends(deps.get_db),
-    current_user=Depends(deps.get_current_user),
-):
-    todo = crud_todo.create(db=db, user_id=current_user.id, todo_params=todo_params)
-    return todo
-
-
-@router.put("/{todo_id}", response_model=schemas_todo.TodoInDB)
-def update_todo(
-    todo_id: int,
-    todo_params: schemas_todo.TodoCreate,
-    db: Session = Depends(deps.get_db),
-    current_user=Depends(deps.get_current_user),
-):
-    todo = crud_todo.get_by_id_with_user_id(db=db, id=todo_id, user_id=current_user.id)
-
-    if not todo:
-        raise HTTPException(status_code=404, detail="Todo not found")
-
-    todo = crud_todo.update(
-        db=db, id=todo_id, user_id=current_user.id, todo_params=todo_params
-    )
-    return todo
-
-
-@router.delete("/{todo_id}", response_model=schemas_todo.TodoInDB)
-def delete_todo(
-    todo_id: int,
-    db: Session = Depends(deps.get_db),
-    current_user=Depends(deps.get_current_user),
-):
-    todo = crud_todo.get_by_id_with_user_id(db=db, id=todo_id, user_id=current_user.id)
-
-    if not todo:
-        raise HTTPException(status_code=404, detail="Todo not found")
-    todo = crud_todo.remove(db=db, id=todo_id)
-
-    return todo
-
-```
-
-```python
-users.py
-
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from api import deps
-from crud import crud_todo
-from schemas import todo as schemas_todo
-
-
-router = APIRouter()
-
-
-@router.get("/", response_model=list[schemas_todo.TodoInDB])
-def get_all_todos(
-    db: Session = Depends(deps.get_db), current_user=Depends(deps.get_current_user)
-):
-    todos = crud_todo.get_all_by_user_id(db=db, user_id=current_user.id)
-    return todos
-
-
-@router.post("/", response_model=schemas_todo.TodoInDB)
-def create_todo(
-    todo_params: schemas_todo.TodoCreate,
-    db: Session = Depends(deps.get_db),
-    current_user=Depends(deps.get_current_user),
-):
-    todo = crud_todo.create(db=db, user_id=current_user.id, todo_params=todo_params)
-    return todo
-
-
-@router.put("/{todo_id}", response_model=schemas_todo.TodoInDB)
-def update_todo(
-    todo_id: int,
-    todo_params: schemas_todo.TodoCreate,
-    db: Session = Depends(deps.get_db),
-    current_user=Depends(deps.get_current_user),
-):
-    todo = crud_todo.get_by_id_with_user_id(db=db, id=todo_id, user_id=current_user.id)
-
-    if not todo:
-        raise HTTPException(status_code=404, detail="Todo not found")
-
-    todo = crud_todo.update(
-        db=db, id=todo_id, user_id=current_user.id, todo_params=todo_params
-    )
-    return todo
-
-
-@router.delete("/{todo_id}", response_model=schemas_todo.TodoInDB)
-def delete_todo(
-    todo_id: int,
-    db: Session = Depends(deps.get_db),
-    current_user=Depends(deps.get_current_user),
-):
-    todo = crud_todo.get_by_id_with_user_id(db=db, id=todo_id, user_id=current_user.id)
-
-    if not todo:
-        raise HTTPException(status_code=404, detail="Todo not found")
-    todo = crud_todo.remove(db=db, id=todo_id)
-
-    return todo
-
-```
-
-代码定义了待办事项API的路由，并使用crud_todo模块与数据库交互。
-
-get_all_todos函数检索当前用户的所有待办事项，而create_todo函数为当前用户创建新的待办事项。update_todo函数更新当前用户的现有待办事项，而delete_todo函数删除当前用户的现有待办事项。
-
-所有这些函数都使用deps模块获取当前用户和数据库会话。schemas_todo模块定义了待办事项API的输入和输出模式。
-:::
-
-然后在`./backend/crud/`文件夹中创建base.py,todo.py,user.py实现我们的crud操作：
-
-:::note
-
-```python
-base.py
-
-from typing import Any, Optional
-from sqlalchemy.orm import Session
-
 
 class CRUDBase:
-    def __init__(self, model) -> None:
+    def __init__(self, model):
         self.model = model
 
     def get_by_id(self, db: Session, id: Any):
@@ -309,47 +76,38 @@ class CRUDBase:
         db.delete(obj)
         db.commit()
         return obj
-
 ```
 
-```python
-todo.py
 
+- `def __init__(self, model):`: 定义 `CRUDBase` 类的构造函数，接收一个 `model` 参数，表示数据库模型。
+- `self.model = model`: 在构造函数中，将传入的 `model` 参数赋值给类的 `model` 属性，以便在类的其他方法中使用。
+- `def get_by_id(self, db: Session, id: Any):`: 定义一个方法 `get_by_id`，用于根据给定的 `id` 从数据库中获取记录。
+- `def get_all(self, db: Session):`: 定义一个方法 `get_all`，用于从数据库中获取所有记录。
+- `def remove(self, db: Session, id: Any):`: 定义一个方法 `remove`，用于从数据库中删除指定的记录。
+
+
+在 `crud` 文件夹里面新建一个 `todo.py` 文件， 用 VS Code 打开， 输入如下代码：
+
+```python showLineNumbers
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from crud.base import CRUDBase
 from models import Todo as ModelsTodo
-from typing import Any, Optional
-
+from typing import Any
 
 class CRUDTodo(CRUDBase):
-    def get_by_id_with_user_id(self, db: Session, id: Any, user_id: Any):
-        return (
-            db.query(self.model)
-            .filter(self.model.id == id)
-            .filter(self.model.user_id == user_id)
-            .first()
-        )
 
-    def get_all_by_user_id(self, db: Session, user_id: Any):
-        return db.query(self.model).filter(self.model.user_id == user_id).all()
-
-    def create(self, db: Session, user_id: Any, todo_params):
+    def create(self, db: Session, todo_params):
         todo_data = jsonable_encoder(todo_params)
         todo = self.model(**todo_data)
-        todo.user_id = user_id
         db.add(todo)
         db.commit()
         db.refresh(todo)
         return todo
 
-    def update(self, db: Session, id: Any, user_id: Any, todo_params):
-        todo = (
-            db.query(self.model)
-            .filter(self.model.id == id)
-            .filter(self.model.user_id == user_id)
-            .first()
-        )
+    def update(self, db: Session, id: Any, todo_params):
+
+        todo = db.query(self.model).filter(self.model.id == id).first()
 
         todo_params_dict = todo_params.dict(exclude_unset=True)
         for key, value in todo_params_dict.items():
@@ -359,82 +117,45 @@ class CRUDTodo(CRUDBase):
         db.refresh(todo)
         return todo
 
-
 crud_todo = CRUDTodo(ModelsTodo)
 
 ```
 
-```python
-user.py
-
-from fastapi.encoders import jsonable_encoder
-from sqlalchemy.orm import Session
-from crud.base import CRUDBase
-from models import User as ModelsUser
-from core.security import get_password_hash, verify_password
+- `def create(self, db: Session, todo_params):`: 定义一个方法 `create`，用于向数据库中创建新的记录。
+- `def update(self, db: Session, id: Any, todo_params):`: 定义一个方法 `update`，用于更新数据库中的记录。
+- `crud_todo = CRUDTodo(ModelsTodo)`: 创建一个 `CRUDTodo` 类的实例，传入一个名为 `ModelsTodo` 的数据库模型作为参数。
 
 
-class CRUDUser(CRUDBase):
-    def get_by_email(self, db: Session, email: str):
-        return db.query(self.model).filter(self.model.email == email).first()
+VS Code 打开  `crud/__init__.py`， 输入如下代码：
 
-    def create(self, db: Session, user_params):
-        user = ModelsUser(
-            name=user_params.name,
-            email=user_params.email,
-            hashed_password=get_password_hash(user_params.password),
-        )
-        db.add(user)
-        db.commit()
-        db.refresh(user)
-        return user
-
-    def authenticate(self, db: Session, email, password):
-        user = self.get_by_email(db, email=email)
-        if not user:
-            return None
-        if not verify_password(password, user.hashed_password):
-            return None
-        return user
-
-    def update_name(self, db: Session, id, user_params):
-        user = self.get_by_id(db=db, id=id)
-        user.name = user_params.name
-        db.commit()
-        db.refresh(user)
-        return user
-
-    def update_password(self, db: Session, id, user_params):
-        user = self.get_by_id(db=db, id=id)
-        user.hashed_password = get_password_hash(user_params.password)
-        db.commit()
-        db.refresh(user)
-        return user
-
-
-crud_user = CRUDUser(ModelsUser)
-
+```python showLineNumbers
+from crud.todo import crud_todo
 ```
 
+VS Code 打开  `schemas/todo.py`， 改成如下代码：
+
+```python showLineNumbers
+from datetime import datetime
+from pydantic import BaseModel
+
+class TodoCreate(BaseModel):
+    content: str
+    is_done: bool
+
+class Todo(TodoCreate):
+    id: int
+
+class TodoInDB(Todo):
+    user_id: int
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+```
+
+:::tip
+
+可以切换 `backend_orm_finished` 分支，查看最终正确实现的代码。
+
 :::
-
-:::info
-SQLAlchemy是一个流行的Python ORM（对象关系映射）库，它提供了一种方便的方式来操作关系型数据库。
-
-SQLAlchemy具有以下特点和功能：
-
-- 对多种数据库后端的支持：SQLAlchemy支持多种主流的关系型数据库后端，包括MySQL、PostgreSQL、SQLite、Oracle等，可以在不同的数据库系统之间无缝切换。
-
-- 完整的ORM功能：SQLAlchemy提供了完整的ORM功能，包括对象映射、关联关系、事务管理、数据一致性等。开发者可以使用Python类来表示数据库表，通过对这些类的操作来实现对数据库的增删改查操作。
-
-- 灵活的查询语法：SQLAlchemy提供了强大而灵活的查询语法，可以通过方法链式调用来构建复杂的查询条件和排序规则。开发者可以使用SQLAlchemy的查询API来执行各种查询操作，并获得查询结果。
-
-- 事务支持：SQLAlchemy支持事务的管理，开发者可以通过事务机制来确保数据的一致性和完整性。可以使用commit和rollback方法来提交或回滚事务。
-
-- 数据库连接池：SQLAlchemy提供了连接池的支持，可以在应用程序和数据库之间建立连接池，以提高数据库操作的性能和效率。
-
-支持原生SQL语句：除了提供ORM功能外，SQLAlchemy还支持执行原生SQL语句，以满足一些特定的数据库操作需求。
-
-:::
-
-更多有关SQLAlembic的基础知识请看后端fastapi教程中的ORM部分

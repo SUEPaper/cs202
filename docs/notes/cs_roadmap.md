@@ -23,15 +23,16 @@ graph
     F --> G[NJU ICS PA]
     G --> H[Stanford CS106L: C++ Programming]
     H --> I[Stanford CS106B: Programming Abstractions]
-    G --> J[Berkeley CS61C: Great Ideas in Computer Architecture]
+    G --> J1[希伯来大学: Nand2Tetris]
+    J1 --> J2[Berkeley CS61C: Great Ideas in Computer Architecture]
     I --> K[NJU JYY的操作系统]
-    J --> K
+    J2 --> K
     K --> L[Stanford CS143: Compilers]
     K --> M[Stanford CS144: Introduction to Computer Networking]
     L --> N[CMU 15-445: Intro to Database System]
     N --> O[MIT 6.824: Distributed Systems]
     M --> O
-    J --> P[国科大一生一芯项目]
+    J2 --> P[国科大一生一芯项目]
 
 ```
 
@@ -137,6 +138,18 @@ B 站视频链接：https://www.bilibili.com/video/BV1Z541127RJ
 2020 年夏 B 站视频链接：https://www.bilibili.com/video/BV1Hr4y137Do
 
 由于 Stanford 上课时间结束，有些作业可能下载不了附上百度网盘的备份链接：https://pan.baidu.com/s/1lUQ8agQHJhpUOyFPIKhf6A?pwd=cs16
+
+## 希伯来大学: Nand2Tetris 
+
+Nand2Tetris I：https://www.coursera.org/learn/build-a-computer
+
+Nand2Tetris II：https://www.coursera.org/learn/nand2tetris2
+
+B站视频链接：https://www.bilibili.com/video/BV1KJ411s7QJ
+
+从小就一直听说，计算机的世界是由 01 构成的，我不理解但大受震撼。如果你的内心也怀有这份好奇，不妨花一到两个月的时间学习，这门无门槛的计算机课程。这门麻雀虽小五脏俱全的课程会从 01 开始让你亲手造出一台计算机，并在上面运行俄罗斯方块小游戏。一门课里涵盖了编译、虚拟机、汇编、体系结构、数字电路、逻辑门等等从上至下、从软至硬的各类知识，非常全面。难度上也是通过精心的设计，略去了众多现代计算机复杂的细节，提取出了最核心本质的东西，力图让每个人都能理解。在低年级，如果就能从宏观上建立对整个计算机体系的鸟瞰图，是大有裨益的。
+
+在学习这门课中用到的所有资源和作业实现都汇总在：https://github.com/PKUFlyingPig/NandToTetris
 
 ## Berkeley CS61C
 
