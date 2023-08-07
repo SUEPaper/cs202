@@ -203,6 +203,12 @@ def downgrade() -> None:
     op.drop_column("todos", "user_id")
 ```
 
+打开终端，并且进入 `db/` 文件夹，输入如下命令
+
+```bash
+alembic upgrade head
+```
+
 请用 VS Code 打开 `models/todo.py`，将代码函数替换成如下代码：
 
 ```python showLineNumbers

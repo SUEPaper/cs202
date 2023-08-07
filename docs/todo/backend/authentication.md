@@ -264,7 +264,7 @@ def create_user(
     return user
 ```
 
-VS Code 打开 `api/__init__.py`文件，将代码改成如下：
+VS Code 打开 `api/api.py`文件，将代码改成如下：
 
 ```python showLineNumbers
 from fastapi import APIRouter

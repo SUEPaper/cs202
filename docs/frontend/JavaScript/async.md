@@ -1,299 +1,387 @@
 ---
 id: async
-sidebar_position: 10
+sidebar_position: 7
 ---
 
-# 异步编程与 AJAX
+# JavaScript 的异步
 
-## 异步编程简介
+:::note 异步的必要性
 
----
+正常我们编写的代码都是同步代码，也就是说代码执行的顺序是从上到下，上面的操作还没有执行完，下面的操作就不会被执行到。但是在前端代码之中，我们会经常向后端或者网络请求数据，即使现在网络已经很快，在请求数据量较大的时候，请求数据的操作依然会占据相当长的时间。如果我们还依然使用同步代码，那么就会导致页面卡顿（因为这个时候代码卡顿在了请求数据这一步）。
 
-异步编程是一种编程模型，用于处理需要等待或耗时的操作，以避免阻塞主线程并提高程序的响应性能。在传统的同步编程中，代码会按照顺序一行一行地执行，直到遇到耗时操作时，程序会停止执行并等待操作完成。这种方式可能导致程序在等待时变得不响应或阻塞其他任务的执行。
+另外一方面，有些操作完全可以在前端请求页面的时候完成，比如说渲染出页面的模板。我们可以在数据完全获取之后再把这些数据填入页面。
 
-异步编程通过使用回调函数、Promise、Async/Await等技术，允许代码在进行耗时操作时继续执行其他任务，当操作完成后再执行相应的回调或继续执行后续代码。这样可以避免阻塞主线程，使程序能够更高效地处理多个任务和提供更好的用户体验。
+总而言之，前端需要使用异步代码，需要允许多段代码同时执行而非严格按照顺序一步步走。这种允许多段代码同时执行的代码就是**异步（英语：Asynchronous）**。
 
-以下是一些常见的异步编程技术：
+:::
 
-### 1. 回调函数
+## 事件循环与消息队列机制
 
-通过将操作完成后的处理逻辑封装在回调函数中，将其作为参数传递给异步函数，以在操作完成后执行相应的操作。
+首先我们需要明确，JavaScript 是单线程语言，这也就代表 JavaScript 并不能像 C++ 或者 Java 那样实现多线程并发的异步。
+
+:::note 为何禁用多线程
+
+JavaScript 的设计初衷就是浏览器的脚本语言，其作用就是修改文档树。如果 JavaScript 允许多线程，那么其很有可能因为多线程并发修改文档树导致冲突。
+
+:::
+
+但 JavaScript 使用了另外一种方式实现异步，也就是事件循环和消息队列机制。
+
+在详细叙述这个机制之前，我们首先需要重新认识一下回调函数。当主线程派遣出一个异步过程，比如说触发了网络请求，一般而言需要设定一个这个异步过程的回调函数。这个回调函数描述的，是这个异步过程执行完毕后需要做的事情。
+
+需要定义这个回调函数的原因也很简单，主线程没有办法了解到异步过程何时才能结束，甚至并不清楚这个过程能否结束。在这样的情况下，主线程完全不能知晓什么时候做这个异步过程的善后工作（比如说从网络获取数据后，主线程应该把这些数据加载到页面上）。那么不如定义一个回调函数，具体什么时候调用，根据异步过程来确定。
+
+回到事件循环和消息队列。JavaScript 的主线程上会有一个死循环，称为**事件循环**。其执行逻辑为在空闲的时候不断检查消息队列是否有消息，如果有，则执行，如果没有，则等待。而空闲的含义是当前函数栈空。
+
+而需要异步执行的代码则会负载一个回调函数，当异步过程执行完毕后，则会把回调函数放入消息队列末尾。当主线程空闲且检测到消息队列之中有回调函数的时候，主线程就会执行回调函数，做好异步过程的善后工作。
+
+通过这样的机制，JavaScript 依然是单线程的，对文档树的操作依然是同步的、不会出现冲突的。但依靠这个机制，JavaScript 实现了异步。
+
+:::note 宏消息队列和微消息队列
+
+实际上 JavaScript 的消息队列有两种，分为宏消息队列和微消息队列。`setTimeout, setInterval` 这类引发的回调会放入宏消息队列，而 `Promise` 的 `then` 会放入微消息队列。
+
+JavaScript 的事件循环在查看消息队列的时候，会首先查看微消息队列，如果存在回调则**执行每一个回调直到微消息队列清空**。之后再去查看宏消息队列，并且**只执行队列第一个回调**。
+
+:::
+
+现在我们编写一个异步的代码。这里会用到 `setTimeout` 函数，其接受两个参数，第一个参数为一个回调函数，第二个参数为多长时间后执行上述回调函数。比如下列代码：
 
 ```javascript
-function fetchData(callback) {
-    // 模拟耗时操作
+setTimeout(() => {
+    console.log("1s has passed!");
+}, 1000);
+```
+
+这个代码将会延迟一秒后输出 `"1s has passed!"`。这个函数的等待过程会异步于主线程执行，而其通过第一个参数接受的回调就会在等待完毕后放入消息队列。现在我们利用这个函数写出一个需要耗时的操作，以此模拟网络请求：
+
+```javascript
+const fetchData = () => {
     setTimeout(() => {
-        const data = '异步数据';
-        callback(data);
+        console.log("Data got!");
     }, 1000);
-}
-
-fetchData(data => {
-    console.log(data);
-});
+};
 ```
 
-### 2. Promise
+这个函数调用后会立刻返回，因为它的任务是派遣一个异步过程，而不负责等待异步结束和善后，善后工作应该写在回调函数之中等待主线程执行。
 
-Promise是一种用于处理异步操作的对象，它可以在异步操作完成后返回结果或抛出错误。
+在等待异步的过程中，主线程可以完成其他的任务：
 
 ```javascript
-function fetchData() {
-    return new Promise((resolve, reject) => {
-        // 模拟耗时操作
-        setTimeout(() => {
-            const data = '异步数据';
-            resolve(data);
+const fetchData = () => {
+    setTimeout(() => {
+        console.log("Data get!");
+    }, 1000);
+};
+
+fetchData(); // Dispatch async task
+console.log("Rendering template...");
+console.log("Loading local storage..."); // Main thread doing other tasks
+```
+
+## 回调函数的缺陷
+
+前面已经提到，在 TypeScript 中常常会面临大量的回调函数，这往往是因为我们需要在被调用的函数中执行一些自定义的操作。这样做的理由可能十分多样，但一种很常见的原因是，被调用的函数本可以将数据返回给调用者去处理，但实际上这个数据可能并不会立即获取到。为了不阻塞整个程序，只能由调用者将后续操作封装为闭包后交给被调用函数，等到数据准备好时，通过调用闭包来完成后续操作。
+
+例如在读取文件这一场景中：
+
+```javascript
+// readFile 是 Node.js 内置的读取文件的方法
+import { readFile } from 'fs';
+
+const handler = (err, data) => {
+    console.log(data.toString());
+}
+readFile('~/someFile', handler);
+```
+
+可以看到，由于读取文件需要时间，我们并不能一直等待读取结果，而是写了 handler 这个闭包告诉 readFile 当读取完成后应该做什么。
+
+回调函数不需要引入很多的其他语法就可以方便地使用到异步之中，但是其问题也是很突出的。回调函数本身可读性就不是很好，而且也并不能很好贴合我们的直观思维逻辑。而其最大的问题就是可能造成回调函数过分嵌套，导致代码难以维护。这一般被称为**回调地狱**。
+
+真正的异步业务逻辑可能并不会很单一，比如说前端要从多个数据源加载数据，但是后一个数据的加载需要依靠前一个数据的结果。这样就不能在主线程中同时派遣多个异步过程，而必须在前一个异步过程的回调之中派遣下一个异步过程。这里我们依然用 `setTimeout` 来模拟耗时操作：
+
+```javascript
+setTimeout(() => { // Get data #1
+    console.log("Data #1 get!");
+    setTimeout(() => { // Get data #2
+        console.log("Data #2 get!");
+        setTimeout(() => { // Get data #3
+            console.log("Data #3 get!");
+            setTimeout(() => { // Get data #4
+                console.log("Data #4 get!");
+            }, 1000);
         }, 1000);
-    });
-}
-
-fetchData()
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+    }, 1000);
+}, 1000);
 ```
 
-### 3. Async/Await
+这样的代码很难阅读，也很难维护，而实际上的业务逻辑也不可能是 `setTimeout` 这样简单。另一方面，我们还需要处理异步异常的情况，如果发生错误，就应当立刻跳出异步，交由主线程做异常处理。而显然，我们很难给这样的代码添加异常处理功能。
 
-Async/Await是基于Promise的异步编程的语法糖，它可以以同步的方式编写异步代码，使其更易于阅读和编写。
+## `Promise` 对象
 
-```javascript
-async function fetchData() {
-    return new Promise((resolve, reject) => {
-        // 模拟耗时操作
-        setTimeout(() => {
-            const data = '异步数据';
-            resolve(data);
-        }, 1000);
-    });
-}
+为了解决回调函数不直观的问题，新版本的 JavaScript 设立了 `Promise` 对象，可以说这个对象完全改变了 JavaScript 异步代码编写的规范。
 
-async function processData() {
-    try {
-        const data = await fetchData();
-        console.log(data);
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-processData();
-```
-
-异步编程在处理网络请求、文件操作、定时器等需要等待的场景中非常常见。它使得程序可以同时处理多个任务，并在操作完成后进行相应的处理，提高了程序的效率和性能。
-
-## XMLHttpRequest 对象
-
----
-XMLHttpRequest对象是用于在JavaScript中进行HTTP请求的内置对象。它提供了一种与服务器进行数据交互的机制，可以用于发送HTTP请求并接收服务器的响应。
-
-> 下面是一个使用XMLHttpRequest对象发送GET请求的简单示例：
+创建一个 `Promise` 对象可以使用其构造函数：
 
 ```javascript
-const xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://api.example.com/data', true); // 设置请求方法、URL和是否异步
-xhr.onreadystatechange = function() {
-    if (xhr.readyState === XMLHttpRequest.DONE) { // 当请求完成时
-        if (xhr.status === 200) { // 如果请求成功
-            const responseData = xhr.responseText; // 获取服务器返回的数据
-            // 处理数据
+new Promise((resolve, reject) => {
+    let asyncSucceeded = Math.random() > 0.2;
+    setTimeout(() => {
+        if (asyncSucceeded) {
+            resolve("Async succeeded!");
         } else {
-            // 处理请求失败的情况
+            reject("Async failed!");
         }
-    }
-};
-xhr.send(); // 发送请求
-```
-
-> 上述代码首先创建了一个XMLHttpRequest对象，并通过调用 `open()` 方法设置请求的方法、URL和是否异步。然后，我们定义了 `onreadystatechange` 事件处理程序，当 `readyState` 发生变化时，会触发该事件处理程序。在事件处理程序中，我们可以根据 `readyState` 和 `status` 来判断请求的状态，并获取服务器返回的数据。
-
-其中， `readyState` 表示请求的当前状态，有以下几个值：
-
-* `0`: 未初始化，即尚未调用`open()`方法
-* `1`: 打开，即已调用`open()`方法，但尚未调用`send()`方法
-* `2`: 已发送，即已调用`send()`方法，但尚未接收到响应
-* `3`: 接收中，即正在接收响应数据
-* `4`: 完成，即已接收到完整的响应数据
-
-而 `status` 表示服务器返回的HTTP状态码，常见的有以下几个值：
-
-* `200`: 请求成功
-* `404`: 请求的资源未找到
-* `500`: 服务器内部错误
-
-> 在上述示例中，当请求的 `readyState` 为 `4` 且 `status` 为 `200` 时，表示请求成功，我们可以通过 `responseText` 属性获取服务器返回的文本数据。
-
-除了使用GET方法，还可以使用POST方法发送数据到服务器，如下所示：
-
-```javascript
-const xhr = new XMLHttpRequest();
-xhr.open('POST', 'https://api.example.com/data', true);
-xhr.setRequestHeader('Content-Type', 'application/json'); // 设置请求头
-xhr.onreadystatechange = function() {
-    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        const responseData = xhr.responseText;
-        // 处理数据
-    }
-};
-const requestData = {
-    name: 'John',
-    age: 30
-};
-xhr.send(JSON.stringify(requestData));
-```
-
-在POST请求中，我们需要通过 `setRequestHeader()` 方法设置请求头，通常用于指定请求的数据类型。然后，通过 `send()` 方法发送数据到服务器，可以使用 `JSON.stringify()` 方法将JavaScript对象转换为JSON格式的字符串。
-
-通过XMLHttpRequest对象，我们可以灵活地发送HTTP请求，与服务器进行数据交互，并根据返回的响应进行相应的处理。它为实现AJAX和与服务器进行数据交换提供了基础支持。然而，现
-
-## Fetch API
-
----
-Fetch API是一种用于进行网络请求的现代JavaScript API，它提供了一种更简洁、灵活的方式来发送HTTP请求并处理响应。与传统的XMLHttpRequest相比，Fetch API具有以下优点：
-
-1. 更简洁的语法：Fetch API使用了Promise来处理异步操作，使代码更具可读性和可维护性。它采用了链式调用的方式，使代码更加清晰明了。
-
-2. 内置的JSON解析：Fetch API自动解析响应数据，可以直接获取JSON格式的数据，无需手动解析。
-
-3. 支持流式数据处理：Fetch API支持处理流式数据，可以处理大型文件和响应流。
-
-> 下面是一个使用Fetch API发送GET请求的示例：
-
-```javascript
-fetch('https://api.example.com/data')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('请求失败');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // 处理返回的JSON数据
-    })
-    .catch(error => {
-        // 处理错误
-    });
-```
-
-> 在上述代码中，我们使用 `fetch()` 函数发送GET请求，并通过 `then()` 方法处理返回的响应。在第一个 `then()` 方法中，我们首先检查响应是否成功（ `response.ok` ），如果失败则抛出一个错误。然后，我们使用 `response.json()` 方法将响应数据解析为JSON格式。在第二个 `then()` 方法中，我们可以处理解析后的JSON数据。
-
-除了GET请求，Fetch API还支持发送POST请求和其他HTTP方法，以及设置请求头和请求参数等。
-
-```javascript
-fetch('https://api.example.com/data', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: 'John',
-            age: 30
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // 处理返回的JSON数据
-    })
-    .catch(error => {
-        // 处理错误
-    });
-```
-
-> 在上述代码中，我们通过传递一个配置对象作为 `fetch()` 函数的第二个参数来发送POST请求。配置对象中包含请求方法（ `method` ）、请求头（ `headers` ）和请求体（ `body` ）等信息。
-
-Fetch API是现代Web开发中常用的网络请求工具，它提供了一种简洁、灵活的方式来进行数据交互，并且具有更好的兼容性和可读性。
-
-## Promise 与 Async/Await
-
----
-
-### Promise
-
-Promise是JavaScript中用于处理异步操作的对象。它代表了一个尚未完成但最终会完成的操作，并可以获取其最终的结果或错误信息。
-
-Promise对象有三种状态：
-
-1. Pending（进行中）：初始状态，表示操作尚未完成。
-2. Fulfilled（已完成）：表示操作已成功完成。
-3. Rejected（已拒绝）：表示操作未能成功完成，发生了错误。
-
-> 下面是一个简单的Promise示例：
-
-```javascript
-const promise = new Promise((resolve, reject) => {
-    // 异步操作，例如发送网络请求或读取文件
-    setTimeout(() => {
-        const data = '操作成功';
-        // resolve方法用于将Promise状态设置为Fulfilled，并将结果传递给后续的处理程序
-        resolve(data);
-        // 或者使用reject方法将Promise状态设置为Rejected，传递错误信息
-        // reject(new Error('操作失败'));
     }, 1000);
 });
+```
 
-promise
-    .then(data => {
-        // 在Promise状态变为Fulfilled时执行的处理程序
-        console.log(data);
+其构造函数接受一个回调函数，这个回调函数的两个参数是另外的两个回调函数。`resolve` 代表异步成功的回调函数，`reject` 代表异步失败的回调函数。而构造函数接受的回调函数的函数体则是需要执行的耗时操作。
+
+:::note 为什么要叫这个名字，它的构造函数为什么长成这样
+
+Promise 的中文一般是“承诺”，那异步和承诺究竟有什么关系？
+
+我们来设想这样的一个情景。小明是一位五年级的小学生，他的妈妈为了让他好好学习，**承诺**小明如果他期末考试考到 100 分，就给他买新手机。而等待期末考试出成绩，就是异步过程。在这段时间内，作为主线程的小明的妈妈可以去做其他的工作，而负责执行异步过程的小明则要好好学习。
+
+等到异步过程执行完毕，也就是期末考试出成绩了，就到了**承诺**兑现的时候了。小明和妈妈就会核对小明的学习成果（异步过程的执行状态），如果小明考到了 100 分（异步过程执行成功），作为主线程的小明的妈妈就会去买新手机。而如果小明没考到 100 分（异步过程执行失败），小明的妈妈就不会买新手机。无论买不买，作为主线程的小明的妈妈都做好了异步过程的善后工作。
+
+换到程序设计的情景。一个**承诺**要成立，就需要规定好，异步过程执行完毕，主线程需要做什么，其实这就是指派异步过程的回调函数。在 `Promise` 的构造函数之中，`resolve` 实际上就是“考到 100 分，小明的妈妈要买新手机”，`reject` 实际上就是“考不到 100 分，小明的妈妈不买新手机”，函数体就是“小明努力学习”。
+
+但是构造函数之中虽然有了 `resolve` 和 `reject`，但实际上我们还没有具体规定这两个回调到底是啥。而指定这两个回调需要调用 `Promise` 的 `then` 和 `catch` 方法。这个我们在下面讲解。
+:::
+
+给 `resolve` 和 `reject` 指定具体的函数体需要使用 `then` 和 `catch` 方法。这两个方法都会接受回调函数，并且返回 `Promise` 对象：
+
+```javascript
+new Promise((resolve, reject) => {
+    let asyncSucceeded = Math.random() > 0.2;
+    setTimeout(() => {
+        if (asyncSucceeded) {
+            resolve("Async succeeded!");
+        } else {
+            reject("Async failed!");
+        }
+    }, 1000);
+})
+    .then((res) => {
+        console.log("Then");
+        console.log(res);
     })
-    .catch(error => {
-        // 在Promise状态变为Rejected时执行的处理程序
-        console.error(error);
+    .catch((err) => {
+        console.log("Catch");
+        console.log(err);
     });
 ```
 
-> 在上述代码中，我们创建了一个Promise对象，并在构造函数中定义了异步操作。使用 `setTimeout` 模拟异步操作的延迟。在异步操作完成后，我们可以调用 `resolve` 方法将Promise状态设置为Fulfilled，并将操作结果传递给后续的 `.then()` 方法。如果异步操作发生错误，可以调用 `reject` 方法将Promise状态设置为Rejected，并传递错误信息。
+通过这样的方式，我们就在 `Promise` 构造函数接受的回调函数的函数体中规定了异步过程的具体任务，在 `then` 和 `catch` 方法之中指派了异步过程的回调函数。这样，主线程就完整完成了异步过程的派遣。
 
-使用 `.then()` 方法可以注册在Promise对象状态为Fulfilled时执行的处理程序。使用 `.catch()` 方法可以注册在Promise对象状态为Rejected时执行的处理程序。这样，我们可以根据Promise的状态来处理操作的结果或错误信息。
-
-Promise还提供了其他方法，如 `.finally()` 用于注册无论Promise状态如何都会执行的处理程序，以及 `.all()` 和 `.race()` 用于处理多个Promise对象的并发操作。
-
-使用Promise可以更好地处理异步操作，避免回调地狱（Callback Hell）的问题，使代码更清晰、可读性更高，并且更容易处理异步操作的结果和错误。
-
-### Async/Await
-
-Async/await是JavaScript中处理异步操作的一种语法糖，它基于Promise，并提供了更简洁、直观的方式来编写异步代码。
-
-使用async/await，我们可以使用类似同步代码的方式来处理异步操作，而无需使用回调函数或链式调用的方式。通过在函数前面加上 `async` 关键字，我们可以将该函数声明为一个异步函数。在异步函数内部，可以使用 `await` 关键字来等待一个返回Promise的表达式，并暂停函数的执行，直到Promise解决（Fulfilled）并返回结果。
-
-> 下面是一个使用async/await的示例：
+`Promise` 比直接写回调模式优越的地方就是这种写法解决了回调地狱。我们依然考虑依次获取多数据源数据的业务场景，由于 `then` 方法依然返回 `Promise` 对象，所以实际上我们可以在 `then` 后面接着调用 `then`。而上一个 `then` 之中的回调函数的返回值会被传入下一个 `then` 之中的回调函数的第一个参数：
 
 ```javascript
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function asyncFunction() {
-    console.log('开始');
-    await delay(1000); // 等待1秒钟
-    console.log('结束');
-}
-
-asyncFunction();
+new Promise((resolve, reject) => {
+    // Get Data #1
+    resolve("Data #1");
+})
+    .then((res) => {
+        console.log(res);
+        // Get Data #2
+        return "Data #2";
+    })
+    .then((res) => {
+        console.log(res);
+        // Get Data #3
+        return "Data #3";
+    })
+    .then(console.log)
+    .catch(console.log);
 ```
 
-> 在上述代码中，我们定义了一个 `delay` 函数，返回一个Promise，它会延迟指定的毫秒数后解决。然后，我们定义了一个异步函数 `asyncFunction` ，在函数内部使用 `await` 关键字来等待 `delay` 函数的完成。这样，当 `await` 后面的Promise解决后，才会执行后续的代码。
+这种写法被称为 `then` 链，其好处是比回调函数写法更易读且易维护。
 
-async/await还可以与try/catch语句结合使用，以处理Promise的拒绝（Rejected）状态和错误。
+另外，对于多依赖问题（需要多个异步全部结束后才能派遣下一个异步），`Promise` 提供了 `all` 方法：
 
 ```javascript
-async function fetchData() {
-    try {
-        const response = await fetch('https://api.example.com/data');
-        const data = await response.json();
-        console.log(data);
-    } catch (error) {
-        console.error('请求失败', error);
-    }
-}
-
-fetchData();
+Promise.all(
+    [1, 2, 3].map((val) => {
+        return new Promise((resolve, reject) => {
+            resolve(`Promise #${val}`);
+        });
+    })
+)
+    .then((res) => {
+        console.log(res); // ["Promise #1", "Promise #2", "Promise #3"]
+    })
+    .catch((err) => {});
 ```
 
-> 在上述代码中，我们使用 `await` 关键字来等待 `fetch` 请求的结果，并使用try/catch语句来捕获可能发生的错误。如果请求成功，我们可以继续处理响应的数据；如果请求失败，会进入catch块并打印错误信息。
+这里 `then` 之中的回调函数接受的参数是所有 `Promise` 对象 `resolve` 回调所接受的参数拼成的数组，`catch` 同理。
 
-使用async/await可以使异步代码更易于编写和阅读，并且能够以更直观的方式处理异步操作的结果和错误。它是现代JavaScript中处理异步编程的常用模式之一。
+---
+
+另外，注意两点：
+
+- `Promise` 一旦创建，内部的异步过程就开始执行，且开始执行后就不会取消
+- 创建 `Promise` 会写很多很长的回调，写完这些回调后很容易给编写者一种“异步已经执行结束”的错觉。实际上这么长的语句仅仅是**定义了 `Promise` 对象**，也就是仅仅只是派遣了异步。
+
+关于第二点，可以看下面的代码：
+
+```javascript
+let i = 1;
+
+new Promise((resolve, reject) => {
+    resolve(2);
+})
+    .then((res) => {
+        i = 2;
+    })
+    .catch(console.log);
+
+console.log(i); // 1
+```
+
+这里创建完 `Promise` 对象之后立刻输出 `i`，由于此时异步还没有执行完毕，也就是还没有将 `i` 重新赋值，所以只能得到原先值 `1`。
+
+:::caution 编者曾经踩过的坑不能让读者再踩
+
+在实际工程中，创建 `Promise` 对象的语句可以比这个示例长很多，甚至可以超出一个屏幕显示的范围。此时一定要保持清醒，这么长的语句，**仅仅是派遣了异步**，不要紧接着后面使用一些会被异步过程修改的值。
+
+跟着我念，**再长的语句也仅仅是派遣了异步**，**再长的语句也仅仅是派遣了异步**，**再长的语句也仅仅是派遣了异步**。
+
+此外，实际工程之中，一般会设计一个标记表示某个异步是否还在执行。这个标记会在创建 `Promise` 对象派遣异步的时候置真，然后在 `then` 链最后的回调中置假。这样主线程就可以根据这个标记确定是否可以使用一些敏感变量（比如上面例子中的 `i`）。
+
+这种思想其实类似于读写锁的思想。
+
+:::
+
+### `async` 与 `await`
+
+在最新标准之中，JavaScript 引入了 `async, await` 这两个关键字，这两个关键字的作用是能够让异步代码写得和同步代码一样自然。
+
+直接使用 `Promise` 看起来有些复杂，尤其是在链式调用时，如果中间变量需要保存，写法就变得丑陋，因此在更多的时候，我们使用 `async` / `await` 关键词。
+
+我们可以用 `async` 关键字将一个函数声明为异步函数。调用异步函数的时候，其会立刻返回并派遣一个异步：
+
+```javascript
+const foo = async () => {
+    setTimeout(() => {
+        console.log("Async over!");
+    }, 1000);
+};
+
+foo();
+console.log("Sync code here!");
+```
+
+而 `async` 关键字的的另外一个作用就是将函数的返回值包装为 `Promise` 对象：
+
+```javascript
+const foo = async () => {
+    setTimeout(() => {
+        console.log("Async over!");
+    }, 1000);
+};
+
+typeof foo(); // "object", not "undefined"
+```
+
+那么我们也可以按照 `Promise` 的 `then` 链写法使用异步函数：
+
+```javascript
+const foo = async () => {
+    return "Data #1";
+};
+
+foo()
+    .then((res) => {
+        console.log(res);
+        return "Data #2";
+    })
+    .then(console.log)
+    .catch(console.log);
+```
+
+`await` 关键字后面可以接一个变量，如果这个变量不是 `Promise` 对象，那么 `await` 关键字不产生任何效果。
+
+如果是 `Promise` 对象，那么 `await` 关键字会阻塞代码运行，直到这个 `Promise` 对象代表的异步执行完毕。
+
+如果异步成功，这个时候 `await` 语句的返回值是 `Promise` 的 `resolve` 回调接受的参数，无论有没有通过 `then` 方法指定 `resolve` 回调。
+
+如果异步失败，首先确定这个 `Promise` 有没有通过 `catch` 方法规定 `reject` 回调。如果有，`await` 返回 `catch` 之中回调函数的返回值，如果没有，抛出 Uncaught Failure 错误。
+
+比如说：
+
+```javascript
+let a = await 1;
+a; // 1
+
+let b = await new Promise((resolve, reject) => {
+    let succeeded = Math.random() > 0.2;
+    if (succeeded) resolve("Success");
+    else reject("Failure");
+})
+    .catch((err) => "Error " + err);
+b; // Maybe "Success", maybe "Error Failure"
+```
+
+`async, await` 关键字实际上是针对 `then` 链可能过长导致可读性降低的问题而提出的。我们现在还是考虑依次从多个数据源获取数据的问题，事实上通过 `async, await` 关键字，这个异步过程甚至可以写得很像同步代码：
+
+```javascript
+const fetchData = async () => {
+    let data_1 = await fetchData_1(initData);
+    let data_2 = await fetchData_2(data_1);
+    let data_3 = await fetchData_3(data_2);
+    return [data_1, data_2, data_3];
+}
+```
+
+这里的 `fetchData` 系列函数均是异步函数。
+
+可以发现这种写法和同步代码几乎没有什么差别，可读性比 `then` 链好一些，更是比回调函数写法好很多。
+
+另一方面，其解决了不定长 `then` 链的问题。如果要依次拉取数据的信息源个数不是固定的，而是通过变量指定，那么 `then` 链就不可用了，因为我们不知道具体要写多少个 `then`。但是通过 `async, await` 结合 `for` 循环就可以解决问题。
+
+---
+
+但是 `async, await` 带来的争议也不小，最大的危险是异步传染。
+
+`await` 关键字的使用有一个要求，也就是如果在函数中使用，那么这个函数必须是异步的。原因也是好理解的，因为 `await` 会阻塞代码运行，如果在主线程上阻塞，则会导致页面卡顿，这本来就和异步的初衷矛盾。
+
+那么进一步，调用了这个函数的外层函数中的语句为了防止异步可能带来的敏感变量问题（和 `Promise` 问题类似，异步函数如果修改了某一个变量，这个变量很有可能不会被及时修改），外层函数也很有可能给这个函数加上 `await`，这又会导致外层函数不可抗力地变为异步函数。这种传染会导致整片函数变为异步，从而让逻辑变得混乱。
+
+另外，`async, await` 关键字会降低我们对阻塞的敏感，从而编写出不必要的阻塞和串行代码。实际上，`async, await` 只是让**依次**拉取信息的代码变得简洁，对于本就可以多并发的信息拉取，反而会有让我们写出不必要的串行代码的可能，从而降低代码效率：
+
+```javascript
+const fetchData = async () => {
+    let data_1 = await fetchData_1();
+    let data_2 = await fetchData_2();
+}
+```
+
+如果 `data_1, data_2` 本就可以并发获取，这样的写法反而会降低效率，因为这样代码的实际含义是串行地获取数据。真正的写法应该是：
+
+```javascript
+const fetchData = async () => {
+    let data_1_promise = fetchData_1();
+    let data_2_promise = fetchData_2();
+    let data_1 = await data_1_promise;
+    let data_2 = await data_2_promise;
+}
+```
+
+只有先获取两个异步的 `Promise` 对象，同时派遣出两个异步后后分别 `await` 才能实现并发。
+
+但是 `async, await` 的目的本来就是用于隐藏掉 `Promise` 的存在，将异步代码写成同步的格式，这样做其实还不如直接把 `Promise` 写出来。
+
+此外，对于多依赖问题，`async, await` 关键字并没有解决，因为 `await` 一次只能等待一个异步。这个时候还是不可避免地需要使用 `Promise` 对象。
+
+:::note 该如何写好异步代码
+
+现代的 JavaScript 已经将异步操作封装得足够易用，借助 `Promise, async, await` 就可以写出很明晰地异步代码。
+
+但是我们在编写的时候一定需要注意自己写的不是同步代码而是异步代码，以免出现问题。此外，应当根据实际应用要求合理选择直接使用 `Promise` 对象还是 `async, await` 关键字。
+
+实际上文档能教给读者的很有限，编者还是希望大家多去编写真实的工程代码以真正掌握 JavaScript 异步。
+
+:::
