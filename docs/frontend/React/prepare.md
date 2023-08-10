@@ -9,7 +9,7 @@ sidebar_position: 2
 
 在继续下面的环境配置之前，本文档默认了你已经安装了高于 v12 的 `node`，并且可以使用 `npm install`。
 
-如果安装 Node.js 或者 npm 遇到困难，可以参考 [Node.js 的引导文档](/languages/node.js)。
+如果安装 Node.js 或者 npm 遇到困难，可以参考 [Node.js 的引导文档](../node.js/index.md)。
 
 ## 使用 `yarn` 代替 `npm`
 
@@ -17,7 +17,7 @@ sidebar_position: 2
 
 这里不具体叙述安装过程，可以参考 [官网](https://yarn.bootcss.com) 上给出的方式进行安装，也可以使用 `npm install yarn -g` 命令安装（后者可能不适用于 Linux 用户）。
 
-`yarn` 的命令和 `npm` 的命令大致具有以下对应关系，更细节的关系则可以参考 [npm 的引导文档](/languages/node.js/npm)：
+`yarn` 的命令和 `npm` 的命令大致具有以下对应关系，更细节的关系则可以参考 [npm 的引导文档](../node.js/npm.md)：
 
 |                  | `npm`                          | `yarn`                 |
 | ---------------- | ------------------------------ | ---------------------- |

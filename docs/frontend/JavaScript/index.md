@@ -25,10 +25,6 @@ sidebar_position: 1
 
 JavaScript 是应用相当广泛的一门脚本语言，大量的 Web 应用或者移动端应用依靠 JavaScript 以及其衍生语言开发。而且作为“前端三件套”（指 HTML、CSS 和 JavaScript）之一，学习 JavaScript 对编写前端工程的重要性不言而喻。
 
-后续可以阅读的文档有：
-
-- TypeScript 语言入门 [/languages/typescript](/languages/typescript)
-
 ---
 
 ## 资源链接

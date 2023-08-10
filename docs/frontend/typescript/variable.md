@@ -74,7 +74,7 @@ let greeting: string = "Hello!";
     ```
 
 - 尽管 TypeScript 会尝试阻止你这么做，但 JavaScript 是动态类型语言，你可以将一个变量赋为其他类型值。
-- 尽管 TypeScript 更加会尝试阻止你，但 JavaScript 是弱类型语言，要小心随处可能存在的隐式类型转换，这可能会引起很难理解的行为，关于这一现象的详细解释可以参考 [JavaScript 的变量与变量类型](../../javascript/variable)中的“JavaScript 的魔法”一节。
+- 尽管 TypeScript 更加会尝试阻止你，但 JavaScript 是弱类型语言，要小心随处可能存在的隐式类型转换，这可能会引起很难理解的行为，关于这一现象的详细解释可以参考 [JavaScript 的变量与变量类型](../JavaScript/variable.md)中的“JavaScript 的魔法”一节。
 
     ```typescript
     console.log(1 + null);      // => 1

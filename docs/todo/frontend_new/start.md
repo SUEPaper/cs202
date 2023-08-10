@@ -7,41 +7,20 @@ sidebar_position: 1
 
 ## Vite
 
-首先进行以下操作
+首先用 VSCode 中打开TodoListApplication，并打开终端。
 
-1. 新建文件夹，命名为TodoListApplication。
-2. 在VScode中打开TodoListApplication，并打开终端。
-
-我们使用[Vite](https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project)来初始化前端项目。
+我们使用[Vite](https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project)来新建并初始化前端项目。
 
 在命令行中输入
+
 ```bash
-npm create vite@latest
+npm create vite@latest frontend -- --template react
 ```
+
 ![](img/1_1.png)
 
-在这里输入frontend，回车
+用 VSCode 打开 frontend 文件夹，并且打开 VS Code 的命令行，输入
 
-![](img/1_2.png)
-
-
-![](img/1_3.png)
-
-用键盘的上下键选择，我们选择`React`框架，回车
-
-![](img/1_4.png)
-
-选择用Javascript，回车
-
-![](img/1_5.png)
-
-此时已经初始化成功，按照它的提示，输入
-
-```bash
-code frontend
-```
-
-然后会跳出新的vscode窗口，打开命令行，输入
 ```bash
 npm install
 npm run dev

@@ -245,7 +245,7 @@ console.log(redCircle === removedCircle); // true
 :::
 
 <!-- TODO -->
-我们提供的 [样例网页](/static/languages/javascript/dom-html.html) 已经为你引用了 jQuery，可以运行下述代码来确定是否引用成功：
+我们提供的 [样例网页]已经为你引用了 jQuery，可以运行下述代码来确定是否引用成功：
 
 ```javascript
 console.log($.fn.jquery); // 2.1.4
@@ -352,7 +352,7 @@ $("#red-circle").after(
 
 :::note 使用我们提供的样例
 
-在学习这一小节的时候，可以点击进入 [我们的样例网页](/static/languages/javascript/event-1.html) 并按下 `f12` 打开控制台，在控制台里运行这一节提供的样例代码来理解 DOM 树操作。
+在学习这一小节的时候，可以点击进入 [我们的样例网页] 并按下 `f12` 打开控制台，在控制台里运行这一节提供的样例代码来理解 DOM 树操作。
 
 :::
 
@@ -416,7 +416,7 @@ $("#test-button").click(console.log);
 </html>
 ```
 
-上述 HTML 代码已经放在 [我们的样例网页之中](/static/languages/javascript/event-2.html)。如果你浏览后点击按钮，你会发现并没有按照预期弹出弹窗。
+上述 HTML 代码已经放在 [我们的样例网页之中]。如果你浏览后点击按钮，你会发现并没有按照预期弹出弹窗。
 
 这里就需要提到 `<script />` 标签中代码的执行时机。实际上，这些代码将会在文档加载完毕之前就执行完毕，此时的 DOM 上还未有按钮对象，也就是说，选择器应该什么都获得不到，从而绑定失败。
 
@@ -442,4 +442,4 @@ $(() => {
 });
 ```
 
-这样修改后的代码可以参见 [我们的样例网页](/static/languages/javascript/event-3.html)。
+这样修改后的代码可以参见 [我们的样例网页]。
