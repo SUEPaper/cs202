@@ -1,6 +1,6 @@
 ---
 id : todo-component
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Todo List组件
@@ -270,3 +270,99 @@ props = { content: "上海电力大学", key: 0 }
 ```
 
 :::
+
+
+## 条件渲染
+
+在 React 中，我们可以根据不同的情况，渲染不同的内容，这也被成为条件渲染。
+
+### if-else 条件渲染
+
+将 `src/App.jsx` 的代码更改如下：
+
+```jsx
+import Todo from "./components/Todo";
+
+function App() {
+  const todoList = [
+    {
+      id: 1,
+      content: "上海电力大学",
+      isDone: false,
+    },
+    {
+      id: 2,
+      content: "数理学院",
+      isDone: false,
+    },
+    {
+      id: 3,
+      content: "现代Web开发",
+      isDone: true,
+    },
+    {
+      id: 4,
+      content: "Web前端开发",
+      isDone: false,
+    },
+    {
+      id: 5,
+      content: "待办清单",
+      isDone: true,
+    },
+  ];
+
+  return (
+    <div className="bg-white text-black p-4">
+      <ul>
+        {todoList.map((todo) => (
+          <Todo todo={todo} key={todo.id} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+```
+
+将 `src/components/Todo.jsx` 的代码更改如下:
+
+```jsx
+function Todo({ todo }) {
+  const { id, content, isDone } = todo;
+  if (!isDone) {
+    return <li>Hello, {content}</li>;
+  } else {
+    return <li className="text-rose-600 line-through">Hello, {content}</li>;
+  }
+}
+
+export default Todo;
+```
+
+在上面的代码中，我们判断 `todo.isDone` 的内容，当为false时，证明该待办事项没有完成，无需特殊处理。
+当为true时，证明该待办事项已完成，于是增加中划线和字体变为红色的CSS样式。
+`text-rose-600` 和 `line-through` 请仔细阅读Tailwind CSS的文档。
+
+效果如下：
+
+![](images/todo_component_04.png)
+
+
+### 三元表达式条件渲染
+
+我们可以使用JavaScript提供的三元表达式对 `src/components/Todo.jsx` 的代码进行更改:
+
+```jsx
+function Todo({ todo }) {
+  const { id, content, isDone } = todo;
+  return (
+    <li className={isDone ? "text-rose-600 line-through" : ""}>
+      Hello, {content}
+    </li>
+  );
+}
+
+export default Todo;
+```

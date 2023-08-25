@@ -1,6 +1,6 @@
 ---
-id : index
-sidebar_position: 0
+id : start
+sidebar_position: 1
 ---
 
 # 初始化Web前端项目
