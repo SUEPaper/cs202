@@ -34,7 +34,7 @@ sidebar_position: 0
 
 :::tip
 
-本课程采用的 Web 前后端开发的技术栈为：`React.js + Tailwind CSS + FastAPI + MySQL` 。
+本课程采用的 Web 前后端开发的技术栈为：`Vue.js + Tailwind CSS + FastAPI + MySQL` 。
 使用 git 进行代码版本管理，GitHub 为代码远程仓库，Docker 进行应用部署。
 (受限于课程实践和课改内容未完全准备好，本学期课程不教授 git 代码版本管理和 docker 进行
 应用部署的内容，请同学们自行学习相关内容。)
@@ -47,7 +47,7 @@ sidebar_position: 0
 graph
     A[HTML] --> B[CSS]
     B --> C[JavaScript]
-    C --> D[React.js]
+    C --> D[Vue.js]
     D --> E[Tailwind CSS]
     E --> F[Python]
     F --> G[MySQL]
@@ -74,62 +74,13 @@ graph
 - HTML：https://developer.mozilla.org/en-US/docs/Web/HTML
 - CSS：https://developer.mozilla.org/en-US/docs/Web/CSS
 - JavaScript：https://developer.mozilla.org/en-US/docs/Web/JavaScript
-- React.js：https://react.dev/learn
+- Vue.js：https://cn.vuejs.org/
 - Tailwind CSS：https://tailwindcss.com/docs/utility-first
 - Python：https://docs.python.org/3.10/tutorial/index.html
 - FastAPI：https://fastapi.tiangolo.com/lo/
 - Alembic：https://alembic.sqlalchemy.org/en/latest/tutorial.html
 - SQLAlchemy：https://docs.sqlalchemy.org/en/14/orm/tutorial.html
 
-### 快速入门视频教程推荐
-
-#### 一小时 Git 教程
-
-<iframe src="//player.bilibili.com/player.html?aid=528356813&bvid=BV1HM411377j&cid=1121354061&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-视频链接：https://www.bilibili.com/video/BV1HM411377j
-
-#### 为初学者准备的：HTML 速成
-
-<iframe src="//player.bilibili.com/player.html?aid=28878158&bvid=BV1vs411M7aT&cid=50057072&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-视频链接：https://www.bilibili.com/video/BV1vs411M7aT
-
-#### 为初学者准备的：CSS 速成
-
-<iframe src="//player.bilibili.com/player.html?aid=29469349&bvid=BV1bW411R7hg&cid=51235718&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-视频链接：https://www.bilibili.com/video/BV1bW411R7hg
-
-#### 为初学者准备的：JavaScript 速成
-
-<iframe src="//player.bilibili.com/player.html?aid=37254160&bvid=BV1Jt411D7j6&cid=65472017&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-视频链接：https://www.bilibili.com/video/BV1bW411R7hg
-
-#### 完整的现代 React 教程
-
-<iframe src="//player.bilibili.com/player.html?aid=560709137&bvid=BV1Me4y1h7bQ&cid=837645211&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-视频链接：https://www.bilibili.com/video/BV1Me4y1h7bQ
-
-#### 3 小时快速入门 Python
-
-<iframe src="//player.bilibili.com/player.html?aid=976148468&bvid=BV1944y1x7SW&cid=429328810&page=2&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-视频链接：https://www.bilibili.com/video/BV1944y1x7SW?p=2
-
-#### 1 小时速成 MySQL
-
-<iframe src="//player.bilibili.com/player.html?aid=252537014&bvid=BV1qY411H7SR&cid=466393122&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-视频链接：https://www.bilibili.com/video/BV1qY411H7SR
-
-#### 从 0 到 1 学习 FastAPI 框架的所有知识点
-
-<iframe src="//player.bilibili.com/player.html?aid=501770841&bvid=BV1iN411X72b&cid=302128826&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-视频链接：https://www.bilibili.com/video/BV1iN411X72b
 
 ## 关于遇到问题的搜索
 

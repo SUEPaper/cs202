@@ -93,38 +93,26 @@ const config = {
           {
             type: "docSidebar",
             position: "left",
+            sidebarId: "installSidebar",
+            label: "开发环境安装",
+          },
+          {
+            type: "docSidebar",
+            position: "left",
             sidebarId: "frontendSidebar",
-            label: "Web前端开发",
+            label: "Web前端基础",
           },
           {
             type: "docSidebar",
             position: "left",
             sidebarId: "backendSidebar",
-            label: "Web后端开发",
-          },
-          {
-            type: "docSidebar",
-            position: "left",
-            sidebarId: "devopsSidebar",
-            label: "DevOps",
+            label: "Web后端基础",
           },
           {
             type: "docSidebar",
             position: "left",
             sidebarId: "todoSidebar",
             label: "Todo应用开发",
-          },
-          {
-            type: "docSidebar",
-            position: "left",
-            sidebarId: "projectSidebar",
-            label: "项目实战(待开发)",
-          },
-          {
-            type: "docSidebar",
-            position: "right",
-            sidebarId: "systemDesignSidebar",
-            label: "系统设计",
           },
           {
             type: "docSidebar",
