@@ -6,9 +6,9 @@ sidebar_position: 2
 # Hello world 组件
 
 
-## 你编写的第一个React组件
+## 你编写的第一个Vue组件
 
-VS Code 打开 `src/App.jsx` 文件，将其中代码替换成如下内容:
+VS Code 打开 `src/App.vue` 文件，将其中代码替换成如下内容:
 
 ```jsx
 <template>
