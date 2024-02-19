@@ -11,50 +11,28 @@ sidebar_position: 2
 VS Code 打开 `src/App.jsx` 文件，将其中代码替换成如下内容:
 
 ```jsx
-function App() {
-  return <div>Hello world</div>;
-}
-
-export default App;
+<template>
+  <div class="text-red-700  bg-blue-500">
+    hello world
+  </div>
+</template>
 ```
+![](./img/2_4.png)
 
-我们看到 App.jsx 里面的代码分为两个部分。
-首先定义了一个 React 函数组件，命名为 App，其实就是一个JavaScript的函数，这个函数返回一个`div`的DOM节点元素。
+`<template> `是 Vue.js 中的模板标签，用于定义组件的模板结构。
 
-第二部分其实在JavaScript中，export default 是用于将一个模块中的某个成员（通常是一个变量、函数或类）标记为默认导出。
-这个默认导出在其他文件中可以被直接引用，而无需使用花括号 {} 来包裹。**更多请仔细学习JavaScript的基础语法**
+**更多请仔细学习JavaScript的基础语法**
 
-VS Code 打开 `src/main.jsx` 文件，便可看到如下代码：
+VS Code 打开 `src/main.js` 文件，便可看到如下代码：
 
 ```jsx
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
+import { createApp } from "vue";
+import App from "./App.vue";
+import "./index.css";
+createApp(App).mount("#app");
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
 ```
 
-首先是一系列导包，我们导入了 `react` 包，并命名为 `React`，导入了 `react-dom` 包并命名为 `ReactDOM`。
-然后导入我们在`App.js`里面定义的组件，命名为 App，同时也导入CSS样式文件。
-
-`ReactDOM.createRoot(document.getElementById('root'))`:
-这一部分使用 `ReactDOM.createRoot` 方法来创建一个根渲染器（root renderer）。
-这个方法接受一个 DOM 元素作为参数，表示要将应用程序渲染到哪个 HTML 元素中。
-在这里，它选择了具有 `id` 为 `root` 的 DOM 元素作为渲染目标。
-
-`.render()`这部分调用了根渲染器的 render 方法，用于将 React 元素渲染到指定的目标 DOM 元素中。
-
-`<React.StrictMode>`
-这是 React 提供的一个组件，用于帮助你发现应用中潜在的问题。
-在严格模式下，React 会执行额外的检查，以帮助你捕获一些常见的开发错误。
-这个组件通常用来包裹应用的整个渲染树。
-
-`<App />`这是你的应用程序的根组件，也就就是我们在`App.js`里面定义的组件，它会被渲染到目标 DOM 元素中。
 
 VS Code 打开 `index.html`，便可看到如下代码：
 
@@ -65,19 +43,21 @@ VS Code 打开 `index.html`，便可看到如下代码：
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Vite + Vue</title>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
 ```
 
-上述是我们整个应用程序的HTML入口文件，其中定义了ID为root的DOM元素，以及引入了`src/main.jsx`文件，
-因此我们整个应用程序需要进行coding的部分是从`src/main.jsx`开始的。
+上述是我们整个应用程序的HTML入口文件，其中定义了ID为root的DOM元素，以及引入了`src/main.js`文件，
+因此我们整个应用程序需要进行coding的部分是从`src/main.js`开始的。
 
-## JSX 语法
+我们可以像在 HTML 中一样，给元素标签加上属性，只不过我们需要遵守[驼峰式命名](https://baike.baidu.com/item/%E9%A9%BC%E5%B3%B0%E5%91%BD%E5%90%8D%E6%B3%95/7560610?fromtitle=%E9%AA%86%E9%A9%BC%E5%91%BD%E5%90%8D%E6%B3%95&fromid=7794053)法则，
+
+<!-- ## JSX 语法
 
 首先我们来看一下 React 引以为傲的特性之一 -- JSX。
 它允许我们在 JS 代码中使用 XML 语法来编写用户界面，使得我们可以充分的利用 JS 的强大特性来操作用户界面。
@@ -150,7 +130,6 @@ const element = <li>Hello, World</li>;
 ### JSX 中添加节点属性
 
 我们可以像在 HTML 中一样，给元素标签加上属性，只不过我们需要遵守[驼峰式命名](https://baike.baidu.com/item/%E9%A9%BC%E5%B3%B0%E5%91%BD%E5%90%8D%E6%B3%95/7560610?fromtitle=%E9%AA%86%E9%A9%BC%E5%91%BD%E5%90%8D%E6%B3%95&fromid=7794053)法则，
-比如在 HTML 上的属性 data-index 在 JSX 节点上要写成 dataIndex。
 
 ```jsx
 const element = <div dataIndex="0">Hello, World</div>;
@@ -165,4 +144,5 @@ const element = <div dataIndex="0">Hello, World</div>;
 const element = <div className="app">Hello, World</div>;
 ```
 
-:::
+::: -->
+<!-- TODO:解释基本语法？ -->

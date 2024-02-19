@@ -5,9 +5,9 @@ sidebar_position: 1
 
 # 初始化Web前端项目
 
-[React.js中文文档网站](https://zh-hans.react.dev/)
+[Vue.js中文文档网站](https://cn.vuejs.org/guide/introduction.html)
 
-## Vite 新建React项目
+## Vite 新建Vue项目
 
 首先用 VSCode 中打开TodoListApplication，并打开终端。
 
@@ -16,7 +16,7 @@ sidebar_position: 1
 在命令行中输入
 
 ```bash
-npm create vite@latest frontend -- --template react
+npm create vite@latest frontend -- --template vue
 ```
 
 ![](img/1_1.png)
@@ -104,29 +104,31 @@ package.json 是一个用于描述和管理项目的配置文件，通常位于�
 
 删除文件src\assets\react.svg
 
-将src\index.css文件中的代码替换为
+新建文件src\index.css，写入代码
 
 ```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
+![](img/1_16.png)
 
 将tailwind.config.js替代为
 ```jsx
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+module.exports = {
+  content: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
+
 
 ```
+
+在main.js 中加入 ```import "./index.css";```，删除 ```import "./style.css";```
+![](img/1_17.png)
 :::tip
 tailwind.config.js 是 Tailwind CSS 的配置文件。它用于自定义和配置 Tailwind CSS 的各种选项和样式。
 
@@ -142,24 +144,3 @@ tailwind.config.js 是 Tailwind CSS 的配置文件。它用于自定义和配�
 :::
 
 
-此时的文件结构为
-
-```
-frontend
-├─ .eslintrc.cjs
-├─ .gitignore
-├─ index.html
-├─ package-lock.json
-├─ package.json
-├─ postcss.config.js
-├─ public
-│  └─ vite.svg
-├─ README.md
-├─ src
-│  ├─ App.jsx
-│  ├─ assets
-│  ├─ index.css
-│  └─ main.jsx
-├─ tailwind.config.js
-└─ vite.config.js
-```
