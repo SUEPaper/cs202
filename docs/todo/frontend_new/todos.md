@@ -5,11 +5,15 @@ sidebar_position: 5
 
 # 完成Todo List剩下功能
 
-## 删除功能
+## 图标库
+
+为了方便使用UI，我们使用[element-plus](https://element-plus.org/zh-CN/component/icon.html)的图标库，在命令行里输入下面的命令进行安装。
 
 ```bash
 npm install @element-plus/icons-vue
 ```
+
+首先对其进行配置。
 
 在```src\main.js```中写入
 ```js
@@ -26,6 +30,11 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 app.mount("#app");
 ```
+## 删除功能
+
+接下来我们需要一个删除按钮，用于删除`todoList`这个状态里的数据。
+
+与之前一样，先添加一个对应的`action`。
 
 在``src\stores\todoData.js``中写入
 ```js
@@ -72,15 +81,20 @@ export const useTodoDataStore = defineStore("todoData", {
       this.todoList.push(newTodo);
     },
     deleteTodo(id) {
+      // 查找待办事项在 todoList 数组中的索引
       const index = this.todoList.findIndex((todo) => todo.id === id);
+
+      // 检查是否找到了待办事项
       if (index !== -1) {
+        // 如果找到了，使用 splice 方法从 todoList 数组中移除该待办事项
         this.todoList.splice(index, 1);
       }
-    },
+    }
   },
 });
 ```
-<!-- TODO:解释deleteTodo -->
+然后需要调用这个`action`
+
 在``src\App.vue``中写入
 ```vue
 <script setup>
@@ -121,13 +135,20 @@ const DeleteTodo = (id) => {
   </div>
 </template>
 ```
+
+其中 `<Delete>` 是图标，通过监听 `@click` 事件触发一个方法，该方法通过匿名函数调用 `DeleteTodo` 方法，传递了一个参数 `todo.id`。
+
 ![](./img/3_4.png)
 
 点击mytodo的删除图标
 
 ![](./img/3_5.png)
 
-## 修改是否完成
+## 修改"是否完成"
+
+接下来我们需要一个点击该TODO，改变其是否完成的功能。
+
+同样的，需要增加对应的`action`
 
 在``src\stores\todoData.js``中修改代码
 
@@ -181,11 +202,15 @@ export const useTodoDataStore = defineStore("todoData", {
       }
     },
     changeIsDone(id) {
+      // 查找待办事项在 todoList 数组中的对象
       const todo = this.todoList.find((item) => item.id === id);
+
+      // 检查是否找到了待办事项
       if (todo) {
+        // 如果找到了，切换待办事项的完成状态
         todo.isDone = !todo.isDone;
       }
-    },
+    }
   },
 });
 ```
@@ -239,3 +264,5 @@ const ChangeIsDone = (id) => {
   </div>
 </template>
 ```
+
+`<Delete>`也是一个图标。
