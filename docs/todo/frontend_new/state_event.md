@@ -6,12 +6,22 @@ sidebar_position: 4
 # State和事件处理
 
 ## pinia
+
+Pinia 起始于 2019 年 11 月左右的一次实验，其目的是设计一个拥有组合式 API 的 Vue 状态管理库。
+
 [pinia官网地址](https://pinia.vuejs.org/zh/introduction.html)
 
+Pinia安装如下，在命令行中输入
 
 ```bash
 npm install pinia
 ```
+
+## 状态
+
+[什么是状态](https://cn.vuejs.org/guide/scaling-up/state-management.html)
+
+
 ## 使用
 
 在```src\main.js```中输入以下代码
