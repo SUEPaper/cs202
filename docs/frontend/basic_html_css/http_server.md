@@ -1,4 +1,9 @@
-# 安装 HTTP服务器以传送网页
+---
+id: http_server
+sidebar_position: 3
+---
+
+# 安装扩展实现实时自动刷新网页
 
 :::tip
 
