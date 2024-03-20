@@ -93,7 +93,7 @@ React 为组件提供了 Props，使得在使用组件时，可以给组件传�
 const props = defineProps(["content"]);
 </script>
 <template>
-  <a> Hello, {{ props.content }} </a>
+  <li> Hello, {{ props.content }} </li>
 </template>
 ```
 
@@ -106,7 +106,7 @@ const props = defineProps(["content"]);
 const {content} = props
 </script>
 <template>
-  <a> Hello, {{ content }} </a>
+  <li> Hello, {{ content }} </li>
 </template>
 ```
 
@@ -219,44 +219,45 @@ const todoList = [
 
 ```vue
 <script setup>
-import Todo from "./components/Todo.vue"
+import Todo from "./components/Todo.vue";
 
 const todoList = [
-    {
-      id: 1,
-      content: "上海电力大学",
-      isDone: false,
-    },
-    {
-      id: 2,
-      content: "数理学院",
-      isDone: false,
-    },
-    {
-      id: 3,
-      content: "现代Web开发",
-      isDone: true,
-    },
-    {
-      id: 4,
-      content: "Web前端开发",
-      isDone: false,
-    },
-    {
-      id: 5,
-      content: "待办清单",
-      isDone: true,
-    },
-  ];
+  {
+    id: 1,
+    content: "上海电力大学",
+    isDone: false,
+  },
+  {
+    id: 2,
+    content: "数理学院",
+    isDone: false,
+  },
+  {
+    id: 3,
+    content: "现代Web开发",
+    isDone: true,
+  },
+  {
+    id: 4,
+    content: "Web前端开发",
+    isDone: false,
+  },
+  {
+    id: 5,
+    content: "待办清单",
+    isDone: true,
+  },
+];
 </script>
 
 <template>
-    <div className="bg-white text-black p-4">
-      <ul v-for="todo in todoList" :key="todo.id"">
-        <Todo  :todo="todo" />
-      </ul>
-    </div>
+  <div className="bg-white text-black p-4">
+    <ul v-for="todo in todoList" :key="todo.id">
+      <Todo :todo="todo" />
+    </ul>
+  </div>
 </template>
+
 ```
 
 将 `src/components/Todo.vue` 的代码更改如下:
