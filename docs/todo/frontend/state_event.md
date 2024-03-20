@@ -56,7 +56,7 @@ app.mount("#app");
 
 我们需要定义一个全局的状态管理器，用来在整个 Vue.js 应用中使用 
 
-在```/src```文件夹下新建```store```文件夹,在store文件夹下新建```todoData.js```文件
+在```/src```文件夹下新建```stores```文件夹,在store文件夹下新建```todoData.js```文件
 
 :::tip
 将相关的代码组织到单独的文件夹中，这样可以更容易地查找和管理相关的代码。
@@ -68,7 +68,7 @@ Todo.vue 文件被放置在 components 文件夹内，表明它是组件。
 
 ![](./img/3_1.png)
 
-在```src\store\todoData.js```写入代码
+在```src\stores\todoData.js```写入代码
 
 ```js
 import { defineStore } from "pinia";
@@ -142,7 +142,7 @@ export const useTodoDataStore = defineStore("todoData", {
 
 有了状态管理后，我们需要改进先前的代码，使用pinia来管理状态。
 
-在```src\components\Todo.vue```中写入代码
+在```src\App.vue```中写入代码
 
 ```vue
 <script setup>
