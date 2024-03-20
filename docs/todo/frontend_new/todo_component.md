@@ -252,7 +252,7 @@ const todoList = [
 
 <template>
     <div className="bg-white text-black p-4">
-      <ul v-for="todo in todoList :key="todo.id"">
+      <ul v-for="todo in todoList" :key="todo.id">
         <Todo  :todo="todo" />
       </ul>
     </div>

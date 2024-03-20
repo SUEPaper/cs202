@@ -53,6 +53,10 @@ npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
 ```
 
+如果安装速度较慢，可以使用国内npm镜像加速
+```bash
+npm config set registry https://registry.npmmirror.com
+```
 
 :::tip
 [Tailwind](https://www.tailwindcss.cn/)是什么？
@@ -102,7 +106,7 @@ package.json 是一个用于描述和管理项目的配置文件，通常位于�
 
 ![](img/1_13.png)
 
-删除文件src\assets\react.svg
+删除文件src\assets\vue.svg
 
 新建文件src\index.css，写入代码
 
