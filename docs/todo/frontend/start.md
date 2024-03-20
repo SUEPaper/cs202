@@ -7,6 +7,14 @@ sidebar_position: 1
 
 [Vue.js中文文档网站](https://cn.vuejs.org/guide/introduction.html)
 
+# Nodejs镜像中国加速：
+
+由于众所周知的原因，中国地区访问 npm 的镜像仓库速度较慢。为了加速下载，建议使用以下命令切换至国内 npm 镜像：
+
+```bash
+npm config set registry https://registry.npmmirror.com
+```
+
 ## Vite 新建Vue项目
 
 首先用 VSCode 中打开TodoListApplication，并打开终端。
@@ -102,9 +110,9 @@ package.json 是一个用于描述和管理项目的配置文件，通常位于�
 
 ![](img/1_13.png)
 
-删除文件src\assets\react.svg
+删除文件`src\assets\vue.svg`
 
-新建文件src\index.css，写入代码
+新建文件`src\index.css`，写入代码
 
 ```css
 @tailwind base;
@@ -113,7 +121,7 @@ package.json 是一个用于描述和管理项目的配置文件，通常位于�
 ```
 ![](img/1_16.png)
 
-将tailwind.config.js替代为
+将`tailwind.config.js`替代为
 ```jsx
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -129,10 +137,11 @@ module.exports = {
 
 在main.js 中加入 ```import "./index.css";```，删除 ```import "./style.css";```
 ![](img/1_17.png)
-:::tip
-tailwind.config.js 是 Tailwind CSS 的配置文件。它用于自定义和配置 Tailwind CSS 的各种选项和样式。
 
-在 tailwind.config.js 文件中，可以进行以下配置：
+:::tip
+`tailwind.config.js` 是 Tailwind CSS 的配置文件。它用于自定义和配置 Tailwind CSS 的各种选项和样式。
+
+在 `tailwind.config.js` 文件中，可以进行以下配置：
 
 1. 主题（Theme）：通过配置颜色、字体、边框、间距等参数来定义项目的主题样式。
 2. 变体（Variants）：配置哪些 CSS 类名的变体应该生成，例如响应式类名、伪类、状态类等。
@@ -140,7 +149,8 @@ tailwind.config.js 是 Tailwind CSS 的配置文件。它用于自定义和配�
 4. 样式（Styles）：配置自定义的 CSS 类名和样式，可以使用原生 CSS 或预处理器语法。
 5. PurgeCSS：配置用于清除未使用的 CSS 的选项，以减小生成的 CSS 文件大小。
 
-通过编辑和配置 tailwind.config.js 文件，可以根据项目的需要自定义和调整 Tailwind CSS 的样式和功能。这样可以使得 Tailwind CSS 更加适应项目的需求，并提供一致的设计风格和样式规范。
+通过编辑和配置 `tailwind.config.js` 文件，可以根据项目的需要自定义和调整 Tailwind CSS 的样式和功能。这样可以使得 Tailwind CSS 更加适应项目的需求，并提供一致的设计风格和样式规范。
+
 :::
 
 
