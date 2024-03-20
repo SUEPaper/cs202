@@ -1,3 +1,8 @@
+---
+id: index
+sidebar_position: 1
+---
+
 # 你的第一行JavaScript代码
 
 新建 `js_learn` 目录，请用 VS Code 打开 `js_learn` 目录，
@@ -7,7 +12,7 @@
 
 请在`index.html`中输入如下代码
 
-```html title="index.html"
+```html showLineNumbers title="index.html"
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,10 +29,27 @@
 `<script src="script.js"></script>` 这行代码是HTML中的一个`<script>`标签，它用于在网页中引入外部JavaScript文件。具体来说，它告诉浏览器加载名为`script.js`的JavaScript文件。这样做的目的是将JavaScript代码从HTML文件中分离出来，使代码更加模块化和易于管理。
 
 请在`script.js`中输入如下代码。
-```js title="script.js"
+```js showLineNumbers title="script.js"
 // 终端中打印 "Hello world"
-console.log("Hello world")
+console.log("Hello world");
 ```
+:::tip 代码注释
+JavaScript中注释可以是以 `//` 开始的单行注释，也可以是 `/* ... */` 结构的多行注释，如下所示为案例。
+
+```js showLineNumbers 
+/**
+ * 返回 a 加 b 的值。
+ *
+ * @param {number} a 要加的第一个数。
+ * @param {number} n 要加的第二个数。
+ * @return {number} a + b的值。
+ */
+function add(a, b) {
+  // 返回 a + b 的值
+  return a + b;
+}
+```
+:::
 
 请用Chrome浏览器打开 `index.html`，便可看到如下页面。
 
@@ -54,3 +76,7 @@ console.log("Hello world")
 
 ![](./imgs/setup_07.png)
 
+:::note 更简单的打开开发者工具的方式
+
+可以通过按下 `f12` 键，打开浏览器的控制台，把我们提供的示例代码在控制台里真正运行一下，相信会给帮助你更好理解 JavaScript 语言的。
+:::
