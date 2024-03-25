@@ -3,21 +3,69 @@ id : start
 sidebar_position: 1
 ---
 
-# 初始化Web前端项目
+# 你的第一个Vue.js的程序
 
-[Vue.js中文文档网站](https://cn.vuejs.org/guide/introduction.html)
+:::tip
 
-# Nodejs镜像中国加速：
+本课程网站内容请仔细阅读后再进行实操。因未仔细阅读内容，出现任何错误后果自负（逃～～～逃～～～逃
 
-由于众所周知的原因，中国地区访问 npm 的镜像仓库速度较慢。为了加速下载，建议使用以下命令切换至国内 npm 镜像：
+**所有的代码请不要复制粘贴，请手敲每一行代码。复制粘贴不会让你动脑子，而手敲每一个行代码会让你自然而然地去动脑子会想每一行代码的含义和原理**
+:::
+
+随着互联网的不断发展，前端技术也从早期的HTML、CSS，到现代前端框架的兴起。前端框架是一种用于构建复杂网站的工具。它们为开发人员提供了强大的功能，例如组件化、状态管理、路由等等。前端框架的兴起标志着前端技术的进一步成熟和发展。现代前端框架中最为流行的是[**Vue**](https://cn.vuejs.org/)和[**React**](https://zh-hans.react.dev/)，它们不断地被开发和完善，成为了开发人员的首选工具。
+
+
+随着Web前端框架的不断发展和演进，现代Web开发呈现出了前后端分离的趋势。这种分离技术将前端（通常指浏览器端）和后端（通常指服务器端）彻底分开，通过HTTP的API实现二者之间的通信，从而架构出更加灵活、可维护、可扩展的Web应用。
+
+前后端分离技术的出现带来了许多优势：
+
+- 提高开发效率和灵活性： 前端和后端团队可以独立开发、测试和部署他们各自的模块，无需相互依赖，从而提高了开发效率和灵活性。
+
+- 更好的团队协作： 分离的架构使得前端和后端团队可以专注于各自的领域，减少了彼此之间的沟通和协调成本，提高了团队的协作效率。
+
+- 提高了系统的可维护性： 前后端分离可以使得代码更加模块化，降低了系统的耦合度，便于单独对前端或后端进行修改、更新和维护。
+
+- 更好的性能和用户体验： 前后端分离可以通过异步加载数据和页面片段来优化性能，提高了Web应用的响应速度和用户体验。
+
+- 支持跨平台开发： 前后端分离使得前端可以独立于后端进行开发，因此可以更容易地实现跨平台开发，例如Web、移动端和桌面端。
+
+在前后端分离的架构中，前端通常由一种或多种前端框架（如React、Angular、Vue.js等）来负责用户界面的渲染和交互逻辑，而后端则负责业务逻辑的处理和数据的存储，通过提供RESTful API或GraphQL等方式向前端提供数据和服务。
+
+## 安装Nodejs以及中国镜像加速
+
+请根据[Nodejs安装教程](/category/nodejs安装)安装Nodejs，并且**请设置NPM镜像加速**
+
+:::note NPM镜像中国加速
+
+由于众所周知的原因，中国地区访问 npm 的镜像仓库速度较慢。因此请一定要设置镜像加速，否则安装软件包的时候可能会出现很慢或者卡死的情况，导致程序不能运行。
+
+如果忘了，命令如下：
 
 ```bash
 npm config set registry https://registry.npmmirror.com
 ```
 
+:::
+
+
 ## Vite 新建Vue项目
 
-首先用 VSCode 中打开TodoListApplication，并打开终端。
+打开终端，通过 `cd` 命令进入一个合适的目录下，例如我的目录是：*`C:\Users\AHZ\Desktop\todo`*
+
+**强烈建议路径中不要出现中文，不要出现中文，不要出现中文**
+
+```bash
+cd C:\Users\AHZ\Desktop\todo
+```
+
+通过 `pwd` 命令查看当前所在的目录的路径
+
+```bash
+pwd
+```
+
+![](img/start_01.png)
+
 
 我们使用[Vite](https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project)来新建并初始化前端项目。
 
@@ -29,12 +77,16 @@ npm create vite@latest frontend -- --template vue
 
 ![](img/1_1.png)
 
-用 VSCode 打开 frontend 文件夹，并且打开 VS Code 的命令行，输入
+在命令行中输入如下命令
 
 ```bash
+cd frontend
 npm install
 npm run dev
 ```
+
+![](img/start_02.png)
+
 :::tip
 
 `npm install`用来安装所需要的包依赖，只需在初始化项目后或者增减包依赖时执行。
@@ -43,118 +95,79 @@ npm run dev
 **开发代码时若浏览器打开网址没反应，则注意一下命令行中是否运行该命令**
 :::
 
-![](img/1_6.png)
 
-此时本地服务器已经启动，浏览器输入http://localhost:5173/，即可看到我们的项目
+此时本地服务器已经启动，浏览器输入[http://localhost:5173/](http://localhost:5173/)，即可看到我们的项目
 
 ![](img/1_7.png)
 
-🎉🎉🎉 恭喜你！成功创建了第一个 React 应用！
-
-## 安装Tailwin CSS
-
-为了开始减少大家写CSS的工作量，我们推荐使用Web前端开发工程师都说好用的Tailwind CSS。
-首先在终端中按 ctrl + c 关闭刚刚运行的开发环境，然后在终端中依次输入如下的命令。
-
-```bash
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
-```
-
-如果安装速度较慢，可以使用国内npm镜像加速
-```bash
-npm config set registry https://registry.npmmirror.com
-```
-
-:::tip
-[Tailwind](https://www.tailwindcss.cn/)是什么？
-只需书写 HTML 代码，无需书写 CSS，即可快速构建美观的网站。
-
-这里推荐可以学习Tailwind CSS 写的样式模板合集————[HyperUI](https://www.hyperui.dev/)，
-可以通过一行一行将模版中的代码敲出来，然后体会每一个CSS的样式意义。
-CSS其实不难，就是刚开始写的网页布局太少，不会融会贯通，唯一的办法就是唯手熟尔，多写多练，自然而然就会掌握CSS如何写。
-
-同时在自己的项目中推荐大家使用最流行的Tailwind CSS组件库[daisyUI](https://daisyui.com/)。
-
-**组件库虽好，但作为初学者还是要自己实现一遍功能，掌握底层原理后就算再复杂的组件库，对你来说其原理都不是黑盒子，而是透明的**
-
-:::
+🎉🎉🎉 恭喜你！你已经搭建好你的第一个Vue.js应用的开发环境。
 
 
-### 查看是否正确安装
+## Demo 代码案例
 
-![](img/1_9.png)
+请用VS Code 打开 `frontend` 文件夹，将`App.vue`中的代码修改成如下代码：
 
-打开**package.json**文件，可以看到已经安装好了所需要的包。(*你的Tailwind 以及React等包的版本号可能和教程不一致，
-请不要慌，我们的教程里面的代码支持最新的版本，版本号不一致不影响后续的学习*)
+```html showLineNumbers title="App.vue"
+<script setup>
+import HelloWorld from './components/HelloWorld.vue'
+</script>
 
-:::tip
-package.json 是一个用于描述和管理项目的配置文件，通常位于项目的根目录下。它是 Node.js 项目的一部分，用于定义项目的元数据、依赖关系和脚本命令等信息。
+<template>
+  <HelloWorld />
+</template>
 
-在 package.json 文件中，可以包含以下信息：
+<style scoped>
 
-1. 项目名称 (`name`)：指定项目的名称。
-2. 项目版本 (`version`)：指定项目的版本号。
-3. 项目描述 (`description`)：对项目进行简要描述。
-4. 作者 (`author`)：指定项目的作者。
-5. 许可证 (`license`)：指定项目的许可证。
-6. 依赖关系 (`dependencies`)：指定项目所依赖的外部包或库。
-7. 开发依赖关系 (`devDependencies`)：指定项目在开发过程中所需要的依赖项。
-8. 脚本命令 (`scripts`)：定义一些自定义的脚本命令，可以通过 `npm run` 或 `yarn run` 来执行这些命令。
-9. 其他自定义配置项：可以根据项目的需要添加其他自定义的配置项。
-
-通过编辑和维护 package.json 文件，开发人员可以管理项目的依赖、运行自定义的脚本命令，以及描述项目的基本信息。这对于项目的开发、构建和部署非常有用。
-:::
-
-### 配置Tailwind CSS
-
-![](img/1_10.png)
-
-删除`style.css`文件，因为我们有了Tailwind css就不需要自己写css了
-
-![](img/1_13.png)
-
-删除文件`src\assets\vue.svg`
-
-新建文件`src\index.css`，写入代码
-
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-![](img/1_16.png)
-
-将`tailwind.config.js`替代为
-```jsx
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
-
+</style>
 
 ```
 
-在main.js 中加入 ```import "./index.css";```，删除 ```import "./style.css";```
-![](img/1_17.png)
+将 `components/HelloWorld.vue`中的代码修改成如下代码：
 
-:::tip
-`tailwind.config.js` 是 Tailwind CSS 的配置文件。它用于自定义和配置 Tailwind CSS 的各种选项和样式。
+```html showLineNumbers title="components/HelloWorld.vue"
+<script setup>
+import { ref } from 'vue';
 
-在 `tailwind.config.js` 文件中，可以进行以下配置：
+const count = ref(0);
 
-1. 主题（Theme）：通过配置颜色、字体、边框、间距等参数来定义项目的主题样式。
-2. 变体（Variants）：配置哪些 CSS 类名的变体应该生成，例如响应式类名、伪类、状态类等。
-3. 插件（Plugins）：引入和配置各种插件来扩展 Tailwind CSS 的功能，例如自定义样式、添加第三方库、优化工具等。
-4. 样式（Styles）：配置自定义的 CSS 类名和样式，可以使用原生 CSS 或预处理器语法。
-5. PurgeCSS：配置用于清除未使用的 CSS 的选项，以减小生成的 CSS 文件大小。
+const result = ref("?");
 
-通过编辑和配置 `tailwind.config.js` 文件，可以根据项目的需要自定义和调整 Tailwind CSS 的样式和功能。这样可以使得 Tailwind CSS 更加适应项目的需求，并提供一致的设计风格和样式规范。
+function add(x, y) {
+  let value = x + y;
+  return value;
+}
 
-:::
+function calculate() {
+  let a = 3;
+  let b = 4;
+  result.value = add(a, b);
+  console.log(`${a} + ${b} = ${result.value}`);
+}
 
+</script>
+
+<template>
+  <h1>你的第一个Vue应用</h1>
+  
+  <div class="card">
+    <button type="button" @click="count++">count is {{ count }}</button>
+    <button type="button" @click="calculate">Calculate</button>
+  </div>
+  <h2>3 + 4 = {{ result }}</h2>
+</template>
+
+<style scoped>
+.read-the-docs {
+  color: #888;
+}
+</style>
+
+```
+
+浏览器输入[http://localhost:5173/](http://localhost:5173/) 便可看到代码更新后的效果。
+（*此时需要你的`npm run dev`这个命令仍在命令行中运行着，如果被关闭了，请重新在 `frontend` 目录中运行`npm run dev`命令*
+
+![](./img/start_03.png)
+
+你可以点击 `count is 0`和 `Calculate`这两个button，然后观察Web页面的变化。
 

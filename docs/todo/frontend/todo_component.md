@@ -9,7 +9,7 @@ sidebar_position: 3
 
 请用 VS Code 打开 `src/app.vue`，输入如下代码:
 
-```vue
+```html
 <script setup>
   const todoList = [
     "上海电力大学",
@@ -47,7 +47,7 @@ sidebar_position: 3
 
 新建一个文件 `src/components/Todo.vue`，VS Code打开后输入如下代码：
 
-```vue
+```html
 <template >
     <li>Hello, 待办清单</li>
 </template>
@@ -55,7 +55,7 @@ sidebar_position: 3
 
 请用 VS Code 打开 `src/app.vue`，将代码更改成如下:
 
-```vue
+```html
 <script setup>
 import Todo from "./components/Todo.vue"
 </script>
@@ -88,7 +88,7 @@ React 为组件提供了 Props，使得在使用组件时，可以给组件传�
 
 更改 `src/components/Todo.vue`代码如下：
 
-```vue
+```html
 <script setup>
 const props = defineProps(["content"]);
 </script>
@@ -100,7 +100,7 @@ const props = defineProps(["content"]);
 `Todo`组件默认接收 `props` 参数，它是一个对象，用于保存父组件传递下来的内容，
 在这里我们使用 `content` 变量对 `props` 进行了解构赋值。这段代码等价与如下代码：
 
-```vue
+```html
 <script setup>
 const props = defineProps(["content"]);
 const {content} = props
@@ -113,7 +113,7 @@ const {content} = props
 
 更改 `src/app.vue`代码如下：
 
-```vue
+```html
 <script setup>
 import Todo from "./components/Todo.vue"
 
@@ -147,7 +147,7 @@ const todoList = [
 
 在Vue的模板语法中，使用冒号 : 用于绑定动态数据，而不使用冒号则表示传递的是静态数据。
 
-```vue
+```html
   <!-- 静态内容 -->
   <Todo content="上海电力大学"/>
   
@@ -160,7 +160,7 @@ const todoList = [
 :::tip
 如果我们再传递一个属性该怎么做呢？其实很简单，代码如下：
 
-```jsx
+```html
 <Todo content="上海电力大学" from="从App组件传递" />
 ``` 
 
@@ -178,7 +178,7 @@ const todoList = [
 
 vue 允许我们渲染一个列表，于是我们可以将 `src/app.vue` 的代码更改成如下:
 
-```vue
+```html
 <script setup>
 import Todo from "./components/Todo.vue"
 
@@ -217,7 +217,7 @@ const todoList = [
 
 将 `src/App.vue` 的代码更改如下：
 
-```vue
+```html
 <script setup>
 import Todo from "./components/Todo.vue";
 
@@ -262,7 +262,7 @@ const todoList = [
 
 将 `src/components/Todo.vue` 的代码更改如下:
 
-```vue
+```html
 <script setup>
 import { toRefs } from "vue";
 const props = defineProps({

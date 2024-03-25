@@ -3,32 +3,80 @@ id: index
 sidebar_position: 1
 ---
 
-# JavaScript 语言基础
+# 你的第一行JavaScript代码
 
-## 前置知识
+新建 `js_learn` 目录，请用 VS Code 打开 `js_learn` 目录，
+然后在`js_learn` 目录中新建`index.html`和`script.js`两个文件，如下图所示。
 
-- 具有 C/C++ 语言基础，能够编写基本的 C/C++ 代码
+![](./imgs/setup_01.png)
 
-- 具有面向对象程序设计的基础，能够理解类封装和方法重写（语言最好是 C++）
+请在`index.html`中输入如下代码
 
-- （如果需要学习 JavaScript 异步）能够理解基本的多线程和异步，理解异步和同步的差别
+```html showLineNumbers title="index.html"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>你好 JavaScript</h1>
+  <script src="script.js"></script>
+</body>
+</html>
+```
+`<script src="script.js"></script>` 这行代码是HTML中的一个`<script>`标签，它用于在网页中引入外部JavaScript文件。具体来说，它告诉浏览器加载名为`script.js`的JavaScript文件。这样做的目的是将JavaScript代码从HTML文件中分离出来，使代码更加模块化和易于管理。
 
-- （如果需要学习 JavaScript 异步）能够理解栈和队列两种数据结构，理解函数栈的工作机制
+请在`script.js`中输入如下代码。
+```js showLineNumbers title="script.js"
+// 终端中打印 "Hello world"
+console.log("Hello world");
+```
+:::tip 代码注释
+JavaScript中注释可以是以 `//` 开始的单行注释，也可以是 `/* ... */` 结构的多行注释，如下所示为案例。
 
-
-:::note 边学边做
-
-阅读这篇文档的时候，编者建议按下 `f12` 键，打开浏览器的控制台，把编者提供的示例代码在控制台里真正运行一下，相信会给帮助你更好理解 JavaScript 语言的。
+```js showLineNumbers 
+/**
+ * 返回 a 加 b 的值。
+ *
+ * @param {number} a 要加的第一个数。
+ * @param {number} n 要加的第二个数。
+ * @return {number} a + b的值。
+ */
+function add(a, b) {
+  // 返回 a + b 的值
+  return a + b;
+}
+```
 :::
 
-## 后续拓展
+请用Chrome浏览器打开 `index.html`，便可看到如下页面。
 
-JavaScript 是应用相当广泛的一门脚本语言，大量的 Web 应用或者移动端应用依靠 JavaScript 以及其衍生语言开发。而且作为“前端三件套”（指 HTML、CSS 和 JavaScript）之一，学习 JavaScript 对编写前端工程的重要性不言而喻。
+![](./imgs/setup_02.png)
 
----
+此时你心中肯定有疑问，JavaScript的代码不是在终端打印 `Hello world`，但目前只在网页中看到 `你好 JavaScript`，终端在哪呢？请接下来根据图片操作打开浏览器的开发者工具，进入浏览器的终端。
 
-## 资源链接
 
-<!-- - 廖雪峰 JavaScript 语言教程 <https://www.liaoxuefeng.com/wiki/1022910821149312>
-- Mozilla JavaScript 语言教程 <https://developer.mozilla.org/zh-CN/docs/Web/JavaScript>
-- JSFuck 官方网站 <http://www.jsfuck.com/> -->
+![](./imgs/setup_03.png)
+
+此时你就进入了开发者工具窗口，点击开发者工具窗口的 `Console` 便可进入浏览器的终端，然后你就可以看到JavaScript代码在终端输出的 `Hello world`。
+
+![](./imgs/setup_04.png)
+
+如果你觉得开发者工具在整个页面的右边，不习惯，那么你可以将开发者工具切换到不同的位置。操作方式如下所示：
+
+![](./imgs/setup_05.png)
+
+于是你就看到开发者工具窗口转移到了下方，如下所示：
+
+![](./imgs/setup_06.png)
+
+那么如何关闭开发者工具窗口，可以按照如下操作：
+
+![](./imgs/setup_07.png)
+
+:::note 更简单的打开开发者工具的方式
+
+可以通过按下 `f12` 键，打开浏览器的控制台，把我们提供的示例代码在控制台里真正运行一下，相信会给帮助你更好理解 JavaScript 语言的。
+:::
