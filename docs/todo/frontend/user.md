@@ -61,7 +61,7 @@ export const useTodoDataStore = defineStore("todoData", {
 });
 ```
 ### Login，Register组件
-首先新建文件，`src\components\Login.vue`
+首先新建文件，`src\components\LogIn.vue`
 
 ```vue
 <script setup>
