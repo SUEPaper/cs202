@@ -322,8 +322,31 @@ import app-header from './components/app-header.vue'
 └── vite.config.js
 ```
 
+- README.md: 这是项目的说明文件，通常包含了项目的介绍、使用说明、安装步骤等信息。它通常是开发者阅读项目的入口。
+
+- index.html: 这是项目的主 HTML 文件，是 Vue 应用的入口文件。通常包含了根元素，用于挂载 Vue 应用。
+
+- node_modules/: 这个文件夹包含了项目中使用的所有依赖库。当你使用 npm 安装依赖时，它们会被下载到这个文件夹中。
+
+- package.json: 这是项目的配置文件，其中包含了项目的元数据信息（如名称、版本、作者等），以及项目的依赖和脚本等信息。此文件是 npm 包管理工具的配置文件。
+
+- public/: 这个文件夹包含了一些公共的静态资源，如图片、字体等。其中的内容会被复制到最终打包的输出目录中。
+
+- src/: 这个文件夹包含了项目的源代码，是开发者主要操作的目录。
+
+  - App.vue: 这是 Vue 应用的根组件，包含了应用的整体结构和布局。
+
+  - assets/: 这个文件夹用于存放项目中使用的静态资源文件，如图片、图标等。
+
+  - components/: 这个文件夹包含了项目中的 Vue 组件，通常每个组件都是一个单独的文件。
+
+  - main.js: 这是项目的主 JavaScript 文件，是 Vue 应用的入口文件，通常包含了创建 Vue 实例、配置路由、挂载根组件等操作。
+
+  - style.css: 这是项目的全局样式文件，包含了项目的全局样式定义。
+
+- vite.config.js: 这是 Vite 构建工具的配置文件，用于配置项目的构建行为，比如指定输出路径、自定义插件等。
+
 对于整个Vue项目中，最重要的文件是`package.json`、`index.html`、`src`整个文件夹下的文件。
-`node_modules`中存放整个项目所依赖的JavaScript的库。
 
 请用 VS Code 打开 `package.json`：
 
@@ -361,40 +384,17 @@ import app-header from './components/app-header.vue'
 
 5. `"scripts"`：这个字段包含了一系列可以通过 npm 运行的脚本命令。
 
-  - `"dev": "vite"`：启动开发服务器，用于开发环境。
-  - `"build": "vite build"`：用于构建生产环境的项目代码。
-  - `"preview": "vite preview"`：启动一个本地服务器来预览生产环境的项目。
+      - `"dev": "vite"`：启动开发服务器，用于开发环境。
+      - `"build": "vite build"`：用于构建生产环境的项目代码。
+      - `"preview": "vite preview"`：启动一个本地服务器来预览生产环境的项目。
 
 6. `"dependencies"`：这个字段包含了项目运行时依赖的模块。在这个例子中，项目依赖于 Vue.js 的版本为 "^3.4.21"。
 
 7. `"devDependencies"`：这个字段包含了开发时依赖的模块。在这个例子中，项目依赖于 Vite 相关的插件和工具，包括 @vitejs/plugin-vue 和 vite 本身。
 
-VS Code 打开 `src/App.vue` 文件，将其中代码替换成如下内容:
+请用 VS Code 打开 `index.html`，便可看到如下代码：
 
-```jsx
-<template>
-  <div class="text-red-700  bg-blue-500">
-    hello world
-  </div>
-</template>
-```
-
-
-
-VS Code 打开 `src/main.js` 文件，便可看到如下代码：
-
-```jsx
-import { createApp } from "vue";
-import App from "./App.vue";
-import "./index.css";
-createApp(App).mount("#app");
-
-```
-
-
-VS Code 打开 `index.html`，便可看到如下代码：
-
-```jsx
+```html showLineNumbers title="index.html"
 <!doctype html>
 <html lang="en">
   <head>
@@ -409,6 +409,23 @@ VS Code 打开 `index.html`，便可看到如下代码：
   </body>
 </html>
 ```
+`index.html`是我们整个应用程序的HTML入口文件，其中定义ID了为`app`的`div`的DOM元素，
+可以看到第11行代码，我们引入了 `src/main.js` 的javascript代码文件，
+接下来请打开 `src/main.js` 文件：
 
-上述是我们整个应用程序的HTML入口文件，其中定义了ID为root的DOM元素，以及引入了`src/main.js`文件，
-因此我们整个应用程序需要进行coding的部分是从`src/main.js`开始的。
+```js showLineNumbers title="src/main.js"
+import { createApp } from "vue";
+import App from "./App.vue";
+import "./index.css";
+createApp(App).mount("#app");
+```
+
+- `import { createApp } from "vue"`：这行代码从 Vue 库中导入 createApp 方法。createApp 方法用于创建一个 Vue 应用程序实例。
+
+- `import App from "./App.vue"`：这行代码从当前目录下的 App.vue 文件中导入 App 组件。在 Vue 3 中，.vue 文件通常包含了 Vue 组件的结构、样式和行为。
+
+- `import "./index.css"`：这行代码导入了 index.css 文件，这是一个样式文件，可能包含了全局的 CSS 样式。
+
+- `createApp(App)`：这行代码调用 createApp 方法，并传入 App 组件作为参数，创建了一个 Vue 应用程序实例。
+
+- `.mount("#app")`：最后一行代码将 Vue 应用程序实例挂载到 HTML 页面中的一个 DOM 元素上，该元素的 id 为 "app"。这意味着该 Vue 应用程序将会在 id 为 "app" 的 DOM 元素内部进行渲染。
