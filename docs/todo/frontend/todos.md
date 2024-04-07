@@ -126,7 +126,7 @@ const DeleteTodo = (id) => {
       <el-button @click="AddTodo">提交</el-button>
     </el-row>
 
-    <el-row v-for="todo in todoList" class="items-center space-x-3">
+    <el-row v-for="todo in todoList" :key="todo.id" class="items-center space-x-3">
       <Todo :todo="todo" :keys="todo.id" />
       <el-icon size="16" class="center">
         <Delete @click="() => DeleteTodo(todo.id)" />

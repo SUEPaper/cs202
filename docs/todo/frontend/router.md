@@ -23,6 +23,8 @@ npm install vue-router@4
 
 一般的项目中,`App.vue`这个文件是作为应用的主要组件，该组件包含应用的布局和结构。因为我们要增加路由，所以应该对原本已经完成的"TODO"功能进行组件化，再用路由对其进行加载。
 
+
+
 ### 组件化
 
 接下来我们将对`App.vue`中的功能转移到一个组件中。
@@ -162,6 +164,26 @@ export default router;
    - `path: "/todos"` 表示该路由规则匹配 "/todos" 路径。
    - `name: "todos"` 是这个路由的名字，可以在代码中用来进行导航。
    - `component: Todos` 表示该路由对应的 Vue 组件是 `Todos`。当用户访问 "/todos" 路径时，会展示 `Todos` 组件。
+  
+### 配置路由
+
+在`src\main.js`中写入
+
+```js
+import { createApp } from "vue";
+import App from "./App.vue";
+import "./index.css";
+import { createPinia } from "pinia";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+import router from "./router";
+const app = createApp(App);
+app.use(createPinia());
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component);
+}
+app.use(router);
+app.mount("#app");
+```
 
 现在已经配置好了路由节点，接下来在`App.vue`中使用。
 
