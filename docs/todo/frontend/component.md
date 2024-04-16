@@ -64,7 +64,7 @@ sidebar_position: 2
 
 ```
 
-让我们回看一下自己写的`components/HelloWorld.vue`这个组件的代码：
+让我们回看一下自己写的`src/components/HelloWorld.vue`这个组件的代码：
 
 ```html showLineNumbers title="components/HelloWorld.vue"
 <script setup>
@@ -132,7 +132,7 @@ const result = ref("?");
 双大括号标签会被替换为相应组件实例HTML模版中 count 属性的值。
 同时每次 count 属性更改时它也会同步更新。
 
-请将`components/HelloWorld.vue`代码更新成如下代码，并且观察浏览器的效果：
+请将`src/components/HelloWorld.vue`代码更新成如下代码，并且观察浏览器的效果：
 
 ```html showLineNumbers title="components/HelloWorld.vue"
 <script setup>

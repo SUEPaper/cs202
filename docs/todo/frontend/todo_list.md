@@ -3,45 +3,85 @@ id : todo-component
 sidebar_position: 3
 ---
 
-# Todo List组件
+# Todo List应用
 
-## 待办清单
+我们先来设计最基础的功能，Todo List 一般用来记录备忘的，最简单的功能包括：
 
-请用 VS Code 打开 `src/app.vue`，输入如下代码:
+1. 新增一条备忘。
+2. 修改该条备忘。
+3. 选择/全选删除某条备忘。
+4. 将某条备忘设置成已完成。
+5. 快速删除已完成的备忘。
 
-```html
+![](./img/todos_01.png)
+
+## 列出Todo List
+
+新建`src/components/TodosComponent.vue`文件,
+新建 `src/views/`文件夹，
+新建 `src/views/TodoView.vue`,
+删除 `src/components/HelloWorld.vue`,
+清空 `src/style.css` 里面的代码。
+
+请用 VS Code 打开 `src/components/TodosComponent.vue`，输入如下代码:
+
+```html showLineNumbers title="src/components/TodosComponent.vue"
 <script setup>
-  const todoList = [
-    "上海电力大学",
-    "数理学院",
-    "现代Web开发",
-    "Web前端",
-    "待办清单",
-  ];
+import { ref } from "vue";
+const todos = ref([]);
+
+const initTodoDatas = ["上海电力大学", "数理学院", "现代Web开发", "Web前端"];
+
+function uuid() {
+  let uuid = "";
+  for (let i = 0; i < 32; i++) {
+    let random = (Math.random() * 16) | 0;
+
+    if (i === 8 || i === 12 || i === 16 || i === 20) uuid += "-";
+
+    uuid += (i === 12 ? 4 : i === 16 ? (random & 3) | 8 : random).toString(16);
+  }
+  return uuid;
+}
+
+initTodoDatas.forEach((todo) => {
+  todos.value.push({
+    id: uuid(),
+    name: todo,
+    completed: false,
+  });
+});
 </script>
 
 <template>
-    <div className="bg-white text-black p-4">
-      <ul>
-        <li>Hello, {{todoList[0]}}</li>
-        <li>Hello, {{todoList[1]}}</li>
-        <li>Hello, {{todoList[2]}}</li>
-        <li>Hello, {{todoList[3]}}</li>
-        <li>Hello, {{todoList[4]}}</li>
-      </ul>
-    </div>
+  <h1>Todo List Application</h1>
+  <div>
+    <ul>
+      <li>{{ todos[0].name }}</li>
+      <li>{{ todos[1].name }}</li>
+      <li>{{ todos[2].name }}</li>
+      <li>{{ todos[3].name }}</li>
+    </ul>
+  </div>
 </template>
-
-
 ```
-可以看到，我们使用 const 定义了一个 todoList 数组常量，
-并且在 vue 中使用 \{\{\}\} 进行动态插值，插入了数组的四个元素。
+
+- `const todos = ref([])`: 这行代码创建了一个名为todos的响应式变量，并初始化为空数组。
+`ref([])`将普通的JavaScript数组转换为Vue响应式对象，这样当数组发生变化时，相关的Vue组件会自动更新。
+
+- `function uuid() {...}`: 这是一个用于生成UUID（通用唯一标识符）的函数，用于生成每一个Todo的唯一性ID。
+
+- `initTodoDatas.forEach((todo) => {...})`: 这是一个forEach循环，用于遍历初始待办事项数据数组。
+在循环中，对于每个待办事项，都会调用uuid()函数生成一个唯一的ID，并将该待办事项对象推入todos.value数组中，该数组是一个响应式对象。
 
 浏览器中的效果应该是这样的：
 
-![](images/todo_component_01.png)
+![](./img/todos_02.png)
 
 
+## 分离组件
+
+我们可以看到
 
 ## 一个新的组件
 

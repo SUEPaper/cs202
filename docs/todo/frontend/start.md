@@ -122,7 +122,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 ```
 
-将 `components/HelloWorld.vue`中的代码修改成如下代码：
+将 `src/components/HelloWorld.vue`中的代码修改成如下代码：
 
 ```html showLineNumbers title="components/HelloWorld.vue"
 <script setup>
