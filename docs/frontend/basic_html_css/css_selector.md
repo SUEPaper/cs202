@@ -259,3 +259,45 @@ CSS 规则将选择包含在 ID 为**blog** 的元素中的所有**h1** 元素�
 这不会超出一个深度级别。因此，CSS 规则不会应用于包含文本**Today's Weather** 的**h1** 元素。
 
 :::
+
+
+
+## CSS选择器优先级
+
+内联样式 > ID 选择器 > 类选择器 = 属性选择器 = 伪类选择器 > 标签选择器 = 伪元素选择器
+
+
+用 VS Code 在`html_css_basic/index.html`文件中的代码更改如下：
+
+```html title="index.html"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>CSS Selector</title>
+  </head>
+
+  <body>
+    <div class="content-class" id="content-id" style="color: black"></div>
+  </body>
+<html>
+```
+如果要对包含文本**Latest News** 的**h1** 元素进行样式设置，可以使用以下子选择器：
+
+用 VS Code 在`html_css_basic/style.css`文件添加如下代码：
+
+```css title="style.css"
+#content-id {
+    color: red;
+}
+.content-class {
+    color: blue;
+}
+div {
+    color: grey;
+}
+```
+
+在网页浏览器中显示如下:
