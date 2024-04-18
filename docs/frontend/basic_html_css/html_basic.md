@@ -94,6 +94,46 @@ HTML 中创建链接的基本语法和属性：`<a>` 元素，素具有以下属
 
 ## HTML 图片
 
+HTML 中添加图片使用到了 `<img>`， `<img>`素具有以下属性：
+
+- `src`： 属性指定了要显示的图像文件的路径。
+- `alt`：属性用于提供图像的替代文本，当图像无法显示时，将显示这个文本。
+- `width`：属性是用于设置图像的宽度。
+- `height`：属性是用于设置图像的高度。
+
+
+用 VS Code修改 `html_css_basic/index.html`的 HTML 文件代码，内容如下：
+
+```html title="index.html"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 图像 </title>
+  </head>
+
+  <body>
+    <img src="cat.jpg" alt="我的猫咪" width="300px" height: auto>
+  </body>
+<html>
+```
+
+:::tip `width`和`height`值的选择
+
+`width` 和 `height` 属性用于设置 HTML 元素（如图片、文本框、表格等）的宽度和高度。这两个属性可以接受多种类型的值，包括：
+
+1. 像素值（Pixels）：指定元素的宽度和高度以像素为单位。例如：`width="200px"`，`height="150px"`。
+2. 百分比值（Percentage）：相对于父元素的宽度或高度的百分比值。例如：`width="50%"`，`height="75%"`。
+这种方式可以实现相对布局，使元素根据父元素的大小进行自适应调整。
+3. 相对值（Relative Values）：相对于元素本身的大小进行调整的值，如 `em`、`rem` 等。
+例如：`width="2em"`，`height="3rem"`。
+4. 自动值（Auto）：让浏览器自动决定元素的宽度或高度。
+例如，对于图片，如果只指定了其中一个属性，而另一个属性未指定，
+则未指定的属性将自动根据图片的原始尺寸进行调整。
+
+:::
+
 
 ## HTML div元素
 

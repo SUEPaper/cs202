@@ -86,6 +86,47 @@ CSS盒模型本质上是一个盒子，封装周围的HTML元素，它包括：�
 
 ## 调试盒模型
 
+用 VS Code 在`html_css_basic/debug.html`文件中的代码更改如下：
+
+```html title="debug.html"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="debug.css">
+    <title>调试</title>
+  </head>
+
+  <body>
+    <main>
+      <div class="wrapper">
+        <article class="flow">
+          <h1>Outline effect on the box model</h1>
+          <figure class="callout">
+            <p>Even if we have an outline of 50px like this example, it has no effect on the size of the box.</p>
+          </figure>
+        </article>
+        <div class="box">I am the same size regardless of outline width.<div>
+          </div>
+    </main>
+  </body>
+<html>
+```
+
+用 VS Code 在`html_css_basic/debug.css`文件添加如下代码：
+
+```css title="debug.css"
+.box {
+  outline: 50px solid var(--color-primary-dark);
+}
+
+article + * {
+  margin-top: 100px;
+}
+```
+
+
 浏览器开发者工具可以直观呈现选定框的框模型计算结果，这有助于您了解框模型的工作原理，重要的是，它对您正在访问的网站有何影响。
 
 接下来，在您自己的浏览器中尝试此操作：
