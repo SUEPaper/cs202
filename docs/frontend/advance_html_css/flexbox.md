@@ -17,7 +17,7 @@ Flexbox 是单维的，这意味着您可以沿行或列对齐，而且默认设
 
 ## Flexbox属性
 
-新建一个 `html_css_advance`的文件夹，然后新建 `html_css_advance/index.html`和 `html_css_advance/sytle.css`两个文件。
+新建一个 `html_css_advance`的文件夹，然后新建 `html_css_advance/index.html`和 `html_css_advance/style.css`两个文件。
 用 VS Code 在`html_css_advance/index.html`文件添加如下代码：
 
 ```html title="index.html"
@@ -56,7 +56,7 @@ Flexbox 是单维的，这意味着您可以沿行或列对齐，而且默认设
 ```
 
 在网页浏览器中显示如下:
-
+![](./images/flexbox_02.png)
 
 HTML 文件中有七个 div 容器。
 
@@ -83,7 +83,7 @@ HTML 文件中有七个 div 容器。
 ```
 
 现在输出的是七个从左上角开始从左到右排列的 flex 容器。在网页浏览器中显示如下:
-
+![](./images/flexbox_03.png)
 
 
 ## 对齐属性
@@ -121,7 +121,7 @@ HTML 文件中有七个 div 容器。
 }
 ```
 在网页浏览器中显示如下:
-
+![](./images/flexbox_04.png)
 
 ### `flex-wrap`
 
@@ -144,7 +144,7 @@ HTML 文件中有七个 div 容器。
 }
 ```
 在网页浏览器中显示如下:
-
+![](./images/flexbox_05.png)
 现在，项目将按照可用 Viewport 的大小进行包边。 
 
 ### `flex-direction`
@@ -169,7 +169,7 @@ HTML 文件中有七个 div 容器。
 }
 ```
 在网页浏览器中显示如下:
-
+![](./images/flexbox_06.png)
 
 输出结果看起来与原始输出结果相似，但现在实际上是一个柔性输出结果。
 
@@ -198,7 +198,7 @@ HTML 文件中有七个 div 容器。
 }
 ```
 在网页浏览器中显示如下:
-
+![](./images/flexbox_07.png)
 结束 "指的是页面的右侧，因为左侧被视为开始。 
 
 ### `align-self`
@@ -229,8 +229,34 @@ HTML 文件中有七个 div 容器。
 }
 ```
 在网页浏览器中显示如下:
+![](./images/flexbox_08.png)
+在这里，添加了背景颜色为 `blanchedalmond`，但是该类选择器的样式会被 `.box` 类选择器的样式覆盖掉。
 
-在这里，第三个方框的颜色和对齐方式已经更改，并且它覆盖了使用 align-items 设置的属性。
+可以修改 CSS 样式表，使得 `.box3` 类选择器的样式优先于 `.box` 类选择器的样式。你可以通过增加特异性或者重新排列 CSS 规则的顺序来实现这一点。
+```css title="style.css"
+.flex-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  
+  .box {
+    background-color: aquamarine;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 10px;
+  }
+  
+  .box.box3 {
+    background-color: blanchedalmond; /* 优先级更高的样式 */
+    align-self: center;
+  }
+```
+在网页浏览器中显示如下:
+![](./images/flexbox_09.png)
+第三个方框的颜色和对齐方式已经更改，并且它覆盖了使用 align-items 设置的属性。
 
 ### 间隙：
 
@@ -247,10 +273,6 @@ HTML 文件中有七个 div 容器。
     align-items:flex-end;
     gap:10px;
 }
-.box3{
-    background-color: blanchedalmond;
-    align-self: center;
-}
 
 .box{
     background-color: aquamarine;
@@ -258,9 +280,15 @@ HTML 文件中有七个 div 容器。
     margin: 2px;
     padding: 10px;
 }
+
+.box3{
+    background-color: blanchedalmond;
+    align-self: center;
+}
+
 ```
 在网页浏览器中显示如下:
-
+![](./images/flexbox_10.png)
 
 
 项目之间的间距有了明显的变化。 
@@ -286,16 +314,15 @@ HTML 文件中有七个 div 容器。
     align-items:flex-end;
     gap:10px;
 }
-.box3{
-    background-color: blanchedalmond;
-    align-self: center;
-}
-
 .box{
     background-color: aquamarine;
     border-radius: 5px;
     margin: 2px;
     padding: 10px;
+}
+.box3{
+    background-color: blanchedalmond;
+    align-self: center;
 }
 ```
 
@@ -307,6 +334,7 @@ HTML 文件中有七个 div 容器。
 这将使其变为默认的 "行"，输出将再次居中对齐，并在两行之间实现最佳水平分布。 
 
 在网页浏览器中显示如下:
+![](./images/flexbox_11.png)
 
 
 
@@ -325,18 +353,18 @@ HTML 文件中有七个 div 容器。
     gap:10px;
 }
 
-.box3{
-    background-color: blanchedalmond;
-    align-self: center;
-    flex: 1 1 auto;
-}
 .box{
     background-color: aquamarine;
     border-radius: 5px;
     margin: 2px;
     padding: 10px;
 }
+.box3{
+    background-color: blanchedalmond;
+    align-self: center;
+    flex: 1 1 auto;
+}
 ```
 在网页浏览器中显示如下:
-
+![](./images/flexbox_12.png)
 
