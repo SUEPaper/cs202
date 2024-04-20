@@ -180,3 +180,50 @@ HTML 文件中有七个 div 容器。
 在网页浏览器中显示如下:
 ![](./images/grid_06.png)
 
+
+## 来个例子
+用 VS Code 在`html_css_advance_grid/style.css`将代码修改成如下：
+```css title="style.css"
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 三列，每列大小相等 */
+  grid-template-rows: repeat(3, 100px); /* 三行，每行高度为100像素 */
+  gap: 10px; /* 相邻盒子之间的间距 */
+}
+.box {
+  background-color: lightblue;
+  padding: 20px;
+}
+
+.box1 {
+  background-color: rgb(202, 31, 31);
+  grid-column: 1 / span 2; /* 跨越 2 列 */
+  grid-row: 1 / span 2; /* 跨越 1 行 */
+}
+
+.box2 {
+  background-color: rgb(13, 146, 148);
+  grid-column: 3 / span 1; /* 跨越 1 列 */
+  grid-row: 1 / span 1; /* 跨越 1 行 */
+}
+
+.box3 {
+  background-color: rgb(31, 202, 145);
+  grid-column: 1 / span 1; /* 跨越 1 列 */
+  grid-row: 3 / span 1; /* 跨越 1 行 */
+}
+
+.box4 {
+  background-color: rgb(212, 126, 6);
+  grid-column: 2 / span 1; /* 跨越 1 列 */
+  grid-row: 3 / span 1; /* 跨越 1 行 */
+}
+
+.box5 {
+  background-color: rgb(109, 15, 172);
+  grid-column: 3 / span 1; /* 跨越 1 列 */
+  grid-row: 2 / span 2; /* 跨越 2 行 */
+}
+```
+在网页浏览器中显示如下:
+![](./images/grid_07.png)
