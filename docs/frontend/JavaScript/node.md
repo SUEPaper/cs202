@@ -43,9 +43,9 @@ Node.js 可以直接运行，由于包含相关的系统库，Node.js 可以读�
 
 我们提供了不同平台的Node.js安装教程：
 
-- [Windows](../../basic/nodejs_install/Windows.md)
-- [MacOS](../../basic/nodejs_install/MacOS.md)
-- [Ubuntu Linux](../../basic/nodejs_install/Ubuntu.md)
+- [Windows](../../install/nodejs_install/Windows.md)
+- [MacOS](../../install/nodejs_install/MacOS.md)
+- [Ubuntu Linux](../../install/nodejs_install/Ubuntu.md)
 
 在使用包管理器安装时请注意，安装包中可能包含 `npm` 即 `Node.js package manager` 是 Node.js 默认的包管理器，如果此处没有安装也没有关系，我们会在下节中详细解释这个问题。
 

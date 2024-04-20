@@ -13,7 +13,7 @@ JavaScript 最初设计的目的就是运行在浏览器中给静态 HTML 赋予
 
 浏览器内置了部分全局对象，这些对象往往与窗口、屏幕、浏览记录等信息有关。编写相关 JavaScript 代码的时候可以通过这些对象获取相关信息，也可以通过这些调用对象的方法来实现一些和浏览器相关的操作。
 
-`window` 对象是最常用的内置全局变量之一。该变量的一大重要作用是**充当全局作用域**，也就是将所有全局变量和函数绑定为其属性，这一点在先前讲解 `this` 指向的时候提到过，参见 [JavaScript 的面向对象](./oop.md) 部分的“全局对象”注解。
+`window` 对象是最常用的内置全局变量之一。该变量的一大重要作用是**充当全局作用域**，也就是将所有全局变量和函数绑定为其属性，这一点在先前讲解 `this` 指向的时候提到过。
 
 除此之外，`window` 对象有 `innerHeight, innerWidth, outerHeight, outerWidth` 等与窗口尺寸有关的属性，比如你可以在浏览器控制台中运行下述代码获取浏览器内窗口的宽高：
 
@@ -130,7 +130,7 @@ document.getElementById("circle-wrapper").getElementsByTagName("div");
 
 `querySelector` 搜索范围是以该 DOM 节点为根的子树中满足选择器要求的**第一个** DOM 节点。而 `querySelectorAll` 会返回子树内所有满足选择器要求的 DOM 节点构成的列表。
 
-具体的选择器语法可以参考 [CSS 语言基础文档中相关部分](../CSS/selector.md)。
+具体的选择器语法可以参考 [CSS 语言基础文档中相关部分](../basic_html_css/css_selector.md)。
 
 ### 更新 DOM 树节点
 
