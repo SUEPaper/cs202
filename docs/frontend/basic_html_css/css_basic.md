@@ -87,7 +87,7 @@ CSS3 是 CSS 的最新版本，它引入了许多新的功能和特性，以提�
 将 CSS 样式单独存储在一个或多个外部 `.css` 文件中，然后在 HTML 文件中使用 `<link>` 标签引入。
 这种方式适用于多个 HTML 文件共享相同样式的情况，提高了代码的可维护性和可复用性。
 
-新建一个文件`html_css_basic/index.html`，请用VS Code给该文件增加如下代码：
+新建一个文件`html_css_basic/style.css`，请用VS Code给该文件增加如下代码：
 
 ```css title="style.css"
 p {

@@ -134,6 +134,32 @@ p {
 
 color 属性用于设置文本的颜色。下面的 CSS 将所有段落元素的文本颜色设置为红色。
 
+请用VS Code修改`html_css_basic/style.css`代码如下：
+
+```css title="style.css"
+p { 
+  color: red;
+}
+```
+
+用 VS Code修改 `html_css_basic/index.html`的 HTML 文件代码，内容如下：
+
+```html title="index.html"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 案例01 </title>
+    <link rel="stylesheet" href="styles.css">   
+  </head>
+
+  <body>
+    <p>这是一段文本为红色。</p>
+  </body>
+<html>
+```
+
 
 ### 文本字体和大小
 
@@ -150,11 +176,63 @@ color 属性用于设置文本的颜色。下面的 CSS 将所有段落元素的
 
 要设置字体大小，需要使用`font-size` 属性。
 
+请用VS Code修改`html_css_basic/style.css`代码如下：
+
+```css title="style.css"
+p { 
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+}
+```
+
+用 VS Code修改 `html_css_basic/index.html`的 HTML 文件代码，内容如下：
+
+```html title="index.html"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 案例01 </title>
+    <link rel="stylesheet" href="styles.css">   
+  </head>
+
+  <body>
+    <p>这段文本修改了字体和大小</p>
+  </body>
+<html>
+```
+
 ### 文本转换
 
 如果要确保文本内容的大小写正确，文本转换就非常有用。在下面的示例中，
 CSS 规则将使用`text-transform` 属性将段落元素中的所有文本改为大写：
 
+请用VS Code修改`html_css_basic/style.css`代码如下：
+
+```css title="style.css"
+p { 
+  text-transform: uppercase;
+}
+```
+
+用 VS Code修改 `html_css_basic/index.html`的 HTML 文件代码，内容如下：
+
+```html title="index.html"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 案例01 </title>
+    <link rel="stylesheet" href="styles.css">   
+  </head>
+
+  <body>
+    <p>This is a paragraph</p>
+  </body>
+<html>
+```
 
 
 `text-transform` 属性最常用的值：`uppercase`、`lowercase` 、`capitalize` 和`none` 。
@@ -176,6 +254,35 @@ CSS 规则将使用`text-transform` 属性将段落元素中的所有文本改�
 `text-decoration-thickness` 属性单独设置这些属性。
 让我们再次使用相同的示例，并使用各个属性进行定义：
 
+
+请用VS Code修改`html_css_basic/style.css`代码如下：
+
+```css title="style.css"
+p { 
+  text-decoration-line: underline;
+  text-decoration-color: red;
+  text-decoration-style: solid;
+  text-decoration-thickness: 5px;
+}
+```
+
+用 VS Code修改 `html_css_basic/index.html`的 HTML 文件代码，内容如下：
+
+```html title="index.html"
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 案例01 </title>
+    <link rel="stylesheet" href="styles.css">   
+  </head>
+
+  <body>
+    <p>This is a paragraph</p>
+  </body>
+<html>
+```
 
 最常用的`text-decoration-line` 值是：`underline`,`overline`,`line-through` 和`none` 。无是默认值，表示不使用文本装饰。
 
