@@ -30,7 +30,7 @@ sidebar_position: 6
 ```
 
 在网页浏览器中显示为
-
+![](./images/list_01.png)
 
 
 也可以使用`<ol>` 标签对列表进行排序。同样，可以使用`<li>` 标签指定列表项。
@@ -55,4 +55,4 @@ sidebar_position: 6
 <html>
 ```
 在网页浏览器中显示如下。
-
+![](./images/list_02.png)

@@ -71,7 +71,7 @@ CSS盒模型本质上是一个盒子，封装周围的HTML元素，它包括：�
 ```
 
 在网页浏览器中显示如下:
-
+![](./images/box_03.png)
 
 上述案例中整个盒子实际占用的空间宽为 410px（350 + 25 + 25 + 5 + 5），高为 210px（150 + 25 + 25 + 5 + 5）。
 
@@ -192,6 +192,7 @@ p.mix {border-style: dotted dashed solid double;}
 ```
 
 在网页浏览器中显示如下:
+![](./images/box_05.png)
 
 
 用 VS Code 在`html_css_basic/index.html`文件中的代码更改如下：
@@ -239,6 +240,7 @@ p.three
 ```
 
 在网页浏览器中显示如下:
+![](./images/box_06.png)
 
 ## padding 和 margin
 
@@ -286,7 +288,7 @@ p.margin
 ```
 
 在网页浏览器中显示如下:
-
+![](./images/box_07.png)
 
 为了缩短代码，有可能使用一个属性中`margin`指定的所有边距属性，这就是所谓的简写属性。
 
@@ -349,7 +351,7 @@ p.padding
 ```
 
 在网页浏览器中显示如下:
-
+![](./images/box_08.png)
 
 
 为了缩短代码，`padding`也具有简写属性。
