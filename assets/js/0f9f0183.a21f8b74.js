@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[7378],{62770:e=>{e.exports=JSON.parse('{"title":"Nodejs\u5b89\u88c5","slug":"/category/nodejs\u5b89\u88c5","permalink":"/cs202/category/nodejs\u5b89\u88c5","navigation":{"next":{"title":"Windows \u5b89\u88c5","permalink":"/cs202/install/nodejs_install/Windows"}}}')}}]);
