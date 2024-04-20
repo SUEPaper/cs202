@@ -4,6 +4,12 @@ sidebar_position: 3
 ---
 
 # Grid 布局
+
+## 视频教程
+
+<iframe src="//player.bilibili.com/player.html?bvid=BV18p411A7JB&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+
 网格布局（Grid）是最强大的 CSS 布局方案。
 
 它将网页划分成一个个网格，可以任意组合不同的网格，做出各种各样的布局。以前，只能通过复杂的 CSS 框架达到的效果，现在浏览器内置了。
@@ -29,6 +35,10 @@ Grid 布局与 Flex 布局有一定的相似性，都可以指定容器内部多
 - Grid 布局：适用于需要更复杂、多维度布局的情况，比如网格系统、整体页面布局等。
 
 ![](./images/grid_1.png)
+
+
+
+
 ## Grid 属性
 
 新建一个 `html_css_advance_grid`的文件夹，然后新建 `html_css_advance_grid/index.html`和 `html_css_advance_grid/style.css`两个文件。

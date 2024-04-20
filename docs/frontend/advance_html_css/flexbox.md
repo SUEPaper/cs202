@@ -13,7 +13,10 @@ Flexbox 是单维的，这意味着您可以沿行或列对齐，而且默认设
 
 ![](./images/flexbox_01.png)
 
-现在，让我们来看看配置 Flexbox 的一些重要属性。
+
+## 视频教程
+
+<iframe src="//player.bilibili.com/player.html?bvid=BV1P7411m7Nu&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 ## Flexbox属性
 
