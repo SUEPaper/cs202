@@ -1,15 +1,54 @@
 ---
-id : css
-sidebar_position: 7
+id : tailwind
+sidebar_position: 4
 ---
 
-# 增加CSS样式
+# 使用 Tailwind CSS
 
+## 什么是Tailwind CSS
 
-## 安装Tailwin CSS
+Tailwind CSS 是一个基于实用程序的 CSS 框架，旨在加速网页设计和开发。与传统的 CSS 框架（例如 Bootstrap 或 Foundation）相比，Tailwind CSS 采用了不同的方法，强调直接在 HTML 中使用预定义的 CSS 类来构建样式，而不是通过预先构建的组件或模板。
 
-为了开始减少大家写CSS的工作量，我们推荐使用Web前端开发工程师都说好用的Tailwind CSS。
-首先在终端中按 ctrl + c 关闭刚刚运行的开发环境，然后在终端中依次输入如下的命令。
+**只需书写 HTML 代码，无需书写 CSS，即可快速构建美观的网站。**
+
+Tailwind在构建生产文件时会自动删除所有未使用的CSS，所以它在实际生产环境上的体积非常小，它被认为是最富有设计感的CSS样式库。并且，连Vue的作者[尤雨溪尤大](https://zh.wikipedia.org/wiki/%E5%B0%A4%E9%9B%A8%E6%BA%AA)都fork了，我们还不行动起来嘛。
+
+## 为什么是Tailwind CSS
+
+通常我们在使用传统的CSS编写方式的时候，我们会花很多时间给ID选择器等取名字，
+如果名字取的不好，不仅与你合作的同学不知道你写的代码意思，
+而且几个月以后你回来修改实现新的样式排版，
+我想如果没有个见名知义的名字你也很难立刻会想起自己写的代码的意思。
+
+Tailwind 提供大量预定义的实用程序类，这样可以省去你取名字的烦恼，并且我们也可以通过这些类快速构建界面。
+例如，要给元素添加一个背景颜色，传统的 CSS 可能需要定义一个类并将样式应用到该类：
+
+```css
+.my-background {
+  background-color: red;
+}
+```
+
+然后在 HTML 中使用这个类：
+
+```html
+<div class="my-background">Content</div>
+```
+
+在 Tailwind 中，可以直接在 HTML 中应用实用程序类，而无需单独定义 CSS 类：
+
+```html
+<div class="bg-red-500">Content</div>
+```
+
+这简化了开发流程，减少了书写和维护 CSS 的时间。
+
+在传统的 CSS 中，可能会遇到全局样式冲突或级联问题。因为 Tailwind 使用大量的实用程序类，样式的范围更加局限。这可以减少不同组件之间的样式冲突，降低调试和维护的复杂性。
+
+## Vue项目中安装Tailwin CSS
+
+首先如果开发环境还在运行的话，请在终端中按 ctrl + c 关闭正在运行的开发环境，
+然后在终端中依次输入如下的命令。
 
 ```bash
 npm install -D tailwindcss postcss autoprefixer
@@ -22,19 +61,18 @@ npm config set registry https://registry.npmmirror.com
 ```
 
 :::tip
-[Tailwind](https://www.tailwindcss.cn/)是什么？
-只需书写 HTML 代码，无需书写 CSS，即可快速构建美观的网站。
 
-这里推荐可以学习Tailwind CSS 写的样式模板合集————[HyperUI](https://www.hyperui.dev/)，
+这里推荐可以学习Tailwind CSS 写的样式模板合集————[**HyperUI**](https://www.hyperui.dev/)，
 可以通过一行一行将模版中的代码敲出来，然后体会每一个CSS的样式意义。
+
+**请务必打开HyperUI网站，对一些比较常用的UI的HTML+Tailwind的源代码进行学习。请务必学习！！！请务必学习！！！请务必学习！！！**
+
 CSS其实不难，就是刚开始写的网页布局太少，不会融会贯通，唯一的办法就是唯手熟尔，多写多练，自然而然就会掌握CSS如何写。
 
-同时在自己的项目中推荐大家使用最流行的Tailwind CSS组件库[daisyUI](https://daisyui.com/)。
+同时在自己的项目中推荐大家使用最流行的Tailwind CSS组件库[**daisyUI**](https://daisyui.com/)。
 
 **组件库虽好，但作为初学者还是要自己实现一遍功能，掌握底层原理后就算再复杂的组件库，对你来说其原理都不是黑盒子，而是透明的**
-
 :::
-
 
 ### 查看是否正确安装
 
@@ -97,17 +135,13 @@ module.exports = {
 在main.js 中加入 ```import "./index.css";```，删除 ```import "./style.css";```
 ![](img/1_17.png)
 
-:::tip
-`tailwind.config.js` 是 Tailwind CSS 的配置文件。它用于自定义和配置 Tailwind CSS 的各种选项和样式。
 
-在 `tailwind.config.js` 文件中，可以进行以下配置：
+## 如何使用 Tailwind CSS
 
-1. 主题（Theme）：通过配置颜色、字体、边框、间距等参数来定义项目的主题样式。
-2. 变体（Variants）：配置哪些 CSS 类名的变体应该生成，例如响应式类名、伪类、状态类等。
-3. 插件（Plugins）：引入和配置各种插件来扩展 Tailwind CSS 的功能，例如自定义样式、添加第三方库、优化工具等。
-4. 样式（Styles）：配置自定义的 CSS 类名和样式，可以使用原生 CSS 或预处理器语法。
-5. PurgeCSS：配置用于清除未使用的 CSS 的选项，以减小生成的 CSS 文件大小。
 
-通过编辑和配置 `tailwind.config.js` 文件，可以根据项目的需要自定义和调整 Tailwind CSS 的样式和功能。这样可以使得 Tailwind CSS 更加适应项目的需求，并提供一致的设计风格和样式规范。
 
-:::
+
+
+## 增加 shadcn-vue 组件库
+
+虽然我们前面推荐了大家一款组件库，但是本项目实际会使用目前越来越火的Tailwind编写的组件库 [**shadcn-vue**](https://www.shadcn-vue.com/)
