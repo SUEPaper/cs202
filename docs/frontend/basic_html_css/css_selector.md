@@ -280,7 +280,7 @@ CSS 规则将选择包含在 ID 为**blog** 的元素中的所有**h1** 元素�
   </head>
 
   <body>
-    <div class="content-class" id="content-id" style="color: black"></div>
+    <div class="content-class" id="content-id" style="color: black">猜猜是什么颜色</div>
   </body>
 <html>
 ```
@@ -301,3 +301,4 @@ div {
 ```
 
 在网页浏览器中显示如下:
+![](./images/css_selector_08.png)

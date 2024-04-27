@@ -105,7 +105,7 @@ p {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 案例01 </title>
-    <link rel="stylesheet" href="styles.css">   
+    <link rel="stylesheet" href="style.css">   
   </head>
 
   <body>
