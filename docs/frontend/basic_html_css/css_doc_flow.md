@@ -28,7 +28,7 @@ CSS 的文档流程涉及两种基本类型的元素布局：
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Block-level Elements</title>
-    <link rel="stylesheet" href="styles.css">   
+    <link rel="stylesheet" href="style.css">   
 </head>
 <body>
     <!-- 分块元素示例 -->
@@ -74,7 +74,7 @@ div {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inline Elements</title>
-    <link rel="stylesheet" href="styles.css">   
+    <link rel="stylesheet" href="style.css">   
 </head>
 <body>
     <!-- 内联元素示例 -->
@@ -118,7 +118,7 @@ span {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inline-block Elements</title>
-    <link rel="stylesheet" href="styles.css">   
+    <link rel="stylesheet" href="style.css">   
 </head>
 <body>
     <!-- 内联块元素示例 -->
