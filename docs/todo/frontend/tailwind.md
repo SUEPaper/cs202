@@ -142,6 +142,6 @@ module.exports = {
 
 
 
-## 增加 shadcn-vue 组件库
+## 增加 daisyUI 组件库
 
-虽然我们前面推荐了大家一款组件库，但是本项目实际会使用目前越来越火的Tailwind编写的组件库 [**shadcn-vue**](https://www.shadcn-vue.com/)
+虽然我们前面推荐了大家一款组件库，但是本项目实际会使用目前越来越火的Tailwind编写的组件库 [**daisyUI**](https://daisyui.com/)

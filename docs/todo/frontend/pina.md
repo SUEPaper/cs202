@@ -1,13 +1,64 @@
 ---
-id : state-event
+id : pina
 sidebar_position: 6
 ---
 
-# State和事件处理
+# 状态管理和事件处理
+
+
+## 什么是状态？
+
+理论上来说，每一个 Vue 组件实例都已经在“管理”它自己的响应式状态了。
+我们以一个简单的计数器组件为例：
+
+
+```html
+<script setup>
+import { ref } from 'vue'
+
+// 状态
+const count = ref(0)
+
+// 动作
+function increment() {
+  count.value++
+}
+</script>
+
+<!-- 视图 -->
+<template>{{ count }}</template>
+```
+
+它是一个独立的单元，由以下几个部分组成：
+
+- 状态：驱动整个应用的数据源；
+- 视图：对状态的一种声明式映射；
+- 交互：状态根据用户在视图中的输入而作出相应变更的可能方式。
+
+下面是“单向数据流”这一概念的简单图示：
+
+![](./img/state-flow.Cd6No79V.png)
+
+然而，当我们有多个组件共享一个共同的状态时，就没有这么简单了：
+
+1. 多个视图可能都依赖于同一份状态。
+2. 来自不同视图的交互也可能需要更改同一份状态。
+
+对于情景 1，一个可行的办法是将共享状态“提升”到共同的祖先组件上去，再通过 props 传递下来。
+然而在深层次的组件树结构中这么做的话，很快就会使得代码变得繁琐冗长。
+这会导致另一个问题：Prop 逐级透传问题。
+
+对于情景 2，我们经常发现自己会直接通过模板引用获取父/子实例，
+或者通过触发的事件尝试改变和同步多个状态的副本。
+但这些模式的健壮性都不甚理想，很容易就会导致代码难以维护。
+
+一个更简单直接的解决方案是抽取出组件间的共享状态，放在一个全局单例中来管理。这样我们的组件树就变成了一个大的“视图”，而任何位置上的组件都可以访问其中的状态或触发动作。
 
 ## pinia
 
-Pinia 起始于 2019 年 11 月左右的一次实验，其目的是设计一个拥有组合式 API 的 Vue 状态管理库。
+Pinia 就是一个实现了上述需求的状态管理库，由 Vue 核心团队维护，对 Vue 2 和 Vue 3 都可用。
+
+现有用户可能对 Vuex 更熟悉，它是 Vue 之前的官方状态管理库。由于 Pinia 在生态系统中能够承担相同的职责且能做得更好，因此 Vuex 现在处于维护模式。它仍然可以工作，但不再接受新的功能。对于新的应用，建议使用 Pinia。
 
 [pinia官网地址](https://pinia.vuejs.org/zh/introduction.html)
 
@@ -17,26 +68,21 @@ Pinia安装如下，在命令行中输入
 npm install pinia
 ```
 
-## 状态
-
-[什么是状态](https://cn.vuejs.org/guide/scaling-up/state-management.html)
-
-
-## 使用
+## 如何使用 `pinia`
 
 为了使用`pinia`这个插件，我们需要先挂载它
 
 在```src\main.js```中输入以下代码
 
 ```js
-import { createApp } from "vue";
-import App from "./App.vue";
-import "./index.css";
-import { createPinia } from "pinia";
+import { createApp } from 'vue'
+import './style.css'
+import App from './App.vue'
+import { createPinia } from "pinia"
 
 const app = createApp(App);
 app.use(createPinia());
-app.mount("#app");
+app.mount('#app');
 ```
 <!-- TODO:解释何为插件，怎么使用 -->
 
@@ -138,75 +184,41 @@ export const useTodoDataStore = defineStore("todoData", {
    actions: {},
    ```
 
-这个 `Pinia` 仓库用于管理应用程序中的待办事项数据。`state` 存储数据，`getters` 提供对数据的访问，而 `actions` 可以在需要时执行一些逻辑操作。在应用中，你可以使用 `useTodoDataStore` 来访问或更改待办事项的状态。
+这个 `Pinia` 仓库用于管理应用程序中的待办事项数据。`state` 存储数据，
+`getters` 提供对数据的访问，而 `actions` 可以在需要时执行一些逻辑操作。
+在应用中，你可以使用 `useTodoDataStore` 来访问或更改待办事项的状态。
 
 有了状态管理后，我们需要改进先前的代码，使用pinia来管理状态。
 
-在```src\App.vue```中写入代码
+我们可以将 `src/components/TodoList.vue` 的代码更改成如下:
 
-```vue
+```html showLineNumbers title="src/components/TodoList.vue"
 <script setup>
-import Todo from "./components/Todo.vue";
-import { useTodoDataStore } from "./stores/todoData";
+import TodoItem from "./TodoItem.vue";
+import { useTodoDataStore } from "../stores/todoData";
 const todoData = useTodoDataStore();
-const todoList = todoData.allTodos;
+const todos = todoData.allTodos;
 </script>
-
 <template>
-  <div className="bg-white text-black p-4">
-    <ul v-for="todo in todoList">
-      <Todo :todo="todo" :keys="todo.id" />
-    </ul>
+  <div 
+    class="mt-4 rounded-t-md bg-white transition-all duration-75"
+  >
+    <div v-for="todo in todos" :key="todo.id">
+      <TodoItem :todo="todo"/>
+    </div>
   </div>
 </template>
+<style></style>
 ```
+
 此时网页效果没有改变，这说明已经成功使用pinia。
 
 
-![](./img/2_7.png)
+![](./img/web_todo_list_02.png)
 
-## 增加功能
+## Web页面新增一个Todo
 
-为了可以方便的做一些UI设计，我们使用组件库。
-
-### Element Plus
-
-[Element Plus官网](https://element-plus.org/zh-CN/guide/installation.html)
-
-```bash
-npm install element-plus --save
-npm install -D unplugin-vue-components unplugin-auto-import
-```
-[安装配置](https://element-plus.org/zh-CN/guide/quickstart.html#%E6%8C%89%E9%9C%80%E5%AF%BC%E5%85%A5)
-
-
-Element Plus 是一个基于 Vue 3 的 UI 组件库，是对原本 Vue 2.x 版本的 Element UI 的升级和重构。Element Plus 提供了一套丰富的、现代化的 UI 组件，可用于构建用户界面。该组件库以易用性和美观为目标，广泛用于 Vue.js 的项目中。
-
-为了使用这个组件库，我们需要对它进行配置。
-
-在`vite.config.js`中写入
-```js
-import { defineConfig } from "vite";
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
-import vue from "@vitejs/plugin-vue";
-export default defineConfig({
-  plugins: [
-    [vue()],
-    AutoImport({
-      resolvers: [ElementPlusResolver()],
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()],
-    }),
-  ],
-});
-```
-
-### 添加Todo
-
-接下来我们要完成"添加功能"，首先现在pinia增加`actions`,这是接下来需要调用的函数。
+接下来我们要完成"添加Todo的功能"，首先现在pinia增加`actions`,这是接下来需要调用的函数。
 
 在``src\stores\todoData.js``中写入代码
 ```js
@@ -256,71 +268,51 @@ export const useTodoDataStore = defineStore("todoData", {
 });
 ```
 
-我们的目标是完成一个输入框，一个确认按钮，当点击时，调用`addTodo`函数，将输入框输入的内容添加到`todoList`这个状态里，然后设置输入框的内容为空，因为`todoList`这个状态更新了，所以网页的内容更新了。
+我们的目标是完成一个输入框，一个确认按钮，当点击时，调用`addTodo`函数，
+将输入框输入的内容添加到`todoList`这个状态里，然后设置输入框的内容为空，
+因为`todoList`这个状态更新了，
+所以网页的内容更新了。
 
-在``src\App.vue``中写入代码
-```vue
+我们可以将 `src/components/TodoCreate.vue` 的代码更改成如下:
+
+```html showLineNumbers title="src/components/TodoCreate.vue"
 <script setup>
-// 导入 Todo 组件、todoData 数据仓库和 ref 函数
-import Todo from "./components/Todo.vue";
-import { useTodoDataStore } from "./stores/todoData";
-import { ref } from "vue";
+import { useTodoDataStore } from '../stores/todoData';
+import { ref } from 'vue';
 
-// 创建一个 ref 对象，用于存储输入框的值
-const input = ref("");
+const inputValue = ref("");
 
-// 获取名为 todoData 的数据仓库实例
 const todoData = useTodoDataStore();
 
-// 从 todoData 中获取名为 allTodos 的响应式数据
-const todoList = todoData.allTodos;
+const addTodo = () => {
+  todoData.addTodo(inputValue.value);
+  inputValue.value = ""
+}
 
-// 获取名为 addTodo 的 action 函数，用于添加新的 todo
-const addTodo = todoData.addTodo;
-
-// 定义一个名为 AddTodo 的函数，用于添加新的 todo
-const AddTodo = () => {
-  // 调用 addTodo action，将输入框的值作为参数传递
-  addTodo(input.value);
-  
-  // 将输入框的值重置为空
-  input.value = "";
-};
 </script>
-
 <template>
-  <div class="bg-white text-black p-4">
-    <el-row>
-      <el-col :span="6">
-        <el-input v-model="input" placeholder="请输入代办事项" />
-      </el-col>
-      <el-button @click="AddTodo">提交</el-button>
-    </el-row>
-    <ul v-for="todo in todoList">
-      <Todo :todo="todo" :keys="todo.id" />
-    </ul>
-  </div>
+  <form
+    v-on:submit.prevent="addTodo"
+    class="mt-7 flex items-center gap-4 overflow-hidden rounded-md bg-white p-4 transition-all duration-700"
+  >
+    <span
+      class="inline-block h-7 w-7 rounded-full border-2 transition-all duration-700"
+    ></span>
+
+    <input
+      v-model="inputValue"
+      type="text"
+      placeholder="新建一个Todo..."
+      class="input input-bordered input-md w-96"
+    />
+    <button class="btn">增加</button>
+  </form>
 </template>
+<style></style>
 ```
-此时效果如下
-
-![](./img/3_2.png)
-
 在输入框输入`mytodo`可以看到
 
-![](./img/3_3.png)
+![](./img/web-add-todo.png)
 
-这里的`<el-row>`，`<el-input>`,`<el-button>`,都是Element Plus这个UI组件库的组件。
-
-```html
-<el-button @click="AddTodo">提交</el-button>
-```
-
-- `@click="AddTodo"`是指当被点击时，触发`AddTodo`函数。
-
-```html
-<el-input v-model="input" placeholder="请输入代办事项" />
-```
-- `v-model="input"` 是 Vue.js 中的语法，用于实现数据的双向绑定。这意味着 `input` 这个变量的值将与输入框的值保持同步，如果用户在输入框中输入内容，`input` 的值也会更新，反之亦然。
-  
-- `placeholder="请输入代办事项"` 是 `<el-input>` 的一个属性，用于设置输入框的占位提示文本。
+- `v-on:submit.prevent="addTodo"` 指令在调用 addTodo 函数的同时，阻止表单的默认提交行为（默认行为会刷新页面）
+- `v-model="inputValue` 这个输入框使用 `v-model` 绑定到 `inputValue`，所以它的值会始终与 `inputValue` 同步
