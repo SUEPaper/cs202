@@ -60,7 +60,7 @@ def get_all_todos():
 
 - `@app.get` 是 FastAPI 框架中的一个装饰器，用于定义一个 `HTTP GET` 请求的处理器函数。而在上面的例子中，当你发送一个 `GET` 请求到 `/todos` 路径时，FastAPI 将调用 `get_all_todos` 函数，并返回一个包含所有 TODOS 数据序列化后的JSON Array 的响应。
 
-结下来让我们用浏览器打开URL `http://localhost:8000/docs`(**打开 URL 前请确保我们的FastAPI 应用是运行起来的**)，开始做一个实验，看看这个API 返回的数据是不是一组 TODOS 的 JSON Array。(相关操作请参考 [一个简单的FastAPI案例](./demo.md) 中的测试 API 内容)。
+结下来让我们用浏览器打开URL `http://localhost:8000/docs`(**打开 URL 前请确保我们的FastAPI 应用是运行起来的**)，开始做一个实验，看看这个API 返回的数据是不是一组 TODOS 的 JSON Array。(相关操作请参考 [一个简单的FastAPI案例](./backend_demo.md) 中的测试 API 内容)。
 
 如下是 FastAPI 的Swagger UI 中的实验结果：
 

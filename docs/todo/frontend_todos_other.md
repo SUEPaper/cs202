@@ -14,21 +14,21 @@ sidebar_position: 28
 
 ## 删除功能
 
-在`src\stores\todoData.js`中，修改代码如下：
+在`src\stores\todo.js`中，修改代码如下：
 
-```js showLineNumbers title="src\stores\todoData.js"
+```js showLineNumbers title="src\stores\todo.js"
+
 import { defineStore } from "pinia";
 import axios from 'axios';
 
 import { FASTAPI_BASE_URL } from "../constant";
 
-export const useTodoDataStore = defineStore("todoData", {
+export const todoStore = defineStore("todo", {
   state: () => ({
-    todos: []
+    todos: [],
   }),
-  getters: { allTodos: (state) => state.todos },
   actions: {
-    async fetchTodos() {
+    async loadTodos() {
       try {
         const response = await axios.get(`${FASTAPI_BASE_URL}/api/todos`);
         this.todos = response.data;
@@ -44,27 +44,40 @@ export const useTodoDataStore = defineStore("todoData", {
         this.todos.push(response.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        console.log(this.todos);
       }
     },
     async deleteTodo(id) {
       try {
         const response = await axios.delete(`${FASTAPI_BASE_URL}/api/todos/${id}`);
-        this.todos.filter(todo => todo.id !== id);
+        this.todos = this.todos.filter(todo => todo.id !== id);
       } catch (error) {
         console.error(error);
       }
     },
-  }
+  },
 });
+
 ```
+
+- `const response = await axios.delete(.../${id})`: `axios.delete`：这是axios库提供的一个函数，用于发送DELETE请求。
+
+- `${FASTAPI_BASE_URL}/api/todos/${id}`：这是一个模板字符串，用于构建 DELETE 请求的 URL。`\${FASTAPI_BASE_URL}` 是一个常量，
+表示后端 API 的基础 URL，`\api\todos\${id}` 是特定的 API 端点路径，`${id}`是待删除资源的标识符。
+
+我们可以看到FastAPI程序中的**Delete Todo**这个API不仅要求HTTP请求是DELETE，还要求在URL中传入指定的Todo的ID, 此ID是MySQL todos表中主键，不可乱传。
+
+![](./img/backend-delete-todo-api.png)
+
 
 我们可以将 `src/components/TodoItem.vue` 的代码更改成如下:
 
 ```html showLineNumbers title="src/components/TodoItem.vue"
 <script setup>
 import { toRefs } from "vue";
-import { useTodoDataStore } from "../stores/todoData";
-const todoData = useTodoDataStore();
+import { todoStore } from "../stores/todo";
+const useTodoStore = todoStore();
 import XMark from "./icons/XMark.vue";
 const props = defineProps({
   todo: { id: Number, content: String, is_done: Boolean },
@@ -73,7 +86,7 @@ const props = defineProps({
 const { id, content, is_done } = toRefs(props.todo);
 
 const deleteTodo = (id) => {
-  todoData.deleteTodo(id);
+  useTodoStore.deleteTodo(id);
 }
 </script>
 <template>
@@ -92,26 +105,27 @@ const deleteTodo = (id) => {
     </button>
   </article>
 </template>
+
 ```
 
+-  `<button @click="() => deleteTodo(id)">`: 在 Vue 组件中，使用 `@click` 绑定事件时，可以直接调用方法，并传递参数
 
 ## 修改功能
 
-在`src\stores\todoData.js`中，修改代码如下：
+在`src\stores\todo.js`中，修改代码如下：
 
-```js showLineNumbers title="src\stores\todoData.js"
+```js showLineNumbers title="src\stores\todo.js"
 import { defineStore } from "pinia";
 import axios from 'axios';
 
 import { FASTAPI_BASE_URL } from "../constant";
 
-export const useTodoDataStore = defineStore("todoData", {
+export const todoStore = defineStore("todo", {
   state: () => ({
-    todos: []
+    todos: [],
   }),
-  getters: { allTodos: (state) => state.todos },
   actions: {
-    async fetchTodos() {
+    async loadTodos() {
       try {
         const response = await axios.get(`${FASTAPI_BASE_URL}/api/todos`);
         this.todos = response.data;
@@ -127,12 +141,14 @@ export const useTodoDataStore = defineStore("todoData", {
         this.todos.push(response.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        console.log(this.todos);
       }
     },
     async deleteTodo(id) {
       try {
         const response = await axios.delete(`${FASTAPI_BASE_URL}/api/todos/${id}`);
-        this.todos.filter(todo => todo.id !== id);
+        this.todos = this.todos.filter(todo => todo.id !== id);
       } catch (error) {
         console.error(error);
       }
@@ -142,28 +158,41 @@ export const useTodoDataStore = defineStore("todoData", {
       todo.is_done = !todo.is_done;
       try {
         const response = await axios.put(`${FASTAPI_BASE_URL}/api/todos/${id}`, todo);
+        this.todos = this.todos.map(todo => {
+          if (todo.id === idToModify) {
+            return { ...todo, is_done: newIsDoneStatus };
+          }
+          return todo;
+        });
       } catch (error) {
         console.error(error);
       }
-
-      this.todos = this.todos.map(todo => {
-        if (todo.id === idToModify) {
-          return { ...todo, is_done: newIsDoneStatus };
-        }
-        return todo;
-      });
-    }
-  }
+  },
 });
 ```
+
+
+我们可以看到FastAPI程序中的**Update Todo**这个API不仅要求HTTP请求是PUT方法，
+还要求在URL中传入指定的Todo的ID, 并且还需要在HTTP body 体里面增加需要修改的两个 `content`和 `is_done`字段的内容。
+
+![](./img/backend-update-todo-api.png)
+
+由于我们只是想更改`is_done`的状态，于是代码就实现成如下方法：
+
+```js
+const todo = this.todos.find(todo => todo.id === id);
+todo.is_done = !todo.is_done;
+const response = await axios.put(`${FASTAPI_BASE_URL}/api/todos/${id}`, todo);
+```
+
 
 我们可以将 `src/components/TodoItem.vue` 的代码更改成如下:
 
 ```html showLineNumbers title="src/components/TodoItem.vue"
 <script setup>
 import { toRefs } from "vue";
-import { useTodoDataStore } from "../stores/todoData";
-const todoData = useTodoDataStore();
+import { todoStore } from "../stores/todo";
+const useTodoStore = todoStore();
 import XMark from "./icons/XMark.vue";
 const props = defineProps({
   todo: { id: Number, content: String, is_done: Boolean },
@@ -172,11 +201,11 @@ const props = defineProps({
 const { id, content, is_done } = toRefs(props.todo);
 
 const deleteTodo = (id) => {
-  todoData.deleteTodo(id);
+  useTodoStore.deleteTodo(id);
 }
 
 const changeIsDone = (id) => {
-  todoData.changeIsDone(id);
+  useTodoStore.changeIsDone(id);
 }
 </script>
 <template>

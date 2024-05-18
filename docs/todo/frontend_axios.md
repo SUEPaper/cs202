@@ -78,6 +78,11 @@ fetchData();
 
 <style scoped></style>
 ```
+
+- `const response = await axios.get(...)`: `axios.get`这是axios库提供的一个函数，用于发送GET请求，更多内容请看官方文档：https://axios-http.com/docs/intro。
+`await`关键字用于等待`axios.get`函数返回的`Promise`对象。在这里，它使得JavaScript引擎暂停执行，直到该请求完成并且`Promise`状态变为`resolved`（已完成）。
+
+
 Chrome浏览器中在 `src/App.vue`的第八行打个断点，如下图所示。
 
 ![](./img/web-debug-axios-01.png)
@@ -102,21 +107,20 @@ Chrome浏览器中在 `src/App.vue`的第八行打个断点，如下图所示。
 
 ## axios与pinia结合
 
-在`src\stores\todoData.js`中，修改代码如下：
+在`src\stores\todo.js`中，修改代码如下：
 
-```js showLineNumbers title="src\stores\todoData.js"
+```js showLineNumbers title="src\stores\todo.js"
 import { defineStore } from "pinia";
 import axios from 'axios';
 
 import { FASTAPI_BASE_URL } from "../constant";
 
-export const useTodoDataStore = defineStore("todoData", {
+export const todoStore = defineStore("todo", {
   state: () => ({
-    todos: []
+    todos: [],
   }),
-  getters: { allTodos: (state) => state.todos },
   actions: {
-    async fetchTodos() {
+    async loadTodos() {
       try {
         const response = await axios.get(`${FASTAPI_BASE_URL}/api/todos`);
         this.todos = response.data;
@@ -126,28 +130,55 @@ export const useTodoDataStore = defineStore("todoData", {
       }
     },
     async addTodo(content) {
-      const newTodo = { content, is_done: false };
+      const newTodo = { content: content, is_done: false };
       try {
         const response = await axios.post(`${FASTAPI_BASE_URL}/api/todos`, newTodo);
         this.todos.push(response.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        console.log(this.todos);
       }
-    }
+    },
   }
 });
 ```
+
+- `const response = await axios.post(..., newTodo)`: `axios.post`：这是axios库提供的一个函数，用于发送POST请求。
+
+- `${FASTAPI_BASE_URL}/api/todos`：这是一个模板字符串，用于构建请求的URL。`${FASTAPI_BASE_URL}`是一个常量，表示后端API的基础URL，
+`/api/todos`则是特定的API端点路径。
+
+FastAPI程序中的**Create Todo**API。
+
+![](./img/backend-create-todo-api.png)
+
+该API是POST请求，URL为：`${FASTAPI_BASE_URL}/api/todos`，使用该API时我们需要在HTTP body体里面加入这样的JSON数据： 
+```json
+{
+  "content": "string",
+  "is_done": true
+}
+```
+因此新建一个 `newTodo`对象的代码为： `const newTodo = { content: content, is_done: false }` 。
+此时 `newTodo`的数据结构和**Create Todo** API所需的一样，axios会自动将 JavaScript 中的字典对象转换成JSON数据格式。
+
 
 我们可以将 `src/components/TodoList.vue` 的代码更改成如下:
 
 ```html showLineNumbers title="src/components/TodoList.vue"
 <script setup>
 import TodoItem from "./TodoItem.vue";
-import { useTodoDataStore } from "../stores/todoData";
-import { onMounted } from "vue";
-const todoData = useTodoDataStore();
-todoData.fetchTodos();
-const todos = todoData.allTodos;
+import { todoStore } from "../stores/todo";
+
+import { onMounted, computed } from "vue";
+
+const useTodoStore = todoStore();
+const todos = computed(()=> useTodoStore.todos);
+
+onMounted(() => {
+  useTodoStore.loadTodos();
+})
 </script>
 <template>
   <div 
@@ -160,5 +191,8 @@ const todos = todoData.allTodos;
 </template>
 <style></style>
 ```
+
+- `onMounted(() => { ... })`: 使用`onMounted`钩子函数，表示在组件挂载后执行的操作。在这里，调用`useTodoStore.loadTodos()`方法，用于加载初始的待办事项数据。
+
 
 这样我们就实现了往FastAPI后端发送获取所有的Todo和新增Todo的请求。

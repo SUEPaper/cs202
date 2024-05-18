@@ -108,24 +108,22 @@ app.mount('#app');
 
 我们需要定义一个全局的状态管理器，用来在整个 Vue.js 应用中使用 
 
-在```/src```文件夹下新建```stores```文件夹,在store文件夹下新建```todoData.js```文件
+在```/src```文件夹下新建```stores```文件夹,在store文件夹下新建```todo.js```文件
 
 :::tip
 将相关的代码组织到单独的文件夹中，这样可以更容易地查找和管理相关的代码。
 
-todoData.js 文件被放置在 stores 文件夹中，表明它包含与状态管理有关的代码。
+`todo.js` 文件被放置在 `stores` 文件夹中，表明它包含与状态管理有关的代码。
 
-Todo.vue 文件被放置在 components 文件夹内，表明它是组件。
+`TodoList.vue` 文件被放置在 `components` 文件夹内，表明它是组件。
 :::
 
-![](./img/3_1.png)
-
-在```src\stores\todoData.js```写入代码
+在```src\stores\todo.js```写入代码
 
 ```js
 import { defineStore } from "pinia";
 
-export const useTodoDataStore = defineStore("todoData", {
+export const todoStore = defineStore("todo", {
   state: () => ({
     todoList: [
       {
@@ -155,7 +153,7 @@ export const useTodoDataStore = defineStore("todoData", {
       },
     ],
   }),
-  getters: { allTodos: (state) => state.todoList },
+  getters: {},
   actions: {},
 });
 
@@ -192,7 +190,7 @@ export const useTodoDataStore = defineStore("todoData", {
 
 这个 `Pinia` 仓库用于管理应用程序中的待办事项数据。`state` 存储数据，
 `getters` 提供对数据的访问，而 `actions` 可以在需要时执行一些逻辑操作。
-在应用中，你可以使用 `useTodoDataStore` 来访问或更改待办事项的状态。
+在应用中，你可以使用 `todoStore` 来访问或更改待办事项的状态。
 
 有了状态管理后，我们需要改进先前的代码，使用pinia来管理状态。
 
@@ -200,10 +198,13 @@ export const useTodoDataStore = defineStore("todoData", {
 
 ```html showLineNumbers title="src/components/TodoList.vue"
 <script setup>
+import { computed } from "vue";
+
 import TodoItem from "./TodoItem.vue";
-import { useTodoDataStore } from "../stores/todoData";
-const todoData = useTodoDataStore();
-const todos = todoData.allTodos;
+import { todoStore } from "../stores/todo";
+
+const useTodoStore = todoStore();
+const todos = computed(()=> useTodoStore.todos);
 </script>
 <template>
   <div 
@@ -217,6 +218,10 @@ const todos = todoData.allTodos;
 <style></style>
 ```
 
+- `import { computed } from "vue"`: 从Vue中导入computed函数，用于创建计算属性。计算属性是响应式的，当它们依赖的数据发生变化时会自动更新。
+- `const todos = computed(() => useTodoStore.todos)`: 定义一个计算属性`todos`，其值是从`useTodoStore`中的`todos`属性获取的。
+这样，当`todos`发生变化时，`todos`计算属性也会自动更新。
+
 此时网页效果没有改变，这说明已经成功使用pinia。
 
 
@@ -224,13 +229,13 @@ const todos = todoData.allTodos;
 
 ## Web页面新增一个Todo
 
-接下来我们要完成"添加Todo的功能"，首先现在pinia增加`actions`,这是接下来需要调用的函数。
+接下来我们要完成"添加Todo的功能"，首先现在`pinia`增加`actions`,这是接下来需要调用的函数。
 
-在``src\stores\todoData.js``中写入代码
+在``src\stores\todo.js``中写入代码
 ```js
 import { defineStore } from "pinia";
 
-export const useTodoDataStore = defineStore("todoData", {
+export const todoStore = defineStore("todo", {
   state: () => ({
     todoList: [
       {
@@ -260,7 +265,6 @@ export const useTodoDataStore = defineStore("todoData", {
       },
     ],
   }),
-  getters: { allTodos: (state) => state.todoList },
   actions: {
     addTodo(content) {
       const newTodo = {
@@ -283,18 +287,17 @@ export const useTodoDataStore = defineStore("todoData", {
 
 ```html showLineNumbers title="src/components/TodoCreate.vue"
 <script setup>
-import { useTodoDataStore } from '../stores/todoData';
+import { todoStore } from '../stores/todo';
 import { ref } from 'vue';
 
 const inputValue = ref("");
 
-const todoData = useTodoDataStore();
+const useTodoStore = todoStore();
 
 const addTodo = () => {
-  todoData.addTodo(inputValue.value);
+  useTodoStore.addTodo(inputValue.value);
   inputValue.value = ""
 }
-
 </script>
 <template>
   <form
@@ -316,9 +319,21 @@ const addTodo = () => {
 </template>
 <style></style>
 ```
-在输入框输入`mytodo`可以看到
+
+1. `import { ref } from 'vue'`: 导入`ref`函数，用于创建响应式引用。
+
+2. `const inputValue = ref("")`: 创建一个名为`inputValue`的响应式引用，初始值为空字符串，用于存储输入框的值。
+
+3. `const addTodo = () => { ... }`: 定义一个`addTodo`函数，
+用于向待办事项列表中添加新的待办事项。
+它从`inputValue.value`获取输入框的当前值，
+调用`useTodoStore`中的`addTodo`方法进行添加，
+并在添加完成后将输入框的值重置为空字符串。
+
+4. `<form v-on:submit.prevent="addTodo" ...>`: 使用`v-on:submit.prevent`指令监听表单提交事件，并调用`addTodo`函数。`.prevent`修饰符阻止表单的默认提交行为。
+
+5. `<input v-model="inputValue" ... />`: 使用`v-model`指令将输入框的值与`inputValue`
+
+在输入框输入`MyTodo`可以看到
 
 ![](./img/web-add-todo.png)
-
-- `v-on:submit.prevent="addTodo"` 指令在调用 addTodo 函数的同时，阻止表单的默认提交行为（默认行为会刷新页面）
-- `v-model="inputValue` 这个输入框使用 `v-model` 绑定到 `inputValue`，所以它的值会始终与 `inputValue` 同步
