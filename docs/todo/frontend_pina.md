@@ -295,8 +295,10 @@ const inputValue = ref("");
 const useTodoStore = todoStore();
 
 const addTodo = () => {
-  useTodoStore.addTodo(inputValue.value);
-  inputValue.value = ""
+  if(inputValue.value != "") {
+    useTodoStore.addTodo(inputValue.value);
+    inputValue.value = "";
+  }
 }
 </script>
 <template>

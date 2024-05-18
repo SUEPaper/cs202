@@ -97,6 +97,7 @@ sidebar_position: 25
 
 ```html showLineNumbers title="src/components/TodoList.vue"
 <script setup>
+import XMark from "./icons/XMark.vue";
 </script>
 <template>
   <div class="mt-4 rounded-t-md bg-white transition-all duration-75">
@@ -184,6 +185,8 @@ src/
 ```html showLineNumbers title="src/components/TodoList.vue"
 <script setup>
 import { ref } from "vue";
+import XMark from "./icons/XMark.vue";
+
 const todos = ref([]);
 
 const initTodoDatas = ["上海电力大学", "数理学院", "现代Web开发", "Web前端"];
@@ -203,7 +206,7 @@ function uuid() {
 initTodoDatas.forEach((todo) => {
   todos.value.push({
     id: uuid(),
-    name: todo,
+    content: todo,
     is_done: false,
   });
 });
@@ -216,7 +219,7 @@ initTodoDatas.forEach((todo) => {
         class="h-5 w-5 rounded-full border-2 transition-all duration-700"
       ></button>
       <p class="flex-auto text-gray-500 transition-all duration-700">
-        {{ todos[0].name }}
+        {{ todos[0].content }}
       </p>
       <button>
         <XMark />
@@ -227,7 +230,7 @@ initTodoDatas.forEach((todo) => {
         class="h-5 w-5 rounded-full border-2 transition-all duration-700"
       ></button>
       <p class="flex-auto text-gray-500 transition-all duration-700">
-        {{ todos[1].name }}
+        {{ todos[1].content }}
       </p>
       <button>
         <XMark />
@@ -238,7 +241,7 @@ initTodoDatas.forEach((todo) => {
         class="h-5 w-5 rounded-full border-2 transition-all duration-700"
       ></button>
       <p class="flex-auto text-gray-500 transition-all duration-700">
-        {{ todos[2].name }}
+        {{ todos[2].content }}
       </p>
       <button>
         <XMark />
@@ -249,7 +252,7 @@ initTodoDatas.forEach((todo) => {
         class="h-5 w-5 rounded-full border-2 transition-all duration-700"
       ></button>
       <p class="flex-auto text-gray-500 transition-all duration-700">
-        {{ todos[3].name }}
+        {{ todos[3].content }}
       </p>
       <button>
         <XMark />
@@ -288,7 +291,7 @@ Vue 为组件提供了 `props`，使得在使用组件时，可以给组件传�
 import XMark from "./icons/XMark.vue";
 const props = defineProps(["todo"])
 const { todo } = props
-const { id, name , is_done} = todo
+const { id, content , is_done} = todo
 </script>
 <template>
   <article class="flex gap-4 border-b border-gray-200 p-4">
@@ -296,7 +299,7 @@ const { id, name , is_done} = todo
       class="h-5 w-5 rounded-full border-2 transition-all duration-700"
     ></button>
     <p class="flex-auto text-gray-500 transition-all duration-700">
-      {{ name }}
+      {{ content }}
     </p>
     <button>
       <XMark />
@@ -309,7 +312,7 @@ const { id, name , is_done} = todo
 `TodoItem`组件默认接收 `props` 参数，它是一个对象，
 用于保存父组件传递下来的内容，
 在这里我们使用 `todo` 变量对 `props` 进行了解构赋值，
-并且也用了 `id`, `name`, `is_done` 变量对 `todo` 进行了解构赋值。
+并且也用了 `id`, `content`, `is_done` 变量对 `todo` 进行了解构赋值。
 
 
 更改 `src/components/TodoList.vue`代码如下：
@@ -337,7 +340,7 @@ function uuid() {
 initTodoDatas.forEach((todo) => {
   todos.value.push({
     id: uuid(),
-    name: todo,
+    content: todo,
     is_done: false,
   });
 });
@@ -355,7 +358,7 @@ initTodoDatas.forEach((todo) => {
 
 我们给 `TodoItem` 组件传递了一个 `todo` 属性， 它的值为 `todos` 里面的属性，
 所有传递的属性都会合并进 `props` 对象中，然后传递给 `TodoItem` 组件，
-这里 `props` 对象是这样的 `props = { todo: { "id": "9afb8cb6-42b1-41fe-8d82-03e508b776a7", "name": "上海电力大学", "is_done": false} }` 。
+这里 `props` 对象是这样的 `props = { todo: { "id": "9afb8cb6-42b1-41fe-8d82-03e508b776a7", "content": "上海电力大学", "is_done": false} }` 。
 于是浏览器渲染效果又回到我们想要的。
 
 在Vue的模板语法中，使用冒号 `:` 用于绑定动态数据，而不使用冒号则表示传递的是静态数据。
@@ -414,7 +417,7 @@ function uuid() {
 initTodoDatas.forEach((todo) => {
   todos.value.push({
     id: uuid(),
-    name: todo,
+    content: todo,
     is_done: false,
   });
 });
@@ -437,7 +440,7 @@ initTodoDatas.forEach((todo) => {
 除了 `<div>`元素， `li`等都可以循环渲染。
 
 在每次迭代中，`todo` 变量都代表数组中的当前项，
-然后通过 `:tod="todo"` 将 `todo` 对象传递给 `Todo` 组件。
+然后通过 `:todo="todo"` 将 `todo` 对象传递给 `Todo` 组件。
 这样，`Todo` 组件就能够使用 `todo` 对象中的数据进行渲染和展示。
 
 <!-- TODO:vue对key没有要求？ -->
@@ -475,7 +478,7 @@ function uuid() {
 initTodoDatas.forEach((todo) => {
   todos.value.push({
     id: uuid(),
-    name: todo,
+    content: todo,
     is_done: false,
   });
 });
@@ -581,9 +584,6 @@ const { id, content , is_done} = toRef(props.todo)
     <button
       class="h-5 w-5 rounded-full border-2 transition-all duration-700"
     ></button>
-    <!-- <p class="flex-auto text-gray-500 transition-all duration-700">
-      {{ name }}
-    </p> -->
     <p :class=" is_done? 
     'flex-auto text-gray-300 line-through transition-all duration-700 ' :
     'flex-auto text-gray-500 transition-all duration-700'
