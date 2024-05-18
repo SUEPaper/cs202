@@ -1,9 +1,9 @@
 ---
-id : component
-sidebar_position: 2
+id : frontend-component
+sidebar_position: 22
 ---
 
-# 程序代码解析
+# Web前端：程序代码解析
 
 :::tip
 

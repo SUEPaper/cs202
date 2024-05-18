@@ -1,9 +1,16 @@
 ---
-id : todo-component
-sidebar_position: 5
+id : frontend-todo-component
+sidebar_position: 25
 ---
 
-# Todo List应用
+# Web前端：Todo List应用
+
+:::tip
+
+本课程网站内容请仔细阅读后再进行实操。因未仔细阅读内容，出现任何错误后果自负（逃～～～逃～～～逃
+
+**所有的代码请不要复制粘贴，请手敲每一行代码。复制粘贴不会让你动脑子，而手敲每一个行代码会让你自然而然地去动脑子会想每一行代码的含义和原理**
+:::
 
 我们先来设计最基础的功能，Todo List 一般用来记录备忘的，最简单的功能包括：
 
@@ -13,7 +20,7 @@ sidebar_position: 5
 4. 将某条备忘设置成已完成。
 5. 快速删除已完成的备忘。
 
-![](./img/todos_01.png)
+![](./img/web_todo_list_02.png)
 
 ## 完成基础UI部分
 

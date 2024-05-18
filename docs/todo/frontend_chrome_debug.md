@@ -1,9 +1,16 @@
 ---
-id : debug
-sidebar_position: 3
+id : frontend-chrome-debug
+sidebar_position: 23
 ---
 
-# 在Chrome浏览器调试代码
+# Web前端：在Chrome浏览器调试代码
+
+:::tip
+
+本课程网站内容请仔细阅读后再进行实操。因未仔细阅读内容，出现任何错误后果自负（逃～～～逃～～～逃
+
+**所有的代码请不要复制粘贴，请手敲每一行代码。复制粘贴不会让你动脑子，而手敲每一个行代码会让你自然而然地去动脑子会想每一行代码的含义和原理**
+:::
 
 在编写更复杂的代码前，让我们先来聊聊调试吧。
 
@@ -20,11 +27,11 @@ sidebar_position: 3
 
 如果你是第一次这么做，那你应该会看到下面这个样子：
 
-![](./img/debug_01.png)
+![](./img/chrome_debug_01.png)
 
 让我们在预览树中点击和选择 `HelloWorld.vue`。这里应该会如下图所示：
 
-![](./img/debug_02.png)
+![](./img/chrome_debug_02.png)
 
 :::tip 为什么会有两个同名的vue组件？
 在实际的开发中，浏览器并不能直接解析 `.vue` 文件，因为浏览器只能解析 HTML、CSS 和 JavaScript 文件。因此，在构建 Vue 项目时，通常会使用构建工具（如 Vue CLI、Vite 等）将 `.vue` 文件转换为浏览器可以理解的格式。
@@ -48,7 +55,7 @@ sidebar_position: 3
 
 例如，`1+2` 将会返回 `3`，而 `hello("debugger")` 函数调用什么也没返回，所以结果是 `undefined`：
 
-![](./img/debug_03.png)
+![](./img/chrome_debug_03.png)
 
 ## 断点（Breakpoints）
 
@@ -58,7 +65,7 @@ sidebar_position: 3
 
 看起来应该是这样的（蓝色是你应该点击的地方）：
 
-![](./img/debug_04.png)
+![](./img/chrome_debug_04.png)
 
 **断点** 是调试器会自动暂停 JavaScript 执行的地方。
 
@@ -86,7 +93,7 @@ sidebar_position: 3
 
 设置断点之后，程序会在第 8 行暂停执行：
 
-![](./img/debug_05.png)
+![](./img/chrome_debug_05.png)
 
 
 请打开右侧的信息下拉列表（箭头指示出的地方）。这里允许你查看当前的代码状态：
@@ -114,7 +121,7 @@ sidebar_position: 3
 
 在右侧面板的顶部是一些关于跟踪脚本的按钮。让我们来使用它们吧。
 
-![](./img/debug_06.png)
+![](./img/chrome_debug_06.png)
 
 1. “恢复（Resume）”：继续执行，快捷键 `F8`。
 
@@ -122,7 +129,7 @@ sidebar_position: 3
 
 请在第11行和18行打一个断点，然后在网页上点击`Calculate`按钮，程序会卡在第十八行处，之后按快捷键`F8`，我们会看到这样的情况：
 
-![](./img/debug_07.png)
+![](./img/chrome_debug_07.png)
 
 程序恢复执行了，执行到第11行 `add()` 函数中的`let value = x + y`另外一个断点后暂停在了那里。看一下右边的 “Call stack”。它已经增加了一个调用信息。我们现在在 `add()` 里面。
 

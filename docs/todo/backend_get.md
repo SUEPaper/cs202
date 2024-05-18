@@ -1,9 +1,9 @@
 ---
-id: http_get
+id: backend-http-get
 sidebar_position: 4
 ---
 
-# HTTP GET 请求
+# Web后端：HTTP GET 请求
 
 :::tip
 

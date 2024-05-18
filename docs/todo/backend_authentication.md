@@ -1,9 +1,9 @@
 ---
-id: auth
-sidebar_position: 13
+id: backend-auth
+sidebar_position: 51
 ---
 
-# 用户登陆
+# Web后端：用户登陆
 
 :::tip
 
@@ -19,7 +19,7 @@ sidebar_position: 13
 
 ## 新建一张`users`表
 
-为了将用户信息可以持久存储在磁盘上，我们需要在数据库里新建一张 `users` 表来存储用户信息。还记得我们是怎么在数据库里新建一张`todos`表了吗？请回忆一下我们在[数据库迁移](./datamigration.md)章节所学的内容。
+为了将用户信息可以持久存储在磁盘上，我们需要在数据库里新建一张 `users` 表来存储用户信息。还记得我们是怎么在数据库里新建一张`todos`表了吗？请回忆一下我们在[数据库迁移](./backend_datamigration.md)章节所学的内容。
 
 打开终端，并且进入 `db/` 文件夹，输入如下命令。
 

@@ -1,9 +1,9 @@
 ---
 id: debug
-sidebar_position: 20
+sidebar_position: 16
 ---
 
-# VS Code Debug FastAPI 代码
+# Web后端：VS Code Debug FastAPI 代码
 
 :::info
 当您开发应用程序时，调试是一个非常重要的工具，可以帮助您查找和修复代码中的错误。在 Visual Studio Code (VS Code) 中，您可以使用内置的调试功能来调试您的代码。下面是详细介绍如何在 VS Code 中进行调试的步骤：

@@ -1,9 +1,9 @@
 ---
-id: db
+id: backend-db
 sidebar_position: 8
 ---
 
-# 与 MySQL 数据库连接
+# Web后端：与 MySQL 数据库连接
 
 :::tip
 

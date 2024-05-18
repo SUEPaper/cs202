@@ -1,9 +1,16 @@
 ---
-id : tailwind
-sidebar_position: 4
+id : frontend-tailwind
+sidebar_position: 24
 ---
 
-# 使用 Tailwind CSS
+# Web前端：使用 Tailwind CSS
+
+:::tip
+
+本课程网站内容请仔细阅读后再进行实操。因未仔细阅读内容，出现任何错误后果自负（逃～～～逃～～～逃
+
+**所有的代码请不要复制粘贴，请手敲每一行代码。复制粘贴不会让你动脑子，而手敲每一个行代码会让你自然而然地去动脑子会想每一行代码的含义和原理**
+:::
 
 ## 什么是Tailwind CSS
 
@@ -122,7 +129,7 @@ package.json 是一个用于描述和管理项目的配置文件，通常位于�
 ```jsx
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{vue,js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
@@ -145,3 +152,26 @@ module.exports = {
 ## 增加 daisyUI 组件库
 
 虽然我们前面推荐了大家一款组件库，但是本项目实际会使用目前越来越火的Tailwind编写的组件库 [**daisyUI**](https://daisyui.com/)
+
+安装 daisyUI 其实很简单，只要在命令行中输入：
+
+```bash
+npm i -D daisyui@latest
+```
+
+在你的 `tailwind.config.js` 里追加 daisyUI 的设置:
+
+```js
+export default {
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [
+    require('daisyui'),
+  ],
+  daisyui: {
+    themes: ["light"],
+  },
+};
+```

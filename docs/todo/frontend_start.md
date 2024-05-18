@@ -1,9 +1,9 @@
 ---
-id : start
-sidebar_position: 1
+id : frontend-start
+sidebar_position: 20
 ---
 
-# 你的第一个Vue.js的程序
+# Web前端：你的第一个Vue.js的程序
 
 :::tip
 

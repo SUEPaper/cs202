@@ -1,9 +1,9 @@
 ---
-id: db_migration
+id: backend-db-migration
 sidebar_position: 7
 ---
 
-# 数据库迁移
+# Web后端：数据库迁移
 
 :::tip
 

@@ -1,10 +1,10 @@
 ---
-id: put_delete
+id: backend-put-delete
 sidebar_position: 11
 ---
 
 
-# HTTP PUT 和 DELETE 请求
+# Web后端：HTTP PUT 和 DELETE 请求
 
 :::tip
 
