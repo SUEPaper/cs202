@@ -148,7 +148,6 @@ class Todo(TodoCreate):
     id: int
 
 class TodoInDB(Todo):
-    user_id: int
     created_at: datetime
     updated_at: datetime
 
