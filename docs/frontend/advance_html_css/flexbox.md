@@ -18,6 +18,10 @@ Flexbox 是单维的，这意味着您可以沿行或列对齐，而且默认设
 
 <iframe src="//player.bilibili.com/player.html?bvid=BV1P7411m7Nu&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
+## 辅助学习游戏
+
+Flexbox游戏：https://flexboxfroggy.com/#zh-cn
+
 ## Flexbox属性
 
 新建一个 `html_css_advance`的文件夹，然后新建 `html_css_advance/index.html`和 `html_css_advance/style.css`两个文件。

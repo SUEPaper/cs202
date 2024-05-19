@@ -9,7 +9,6 @@ sidebar_position: 3
 
 <iframe src="//player.bilibili.com/player.html?bvid=BV18p411A7JB&page=1&autoplay=0" width="100%" height="600" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
-
 网格布局（Grid）是最强大的 CSS 布局方案。
 
 它将网页划分成一个个网格，可以任意组合不同的网格，做出各种各样的布局。以前，只能通过复杂的 CSS 框架达到的效果，现在浏览器内置了。
@@ -37,6 +36,9 @@ Grid 布局与 Flex 布局有一定的相似性，都可以指定容器内部多
 ![](./images/grid_1.png)
 
 
+## Grid 辅助学习游戏
+
+Grid布局游戏：https://cssgridgarden.com/#zh-cn
 
 
 ## Grid 属性
