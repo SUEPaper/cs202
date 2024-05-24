@@ -108,22 +108,21 @@ package.json 是一个用于描述和管理项目的配置文件，通常位于�
 
 ### 配置Tailwind CSS
 
-![](img/1_10.png)
-
-删除`style.css`文件，因为我们有了Tailwind css就不需要自己写css了
-
 ![](img/1_13.png)
 
 删除文件`src\assets\vue.svg`
 
-新建文件`src\index.css`，写入代码
+![](img/1_10.png)
+
+将`style.css`文件，替代为
+
 
 ```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
-![](img/1_16.png)
+<!-- ![](img/1_16.png) -->
 
 将`tailwind.config.js`替代为
 ```jsx
@@ -139,8 +138,8 @@ module.exports = {
 
 ```
 
-在main.js 中加入 ```import "./index.css";```，删除 ```import "./style.css";```
-![](img/1_17.png)
+<!-- 在main.js 中加入 ```import "./index.css";```，删除 ```import "./style.css";```
+![](img/1_17.png) -->
 
 
 ## 如何使用 Tailwind CSS

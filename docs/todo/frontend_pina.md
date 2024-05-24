@@ -125,31 +125,31 @@ import { defineStore } from "pinia";
 
 export const todoStore = defineStore("todo", {
   state: () => ({
-    todoList: [
+    todos: [
       {
         id: 1,
         content: "上海电力大学",
-        isDone: false,
+        is_done: false,
       },
       {
         id: 2,
         content: "数理学院",
-        isDone: false,
+        is_done: false,
       },
       {
         id: 3,
         content: "现代Web开发",
-        isDone: true,
+        is_done: true,
       },
       {
         id: 4,
         content: "Web前端开发",
-        isDone: false,
+        is_done: false,
       },
       {
         id: 5,
         content: "待办清单",
-        isDone: true,
+        is_done: true,
       },
     ],
   }),
@@ -166,7 +166,7 @@ export const todoStore = defineStore("todo", {
 
    ```javascript
    state: () => ({
-     todoList: [
+     todos: [
        // ... todo items ...
      ],
    }),
@@ -177,7 +177,7 @@ export const todoStore = defineStore("todo", {
 
    ```javascript
    getters: { 
-     allTodos: (state) => state.todoList 
+     allTodos: (state) => state.todos 
    },
    ```
 
@@ -235,52 +235,53 @@ const todos = computed(()=> useTodoStore.todos);
 ```js
 import { defineStore } from "pinia";
 
-export const todoStore = defineStore("todo", {
+export const todoStore = defineStore("todos", {
   state: () => ({
-    todoList: [
+    todos: [
       {
         id: 1,
         content: "上海电力大学",
-        isDone: false,
+        is_done: false,
       },
       {
         id: 2,
         content: "数理学院",
-        isDone: false,
+        is_done: false,
       },
       {
         id: 3,
         content: "现代Web开发",
-        isDone: true,
+        is_done: true,
       },
       {
         id: 4,
         content: "Web前端开发",
-        isDone: false,
+        is_done: false,
       },
       {
         id: 5,
         content: "待办清单",
-        isDone: true,
+        is_done: true,
       },
     ],
   }),
+  getters: {},
   actions: {
     addTodo(content) {
       const newTodo = {
-        id: this.todoList.length + 1,
+        id: this.todos.length + 1,
         content: content,
         isDone: false,
       };
-      this.todoList.push(newTodo);
+      this.todos.push(newTodo);
     },
   },
 });
 ```
 
 我们的目标是完成一个输入框，一个确认按钮，当点击时，调用`addTodo`函数，
-将输入框输入的内容添加到`todoList`这个状态里，然后设置输入框的内容为空，
-因为`todoList`这个状态更新了，
+将输入框输入的内容添加到`todos`这个状态里，然后设置输入框的内容为空，
+因为`todos`这个状态更新了，
 所以网页的内容更新了。
 
 我们可以将 `src/components/TodoCreate.vue` 的代码更改成如下:
@@ -332,9 +333,9 @@ const addTodo = () => {
 调用`useTodoStore`中的`addTodo`方法进行添加，
 并在添加完成后将输入框的值重置为空字符串。
 
-4. `<form v-on:submit.prevent="addTodo" ...>`: 使用`v-on:submit.prevent`指令监听表单提交事件，并调用`addTodo`函数。`.prevent`修饰符阻止表单的默认提交行为。
+1. `<form v-on:submit.prevent="addTodo" ...>`: 使用`v-on:submit.prevent`指令监听表单提交事件，并调用`addTodo`函数。`.prevent`修饰符阻止表单的默认提交行为。
 
-5. `<input v-model="inputValue" ... />`: 使用`v-model`指令将输入框的值与`inputValue`
+2. `<input v-model="inputValue" ... />`: 使用`v-model`指令将输入框的值与`inputValue`
 
 在输入框输入`MyTodo`可以看到
 
