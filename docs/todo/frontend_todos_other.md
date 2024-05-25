@@ -158,16 +158,10 @@ export const todoStore = defineStore("todo", {
       todo.is_done = !todo.is_done;
       try {
         const response = await axios.put(`${FASTAPI_BASE_URL}/api/todos/${id}`, todo);
-        this.todos = this.todos.map(todo => {
-          if (todo.id === idToModify) {
-            return { ...todo, is_done: newIsDoneStatus };
-          }
-          return todo;
-        });
       } catch (error) {
         console.error(error);
       }
-  },
+    },
 });
 ```
 

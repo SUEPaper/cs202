@@ -3,7 +3,7 @@ id : code-name
 sidebar_position: 100
 ---
 
-# 代码的命令技巧
+# 代码的命名技巧
 
 :::tip
 

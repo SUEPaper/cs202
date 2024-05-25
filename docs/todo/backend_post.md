@@ -231,7 +231,7 @@ def get_todo_by_id(todo_id: int):
     if result:
         return result
     
-@app.get("/todos/search/",  response_model=list[Todo])
+@app.get("/todos/search/")
 def search_todos(
     keyword: Optional[str] = None, max_results: Optional[int] = 10  
 ):
