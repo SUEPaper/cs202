@@ -105,7 +105,7 @@ npm run dev
 
 ## Demo 代码案例
 
-请用VS Code 打开 `frontend` 文件夹，将`App.vue`中的代码修改成如下代码：
+请用VS Code 打开 `frontend` 文件夹中的`src`文件夹，将`App.vue`中的代码修改成如下代码：
 
 ```html showLineNumbers title="App.vue"
 <script setup>
