@@ -760,3 +760,5 @@ import { RouterLink } from 'vue-router';
 </template>
 <style scoped></style>
 ```
+
+可以通过点击`登录`或`注册`按钮测试`<RouterLink>`的效果。也可以通过`http://localhost:5173/`中导航栏来访问其他的页面。

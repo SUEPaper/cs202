@@ -58,7 +58,7 @@ Tailwind 提供大量预定义的实用程序类，这样可以省去你取名�
 然后在终端中依次输入如下的命令。
 
 ```bash
-npm install -D tailwindcss postcss autoprefixer
+npm install -D tailwindcss@3.4 postcss autoprefixer
 npx tailwindcss init -p
 ```
 
@@ -141,6 +141,7 @@ module.exports = {
 <!-- 在main.js 中加入 ```import "./index.css";```，删除 ```import "./style.css";```
 ![](img/1_17.png) -->
 
+完成后，重启web前端。
 
 ## 如何使用 Tailwind CSS
 
