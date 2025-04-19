@@ -828,3 +828,84 @@ import Navbar from "../components/Navbar.vue";
 
 <style></style>
 ```
+
+## 补充home内容
+
+在实现项目时，要秉持着“功能先行”的原则，先完成再完美，先实现基本的功能，再考虑如何优化。因基本功能已经实现，所以我们可以先优化UI，让home页面更加美观。
+
+更新`src\views\HomeView.vue`
+
+```vue showLineNumbers title="src\views\HomeView.vue"
+<script setup>
+import { RouterLink } from "vue-router";
+import Navbar from "../components/Navbar.vue";
+</script>
+
+<template>
+  <Navbar />
+  <main class="container mx-auto px-6 py-12">
+    <section class="mb-16 text-center">
+      <h1 class="text-4xl font-bold text-gray-800 mb-6">CS202 WEB开发实践</h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+        本课程实验平台包含TodoList任务管理、用户认证等核心功能模块，通过实践掌握现代Web开发技术栈。
+      </p>
+      <div class="flex justify-center gap-4 mb-12">
+        <RouterLink
+          to="/todo"
+          class="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-colors"
+        >
+          进入TodoList
+        </RouterLink>
+        <RouterLink
+          to="/login"
+          class="border-2 border-teal-600 text-teal-600 px-6 py-3 rounded-lg hover:bg-teal-50 transition-colors"
+        >
+          用户登录/注册
+        </RouterLink>
+      </div>
+    </section>
+
+    <section class="bg-teal-50 rounded-xl p-8 shadow-xl border-2 border-teal-600">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6">实验目标</h2>
+      <ul class="space-y-4 text-gray-600">
+        <li class="flex items-center">
+          <span class="w-2 h-2 bg-teal-600 rounded-full mr-3"></span>
+          掌握Vue3组合式API开发模式
+        </li>
+        <li class="flex items-center">
+          <span class="w-2 h-2 bg-teal-600 rounded-full mr-3"></span>
+          实现前后端分离架构的CRUD操作
+        </li>
+        <li class="flex items-center">
+          <span class="w-2 h-2 bg-teal-600 rounded-full mr-3"></span>
+          学习状态管理(Pinia)和路由(Vue Router)
+        </li>
+        <li class="flex items-center">
+          <span class="w-2 h-2 bg-teal-600 rounded-full mr-3"></span>
+          实践Tailwind CSS原子化样式开发
+        </li>
+        <li class="flex items-center">
+          <span class="w-2 h-2 bg-teal-600 rounded-full mr-3"></span>
+          掌握FastAPI后端接口开发与调试
+        </li>
+        <li class="flex items-center">
+          <span class="w-2 h-2 bg-teal-600 rounded-full mr-3"></span>
+          使用Vite构建工具优化开发流程
+        </li>
+        <li class="flex items-center">
+          <span class="w-2 h-2 bg-teal-600 rounded-full mr-3"></span>
+          集成axios实现网络请求处理
+        </li>
+        <li class="flex items-center">
+          <span class="w-2 h-2 bg-teal-600 rounded-full mr-3"></span>
+          实现基于JWT的鉴权机制
+        </li>
+      </ul>
+    </section>
+  </main>
+</template>
+```
+
+最终效果如下:
+
+![最终效果](./img/finish.png)
