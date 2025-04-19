@@ -46,7 +46,6 @@ sidebar_position: 25
 
 关于ICON的SVC代码，你可以重这个网站找到：https://heroicons.com/
 
-
 请用 VS Code 新建 `src/components/Header.vue` 文件，输入如下代码：
 
 ```html showLineNumbers title="src/components/Header.vue"
@@ -84,12 +83,13 @@ sidebar_position: 25
 </template>
 <style></style>
 ```
+
 :::note daisyUI
 
 此处的`input` 和 `button` 使用了 daisyUI 组件库，相关文档可见如下链接：
 
-- `input` : https://daisyui.com/components/input/
-- `button` : https://daisyui.com/components/button/
+- `input`: [daisyUI Input 组件](https://daisyui.com/components/input/)
+- `button` : [daisyUI Button 组件](https://daisyui.com/components/button/)
 
 :::
 
@@ -177,7 +177,6 @@ src/
 
 ![](./img/basic_ui.png)
 
-
 ## 列出Todo List
 
 请用 VS Code 打开 `src/components/TodoList.vue`，输入如下代码:
@@ -262,7 +261,6 @@ initTodoDatas.forEach((todo) => {
 </template>
 ```
 
-
 - `const todos = ref([])`: 这行代码创建了一个名为todos的响应式变量，并初始化为空数组。
 `ref([])`将普通的JavaScript数组转换为Vue响应式对象，这样当数组发生变化时，相关的Vue组件会自动更新。
 
@@ -275,9 +273,7 @@ initTodoDatas.forEach((todo) => {
 
 ![](img/web_todo_list_01.png)
 
-
 ## 分离组件和共享数据
-
 
 你可能注意到我们暂时没有使用之前定义的 todos 数组，而是使用了6个相同的 Todo 组件。
 现在6个待办事项都是一样的内容，这有点单调，你可能会想，
@@ -308,12 +304,10 @@ const { id, content , is_done} = todo
 </template>
 ```
 
-
 `TodoItem`组件默认接收 `props` 参数，它是一个对象，
 用于保存父组件传递下来的内容，
 在这里我们使用 `todo` 变量对 `props` 进行了解构赋值，
 并且也用了 `id`, `content`, `is_done` 变量对 `todo` 进行了解构赋值。
-
 
 更改 `src/components/TodoList.vue`代码如下：
 
@@ -378,7 +372,7 @@ initTodoDatas.forEach((todo) => {
 
 ```html
 <TodoItem content="上海电力大学" from="从App组件传递" />
-``` 
+```
 
 最终 `props` 对象就会变成这样：`props={ content: "上海电力大学",  from = "从App组件传递" }`
 
@@ -475,25 +469,28 @@ function uuid() {
   return uuid;
 }
 
+let isDoneValue = true; // 初始化 is_done 的值为 false
 initTodoDatas.forEach((todo) => {
   todos.value.push({
     id: uuid(),
     content: todo,
-    is_done: false,
+    is_done: isDoneValue, // 使用当前的 is_done 值
   });
+  isDoneValue = !isDoneValue; // 切换 is_done 的值
 });
 </script>
 <template>
-  <div 
-    class="mt-4 rounded-t-md bg-white transition-all duration-75"
-  >
+  <div class="mt-4 rounded-t-md bg-white transition-all duration-75">
     <div v-for="todo in todos" :key="todo.id">
-      <TodoItem :todo="todo"/>
+      <TodoItem :todo="todo" />
     </div>
   </div>
 </template>
 <style></style>
+
 ```
+
+其中增加`isDoneValue`的目的是为了手动让`is_done`的值交替变化，用以验证渲染效果。
 
 将 `src/components/TodoItem.vue` 的代码更改如下:
 
@@ -530,7 +527,6 @@ const { id, content , is_done} = toRefs(props.todo)
 `defineProps` 是 Vue 3 Composition API 中提供的一个函数，用于声明和定义组件的 props。
 在代码中，`defineProps` 用于声明和设置 `todo` 这个 prop 的类型。
 
-
 ```javascript
 const props = defineProps({
   todo: { id: Number, content: String, isDone: Boolean },
@@ -551,12 +547,11 @@ const props = defineProps({
 如果传递的 `prop` 类型不符合声明，Vue 会在开发环境下发出警告，有助于及早发现并修复问题。
 :::
 
-
 效果如下：
 
 ![](./img/web_todo_list_02.png)
 
-:::tip `toRefs` 
+:::tip `toRefs`
 
 `toRefs` 函数用于将一个带有响应式属性的对象转换成一个普通对象，其中的每个属性都是一个引用。通过使用 `toRefs(props.todo)`，确保 `id`、`content` 和 `is_done` 的每个属性都保持响应式。
 
@@ -598,3 +593,152 @@ const { id, content , is_done} = toRef(props.todo)
 ```
 
 这使用了三元运算符，如果 `is_done` 为 `true`，那么应用 `'text-red-600 line-through'` 类，否则应用 `'text-blue-600'` 类。这样可以更加简洁地表达条件样式的逻辑。
+
+<!-- TODO:完成todo和删除todo功能。 -->
+
+## 状态更新
+
+### 为按钮增加逻辑
+
+请用 VS Code 打开 `src/components/TodoItem.vue`，输入如下代码:
+
+```html showLineNumbers title="src/components/TodoItem.vue"
+<script setup>
+import { toRefs } from "vue";
+import XMark from "./icons/XMark.vue";
+const props = defineProps({
+  todo: { id: Number, content: String, is_done: Boolean },
+});
+const { id, content, is_done } = toRefs(props.todo);
+</script>
+<template>
+  <article class="flex gap-4 border-b border-gray-200 p-4">
+    <button
+      class="h-5 w-5 rounded-full border-2 transition-all duration-700"
+      @click="is_done = !is_done"
+    ></button>
+
+    <p
+      v-if="is_done"
+      class="flex-auto text-gray-300 line-through transition-all duration-700"
+    >
+      {{ content }}
+    </p>
+    <p v-else class="flex-auto text-gray-500 transition-all duration-700">
+      {{ content }}
+    </p>
+
+    <button>
+      <XMark />
+    </button>
+  </article>
+</template>
+```
+
+这段代码主要增加了@click="is_done =!is_done"的逻辑，当点击按钮时，会触发is_done的更新，从而触发组件的重新渲染。
+
+@click 是 Vue.js 中的一个指令，用于绑定一个事件监听器到元素上。
+在这个例子中，@click 指令用于绑定一个事件监听器到按钮元素上，当按钮被点击时，会触发指定的事件处理函数。
+
+事件处理函数是 is_done =!is_done，它会将 is_done 的值取反，从而完成渲染，实现“完成todo”的功能。
+
+### 为删除按钮增加逻辑
+
+```html showLineNumbers title="src/components/TodoItem.vue"
+<script setup>
+import { toRefs } from "vue";
+import XMark from "./icons/XMark.vue";
+const props = defineProps({
+  todo: { id: Number, content: String, is_done: Boolean },
+});
+const { id, content, is_done } = toRefs(props.todo);
+</script>
+<template>
+  <article class="flex gap-4 border-b border-gray-200 p-4">
+    <button
+      class="h-5 w-5 rounded-full border-2 transition-all duration-700"
+      @click="is_done = !is_done"
+    ></button>
+
+    <p
+      v-if="is_done"
+      class="flex-auto text-gray-300 line-through transition-all duration-700"
+    >
+      {{ content }}
+    </p>
+    <p v-else class="flex-auto text-gray-500 transition-all duration-700">
+      {{ content }}
+    </p>
+
+    <button @click="$emit('delete', id)">
+      <XMark />
+    </button>
+  </article>
+</template>
+```
+
+```html showLineNumbers title="src/components/TodoList.vue"
+<script setup>
+import { ref } from "vue";
+import TodoItem from "./TodoItem.vue";
+
+const todos = ref([]);
+const initTodoDatas = ["上海电力大学", "数理学院", "现代Web开发", "Web前端"];
+
+function uuid() {
+  let uuid = "";
+  for (let i = 0; i < 32; i++) {
+    let random = (Math.random() * 16) | 0;
+
+    if (i === 8 || i === 12 || i === 16 || i === 20) uuid += "-";
+
+    uuid += (i === 12 ? 4 : i === 16 ? (random & 3) | 8 : random).toString(16);
+  }
+  return uuid;
+}
+
+let isDoneValue = true; // 初始化 is_done 的值为 false
+initTodoDatas.forEach((todo) => {
+  todos.value.push({
+    id: uuid(),
+    content: todo,
+    is_done: isDoneValue, // 使用当前的 is_done 值
+  });
+  isDoneValue = !isDoneValue; // 切换 is_done 的值
+});
+
+const deleteTodo = (id) => {
+  todos.value = todos.value.filter((todo) => todo.id !== id);
+};
+</script>
+
+<template>
+  <div class="mt-4 rounded-t-md bg-white transition-all duration-75">
+    <div v-for="todo in todos" :key="todo.id">
+      <TodoItem :todo="todo" @delete="deleteTodo" />
+    </div>
+  </div>
+</template>
+<style></style>
+```
+
+在 `TodoItem` 组件中，我们通过 `@click="$emit('delete', id)"` 来触发一个名为 `delete` 的事件，并将当前 `todo` 的 `id` 作为参数传递给父组件。
+`emi`t 是 Vue.js 中用于触发自定义事件的方法，它接受两个参数：事件名称和传递给事件处理函数的数据。在组件里，子组件可以通过 `$emit` 方法向父组件发送消息。
+
+在 `TodoList` 组件中，我们定义了一个名为 `deleteTodo` 的函数，用于处理删除操作。
+在 `deleteTodo` 函数中，我们使用 `todos.value = todos.value.filter((todo) => todo.id !== id)` 来过滤掉 `id` 与传入的 `id` 不匹配的 `todo`，从而实现删除操作。
+
+这样，当子组件触发 `delete` 事件时，父组件的 `deleteTodo` 函数就会被调用，并将 `id` 作为参数传递给它。
+
+:::tip
+在 Vue.js 里，直接写 `delete="deleteTodo"` 和加上 `@` 写成 `@delete="deleteTodo"` 有着本质区别。
+
+1. `delete="deleteTodo"` 的含义
+当你在组件标签上写 `delete="deleteTodo"` 时，这其实是在给组件传递一个静态属性。在 Vue 的模板里，没有使用 `v-bind`（简写为 `:`）或者 `v-on`（简写为 `@`）的属性，都会被当作静态属性处理。这意味着 `delete` 这个属性的值就是字符串 `"deleteTodo"`，而非一个方法引用。
+
+子组件接收到的 `delete` 属性值是字符串 `"deleteTodo"`，而不是父组件里定义的 `deleteTodo` 方法。
+
+2. `@delete="deleteTodo"` 的含义
+`@` 是 `v-on` 指令的简写，用于监听事件。`@delete="deleteTodo"` 表示父组件在监听子组件触发的名为 `delete` 的自定义事件。当子组件通过 `$emit` 方法触发 `delete` 事件时，父组件会调用 `deleteTodo` 方法。
+
+:::

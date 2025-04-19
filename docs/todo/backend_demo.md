@@ -16,7 +16,7 @@ sidebar_position: 3
 
 在设置一文中，我们实现了第一个FastAPI的API应用，接下来开始实现一个比前面复杂的FastAPI应用程序。
 
-```python showLineNumbers
+```python showLineNumbers 
 # 0. Import Python Library
 import uvicorn
 from fastapi import FastAPI

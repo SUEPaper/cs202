@@ -105,7 +105,7 @@ def create_todo(todo_in: TodoCreate):
         content=todo_in.content,
         is_done=todo_in.is_done
     )
-    TODOS.append(todo_entry.dict())
+    TODOS.append(todo_entry.model_dump())
 
     return todo_entry
 
@@ -154,7 +154,7 @@ def create_todo(todo_in: TodoCreate):
         content=todo_in.content,
         is_done=todo_in.is_done
     )
-    TODOS.append(todo_entry.dict())
+    TODOS.append(todo_entry.model_dump())
 
     return todo_entry
 ```
@@ -257,7 +257,7 @@ def create_todo(*, todo_in: TodoCreate):  # 2
         content=todo_in.content,
         is_done=todo_in.is_done
     )
-    TODOS.append(todo_entry.dict())  # 3
+    TODOS.append(todo_entry.model_dump())  # 3
 
     return todo_entry
 

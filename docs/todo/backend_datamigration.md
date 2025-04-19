@@ -141,6 +141,10 @@ def downgrade() -> None:
 - 函数 `upgrade` 编写数据库往前滚的变更。
 - 函数 `downgrade` 编写数据库往回滚的变更，用户删除`upgrade`的变更。
 
+:::danger
+不要因为文件名看起来非常乱而随便改名
+:::
+
 ### 实现新建`todos`表的迁移代码
 
 将`xxx_create_todos_table.py`中的`upgrade`、`downgrade` 函数替换成如下代码：

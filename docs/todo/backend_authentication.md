@@ -82,7 +82,6 @@ alembic upgrade head
 在 `models/`文件夹下新建 `user.py` 文件，用 VS Code 打开，输入如下代码：
 
 ```python showLineNumbers
-
 from datetime import datetime
 from sqlalchemy import TIMESTAMP, Column, Integer, String
 from db.config import Base
@@ -121,7 +120,6 @@ pip install python-jose[cryptography]
 在 `core/`文件夹下新建 `security.py` 文件，用 VS Code 打开，输入如下代码：
 
 ```python showLineNumbers
-
 from passlib.context import CryptContext
 
 SECRET_KEY = "196ca263383b2fd21dfae2eda445f30b25d14806a861ababf10a408beb5e2117"
@@ -230,7 +228,7 @@ class UserInDB(UserBase):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 ```
 
 我们在 `UserBase` 类中定义了 `email` 属性为 Pydantic 包提供的 `EmailStr` 类型，该类型需要额外安装一个包：`email-validator`，在命令行输入如下命令，安装此包。
@@ -270,7 +268,7 @@ VS Code 打开 `api/api.py`文件，将代码改成如下：
 ```python showLineNumbers
 from fastapi import APIRouter
 from api.todos import router as todos_router
-from api.users import router as users_router
+from api.user import router as users_router
 
 api_router = APIRouter()
 api_router.include_router(todos_router, tags=["todos"])
@@ -426,7 +424,7 @@ def login_access_token(
 ```python showLineNumbers
 from fastapi import APIRouter
 from api.todos import router as todos_router
-from api.users import router as users_router
+from api.user import router as users_router
 from api.auth import router as auth_router
 
 api_router = APIRouter()

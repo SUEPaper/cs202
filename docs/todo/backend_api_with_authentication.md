@@ -93,7 +93,7 @@ reusable_oauth2 = OAuth2PasswordBearer(
 
 从业务逻辑的角度出发，更改用户名和密码应该只允许当前用户修改自己的用户名和密码，因此这两个API需要实现鉴权验证功能。
 
-用 VS Code 打开 `api/users.py` 文件，将代码修改如下：
+用 VS Code 打开 `api/user.py` 文件，将代码修改如下：
 
 ```python showLineNumbers
 from fastapi import APIRouter, Depends, HTTPException
@@ -201,6 +201,12 @@ def upgrade() -> None:
 def downgrade() -> None:
     op.drop_constraint("user_todo", "todos", type_="foreignkey")
     op.drop_column("todos", "user_id")
+```
+
+先安装mysqlclient包。
+
+```bash
+pip install mysqlclient
 ```
 
 打开终端，并且进入 `db/` 文件夹，输入如下命令

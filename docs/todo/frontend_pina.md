@@ -17,7 +17,6 @@ sidebar_position: 26
 理论上来说，每一个 Vue 组件实例都已经在“管理”它自己的响应式状态了。
 我们以一个简单的计数器组件为例：
 
-
 ```html
 <script setup>
 import { ref } from 'vue'
@@ -106,7 +105,7 @@ app.mount('#app');
 
 :::
 
-我们需要定义一个全局的状态管理器，用来在整个 Vue.js 应用中使用 
+我们需要定义一个全局的状态管理器，用来在整个 Vue.js 应用中使用
 
 在```/src```文件夹下新建```stores```文件夹,在store文件夹下新建```todo.js```文件
 
@@ -222,10 +221,10 @@ const todos = computed(()=> useTodoStore.todos);
 - `const todos = computed(() => useTodoStore.todos)`: 定义一个计算属性`todos`，其值是从`useTodoStore`中的`todos`属性获取的。
 这样，当`todos`发生变化时，`todos`计算属性也会自动更新。
 
-此时网页效果没有改变，这说明已经成功使用pinia。
+此时网页效果发生了变化，这说明已经成功使用pinia。
 
 
-![](./img/web_todo_list_02.png)
+![](./img/web_todo_list_03.png)
 
 ## Web页面新增一个Todo
 
@@ -340,3 +339,5 @@ const addTodo = () => {
 在输入框输入`MyTodo`可以看到
 
 ![](./img/web-add-todo.png)
+
+todolist的剩余功能将在接下来实现。
