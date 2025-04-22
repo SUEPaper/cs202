@@ -20,7 +20,7 @@ sidebar_position: 62
 
 在`src\stores\auth.js`中，新增`register`方法:
 
-```html showLineNumbers title="src\stores\auth.js"
+```javascript showLineNumbers title="src\stores\auth.js"
 import { defineStore } from "pinia";
 import axios from "axios";
 
@@ -59,7 +59,7 @@ export const authStore = defineStore("auth", {
 
 为`src\views\SignupView.vue`添加注册功能:
 
-```vue showLineNumbers title="src\views\SignupView.vue"
+```html showLineNumbers title="src\views\SignupView.vue"
 <script setup>
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
@@ -215,7 +215,7 @@ const handleRegister = async () => {
 
 在`src\stores\auth.js`中，新增`login`方法:
 
-```html showLineNumbers title="src\stores\auth.js"
+```javascript showLineNumbers title="src\stores\auth.js"
 import { defineStore } from "pinia";
 import axios from "axios";
 
@@ -290,7 +290,7 @@ export const authStore = defineStore("auth", {
 
 接下来更新`src\views\LoginView.vue`:
 
-```vue showLineNumbers title="src\views\LoginView.vue"
+```html showLineNumbers title="src\views\LoginView.vue"
 <script setup>
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
@@ -409,7 +409,7 @@ const handleLogin = async () => {
 在主页面时，当没有登录，则右上角`登录`,`注册`,当登陆时，则右上角显示用户邮箱以及`注销`按钮。
 
 更新`src\views\HomeView.vue`
-```vue showLineNumbers title="src\views\HomeView.vue"
+```html showLineNumbers title="src\views\HomeView.vue"
 <script setup>
 import { RouterLink, useRouter } from "vue-router";
 import { computed } from "vue";
@@ -664,7 +664,7 @@ export const todoStore = defineStore("todo", {
 
 修改`src\components\TodoList.vue`
 
-```vue showLineNumbers title="src\components\TodoList.vue"
+```html showLineNumbers title="src\components\TodoList.vue"
 <script setup>
 import TodoItem from "./TodoItem.vue";
 import { todoStore } from "../stores/todo";
@@ -700,7 +700,7 @@ onMounted(() => {
 
 新建`src\components\NavBar.vue`
 
-```vue showLineNumbers title="src\components\NavBar.vue"
+```html showLineNumbers title="src\components\NavBar.vue"
 <script setup>
 import { RouterLink, useRouter } from "vue-router";
 import { computed } from "vue";
@@ -795,7 +795,7 @@ const handleLogOut = () => {
 
 修改`src\views\HomeView.vue`
 
-```vue showLineNumbers title="src\views\HomeView.vue"
+```html showLineNumbers title="src\views\HomeView.vue"
 <script setup>
 import Navbar from "../components/Navbar.vue"; // 导入 Navbar 组件
 </script>
@@ -807,7 +807,7 @@ import Navbar from "../components/Navbar.vue"; // 导入 Navbar 组件
 
 修改`src\views\TodoView.vue`
 
-```vue showLineNumbers title="src\views\TodoView.vue"
+```html showLineNumbers title="src\views\TodoView.vue"
 <script setup>
 import { RouterLink } from "vue-router";
 import { authStore } from "../stores/auth";
@@ -835,7 +835,7 @@ import Navbar from "../components/Navbar.vue";
 
 更新`src\views\HomeView.vue`
 
-```vue showLineNumbers title="src\views\HomeView.vue"
+```html showLineNumbers title="src\views\HomeView.vue"
 <script setup>
 import { RouterLink } from "vue-router";
 import Navbar from "../components/Navbar.vue";
