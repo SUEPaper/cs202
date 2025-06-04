@@ -14,11 +14,9 @@ sidebar_position: 9
 **所有的代码请不要复制粘贴，请手敲每一行代码。复制粘贴不会让你动脑子，而手敲每一个行代码会让你自然而然地去动脑子会想每一行代码的含义和原理**
 :::
 
-
 对象关系映射（Object-Relational Mapping，ORM）是一种编程技术，用于将关系型数据库中的表格和记录映射到面向对象的编程语言中的对象和类。ORM允许开发人员使用面向对象的方式进行数据库操作，而无需直接编写和执行SQL语句。
 
 ORM的主要目标是将数据库和应用程序的数据模型相连接，通过将数据库表格映射为类，行映射为对象的实例，列映射为类的属性，以及通过关联和关系映射表达数据库之间的关系，从而实现数据的持久化和操作。
-
 
 ## 实现todos表的ORM
 
@@ -49,7 +47,7 @@ class Todo(Base):
 - `created_at = Column(TIMESTAMP(timezone=True), nullable=False, default=datetime.utcnow)`: 定义一个名为 `created_at` 的列，它是带有时区的时间戳类型，并且不能为空。`default=datetime.utcnow` 表示如果没有提供值，则默认为当前的 UTC 时间。
 - `updated_at = Column(TIMESTAMP(timezone=True), nullable=False, onupdate=datetime.utcnow, default=datetime.utcnow)`: 定义一个名为 `updated_at` 的列，它是带有时区的时间戳类型，并且不能为空。`onupdate=datetime.utcnow` 表示在更新记录时自动更新为当前的 UTC 时间。`default=datetime.utcnow` 表示如果没有提供值，则默认为当前的 UTC 时间。
 
-VS Code 打开  `models/__init__.py`， 输入如下代码：
+VS Code 打开 `models/__init__.py`， 输入如下代码：
 
 ```python showLineNumbers
 from models.todo import Todo
@@ -80,13 +78,11 @@ class CRUDBase:
         return obj
 ```
 
-
 - `def __init__(self, model):`: 定义 `CRUDBase` 类的构造函数，接收一个 `model` 参数，表示数据库模型。
 - `self.model = model`: 在构造函数中，将传入的 `model` 参数赋值给类的 `model` 属性，以便在类的其他方法中使用。
 - `def get_by_id(self, db: Session, id: Any):`: 定义一个方法 `get_by_id`，用于根据给定的 `id` 从数据库中获取记录。
 - `def get_all(self, db: Session):`: 定义一个方法 `get_all`，用于从数据库中获取所有记录。
 - `def remove(self, db: Session, id: Any):`: 定义一个方法 `remove`，用于从数据库中删除指定的记录。
-
 
 在 `crud` 文件夹里面新建一个 `todo.py` 文件， 用 VS Code 打开， 输入如下代码：
 
@@ -127,14 +123,13 @@ crud_todo = CRUDTodo(ModelsTodo)
 - `def update(self, db: Session, id: Any, todo_params):`: 定义一个方法 `update`，用于更新数据库中的记录。
 - `crud_todo = CRUDTodo(ModelsTodo)`: 创建一个 `CRUDTodo` 类的实例，传入一个名为 `ModelsTodo` 的数据库模型作为参数。
 
-
-VS Code 打开  `crud/__init__.py`， 输入如下代码：
+VS Code 打开 `crud/__init__.py`， 输入如下代码：
 
 ```python showLineNumbers
 from crud.todo import crud_todo
 ```
 
-VS Code 打开  `schemas/todo.py`， 改成如下代码：
+VS Code 打开 `schemas/todo.py`， 改成如下代码：
 
 ```python showLineNumbers
 from datetime import datetime
@@ -158,5 +153,33 @@ class TodoInDB(Todo):
 :::tip
 
 可以切换 `backend_orm_finished` 分支，查看最终正确实现的代码。
+
+:::
+
+:::tip
+
+如果报错`pydantic.error_wrappers.ValidationError: 6 validation errors for TodoInDB`
+
+则将
+
+```py
+class TodoInDB(Todo):
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+```
+
+更改为
+
+```py
+class TodoInDB(Todo):
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+```
 
 :::
