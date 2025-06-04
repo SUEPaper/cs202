@@ -1,5 +1,5 @@
 ---
-id: frontend-user
+id : frontend-user
 sidebar_position: 62
 ---
 
@@ -16,19 +16,53 @@ sidebar_position: 62
 
 ## 注册
 
-因为我们需要管理用户方面的状态，所以新建`src\stores\auth.js`
+因为我们需要管理用户方面的状态，所以新建 `src\stores\auth.js`
 
-在`src\stores\auth.js`中，新增`register`方法:
+在 `src\stores\auth.js` 中，新增 `register` 方法:
 
 ```html showLineNumbers title="src\stores\auth.js"
-import { defineStore } from "pinia"; import axios from "axios"; import {
-FASTAPI_BASE_URL } from "../constant"; export const authStore =
-defineStore("auth", { state: () => ({ user: null, isAuthenticated: false, }),
-actions: { async register(name, email, password) { try { const response = await
-axios.post( `${FASTAPI_BASE_URL}/users`, { name: name, email: email, password:
-password, }, { headers: { accept: "application/json", "Content-Type":
-"application/json", }, } ); return true; } catch (error) { throw new
-Error("注册失败，请检查输入信息"); } }, }, });
+import { defineStore } from "pinia"; 
+import axios from "axios"; 
+
+import { FASTAPI_BASE_URL } from "../constant"; 
+
+export const authStore = defineStore("auth", {
+  state: () => ({
+
+    user: null,
+    isAuthenticated: false,
+
+  }), 
+
+    actions: {
+          async register(name, email, password) {
+      try {
+
+        const response = await axios.post(
+
+`${FASTAPI_BASE_URL}/users` , 
+
+          {
+            name: name,
+            email: email,
+            password: password,
+          },
+          {
+            headers: {
+              accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        return true;
+      } catch (error) {
+        throw new Error("注册失败，请检查输入信息");
+      }
+    },
+
+  }, 
+}); 
+
 ```
 
 为`src\views\SignupView.vue`添加注册功能:
@@ -52,11 +86,7 @@ const handleRegister = async () => {
     alert("两次输入的密码不一致，请重新输入");
     return;
   }
-  const success = await useAuthStore.register(
-    name.value,
-    email.value,
-    password.value
-  );
+  const success = await useAuthStore.register(name.value, email.value, password.value);
   if (success) {
     alert("注册成功，请登录");
     router.push({ path: "/login" });
@@ -96,23 +126,15 @@ const handleRegister = async () => {
             </svg>
           </a>
 
-          <h1
-            class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl"
-          >
+          <h1 class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
             欢迎来到Todo Application
           </h1>
 
           <p class="mt-4 leading-relaxed text-gray-500">账号注册</p>
 
-          <div
-            @submit.prevent="handleRegister"
-            class="mt-8 grid grid-cols-6 gap-6"
-          >
+          <div @submit.prevent="handleRegister" class="mt-8 grid grid-cols-6 gap-6">
             <div class="col-span-6 sm:col-span-3">
-              <label
-                for="FirstName"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="FirstName" class="block text-sm font-medium text-gray-700">
                 Name
               </label>
 
@@ -126,10 +148,7 @@ const handleRegister = async () => {
             </div>
 
             <div class="col-span-6">
-              <label
-                for="Email"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="Email" class="block text-sm font-medium text-gray-700">
                 Email
               </label>
 
@@ -143,10 +162,7 @@ const handleRegister = async () => {
             </div>
 
             <div class="col-span-6 sm:col-span-3">
-              <label
-                for="Password"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="Password" class="block text-sm font-medium text-gray-700">
                 Password
               </label>
 
@@ -186,9 +202,7 @@ const handleRegister = async () => {
 
               <p class="mt-4 text-sm text-gray-500 sm:mt-0">
                 已经有账号了?
-                <RouterLink to="/login" class="text-gray-700 underline"
-                  >登录</RouterLink
-                >.
+                <RouterLink to="/login" class="text-gray-700 underline">登录</RouterLink>.
               </p>
             </div>
           </div>
@@ -198,37 +212,94 @@ const handleRegister = async () => {
   </section>
 </template>
 <style scoped></style>
+
 ```
 
-通过在`<input>`元素上添加`@input`事件监听器，我们可以在输入框的值发生变化时立即执行相应的操作。在这个例子中，我们使用了`v-model`指令来将输入框的值绑定到组件的数据属性`name`、`email`、`password`和`passwordConfirmation`上。
+通过在 `<input>` 元素上添加 `@input` 事件监听器，我们可以在输入框的值发生变化时立即执行相应的操作。在这个例子中，我们使用了 `v-model` 指令来将输入框的值绑定到组件的数据属性 `name` 、 `email` 、 `password` 和 `passwordConfirmation` 上。
 
-然后给`<button>`元素添加了一个`@click`事件监听器，当用户点击按钮时，会执行`handleRegister`函数。在`handleRegister`函数中，我们首先检查两个密码是否一致，如果不一致则弹出一个警告框提示用户。如果密码一致，则调用`authStore`的`register`方法来执行注册操作。
+然后给 `<button>` 元素添加了一个 `@click` 事件监听器，当用户点击按钮时，会执行 `handleRegister` 函数。在 `handleRegister` 函数中，我们首先检查两个密码是否一致，如果不一致则弹出一个警告框提示用户。如果密码一致，则调用 `authStore` 的 `register` 方法来执行注册操作。
 
 ## 登录
 
-在`src\stores\auth.js`中，新增`login`方法:
+在 `src\stores\auth.js` 中，新增 `login` 方法:
 
 ```html showLineNumbers title="src\stores\auth.js"
-import { defineStore } from "pinia"; import axios from "axios"; import {
-FASTAPI_BASE_URL } from "../constant"; export const authStore =
-defineStore("auth", { state: () => ({ user:
-JSON.parse(localStorage.getItem("user")) || null, isAuthenticated:
-!!localStorage.getItem("access_token"), }), actions: { async login(email,
-password) { try { // 实现登录逻辑 const formData = new URLSearchParams();
-formData.append("username", email); formData.append("password", password);
-formData.append("grant_type", "password"); formData.append("client_id",
-"string"); formData.append("client_secret", "string"); const response = await
-axios.post( `${FASTAPI_BASE_URL}/login/access_token`, formData, { headers: {
-"Content-Type": "application/x-www-form-urlencoded", accept: "application/json",
-}, } ); // 修复用户对象存储格式 this.user = { email }; // 改为对象格式
-this.isAuthenticated = true; localStorage.setItem("access_token",
-response.data.access_token); localStorage.setItem("user", JSON.stringify({ email
-})); // 保持对象格式 return true; } catch (error) { this.logout(); throw new
-Error("登录失败，请检查邮箱和密码"); } }, async register(name, email, password)
-{ try { const response = await axios.post( `${FASTAPI_BASE_URL}/users`, { name:
-name, email: email, password: password, }, { headers: { accept:
-"application/json", "Content-Type": "application/json", }, } ); return true; }
-catch (error) { throw new Error("注册失败，请检查输入信息"); } }, }, });
+import { defineStore } from "pinia"; 
+import axios from "axios"; 
+
+import { FASTAPI_BASE_URL } from "../constant"; 
+
+export const authStore = defineStore("auth", {
+  state: () => ({
+
+    user: JSON.parse(localStorage.getItem("user")) || null,
+    isAuthenticated: !!localStorage.getItem("access_token"),
+
+  }), 
+  actions: {
+
+    async login(email, password) {
+      try {
+        // 实现登录逻辑
+        const formData = new URLSearchParams();
+        formData.append("username", email);
+        formData.append("password", password);
+        formData.append("grant_type", "password");
+        formData.append("client_id", "string");
+        formData.append("client_secret", "string");
+
+        const response = await axios.post(
+
+`${FASTAPI_BASE_URL}/login/access_token` , 
+
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              accept: "application/json",
+            },
+          }
+        );
+
+        // 修复用户对象存储格式
+        this.user = { email }; // 改为对象格式
+        this.isAuthenticated = true; 
+        localStorage.setItem("access_token", response.data.access_token); 
+        localStorage.setItem("user", JSON.stringify({ email })); // 保持对象格式
+        return true; 
+      } catch (error) {
+        this.logout(); 
+        throw new Error("登录失败，请检查邮箱和密码"); 
+      }
+    }, 
+    async register(name, email, password) {
+      try {
+
+        const response = await axios.post(
+
+`${FASTAPI_BASE_URL}/users` , 
+
+          {
+            name: name,
+            email: email,
+            password: password,
+          },
+          {
+            headers: {
+              accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        return true;
+      } catch (error) {
+        throw new Error("注册失败，请检查输入信息");
+      }
+    },
+
+  }, 
+}); 
+
 ```
 
 新增了login函数，根据后端的api形式，新增了formData，然后调用axios.post发送请求，若没有返回错误，则将状态中的user设置为邮箱，并将isAuthenticated设置为true，表示已经登录，同时将用户信息和token存储到localStorage中，若失败则抛出错误。
@@ -291,9 +362,7 @@ const handleLogin = async () => {
             </svg>
           </a>
 
-          <h1
-            class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl"
-          >
+          <h1 class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
             欢迎来到Todo Application
           </h1>
 
@@ -301,10 +370,7 @@ const handleLogin = async () => {
 
           <div class="mt-8 grid grid-cols-6 gap-6">
             <div class="col-span-6">
-              <label
-                for="Email"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="Email" class="block text-sm font-medium text-gray-700">
                 Email
               </label>
 
@@ -318,10 +384,7 @@ const handleLogin = async () => {
             </div>
 
             <div class="col-span-6">
-              <label
-                for="Password"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="Password" class="block text-sm font-medium text-gray-700">
                 Password
               </label>
 
@@ -344,9 +407,7 @@ const handleLogin = async () => {
 
               <p class="mt-4 text-sm text-gray-500 sm:mt-0">
                 没有账号？
-                <RouterLink to="/signup" class="text-gray-700 underline"
-                  >注册</RouterLink
-                >
+                <RouterLink to="/signup" class="text-gray-700 underline">注册</RouterLink>
               </p>
             </div>
           </div>
@@ -359,33 +420,34 @@ const handleLogin = async () => {
 <style scoped></style>
 ```
 
-新增了`handleLogin`函数，调用`authStore`的`login`方法，若成功则弹出登录成功的提示框，并跳转到首页。
+新增了 `handleLogin` 函数，调用 `authStore` 的 `login` 方法，若成功则弹出登录成功的提示框，并跳转到首页。
 
 ## 注销
 
-在主页面时，当没有登录，则右上角`登录`,`注册`,当登陆时，则右上角显示用户邮箱以及`注销`按钮。
+在主页面时，当没有登录，则右上角 `登录` , `注册` , 当登陆时，则右上角显示用户邮箱以及 `注销` 按钮。
 
-更新`src\views\HomeView.vue`
+更新 `src\views\HomeView.vue`
 
 ```vue showLineNumbers title="src\views\HomeView.vue"
 <script setup>
-import { RouterLink, useRouter } from "vue-router";
-import { computed } from "vue";
-import { authStore } from "../stores/auth";
+import { RouterLink, useRouter } from "vue-router"; 
+import { computed } from "vue"; 
+import { authStore } from "../stores/auth"; 
 
-const router = useRouter();
-const useAuthStore = authStore();
-const isAuthenticated = computed(() => useAuthStore.isAuthenticated);
+const router = useRouter(); 
+const useAuthStore = authStore(); 
+const isAuthenticated = computed(() => useAuthStore.isAuthenticated); 
 
 // 修复函数定义语法
 const handleLogOut = () => {
-  useAuthStore.logout();
-  router.push("/login");
-};
+  useAuthStore.logout(); 
+  router.push("/login"); 
+}; 
 </script>
 
 <template>
   <header class="bg-white">
+
     <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <div class="md:flex md:items-center md:gap-12">
@@ -457,10 +519,12 @@ const handleLogOut = () => {
         </div>
       </div>
     </div>
+
   </header>
 </template>
 
 <style scoped></style>
+
 ```
 
 通过获取`isAuthenticated`的值来判断是否显示登录/注册按钮，以及用户信息。当点击注销按钮时，调用`handleLogOut`函数，调用`authStore`的`logout`方法，然后跳转到登录页面。
@@ -474,20 +538,18 @@ const handleLogOut = () => {
 路由守卫主要有以下几种类型：
 
 1. 全局路由守卫：
-
    - `beforeEach`：在路由跳转前执行的钩子函数。
    - `beforeResolve`：在路由跳转前执行的钩子函数，与`beforeEach`不同的是，它在解析异步路由组件之前执行。
    - `afterEach`：在路由跳转后执行的钩子函数。
 
 2. 组件级路由守卫：
-
    - `beforeRouteEnter`：在路由进入组件之前执行的钩子函数。
    - `beforeRouteUpdate`：在路由更新时执行的钩子函数。
    - `beforeRouteLeave`：在路由离开组件时执行的钩子函数。
 
 3. 路由独享守卫：
    - `beforeEnter`：在路由进入组件之前执行的钩子函数。
-
+  
 我们这里使用路由独享守卫来实现路由守卫，当未登录时，跳转到登录页面。
 
 更新`src\router\index.js`
@@ -556,43 +618,49 @@ export default router;
 
 在登陆后我们可以看到用户独有的todos列表，因此需要更新todo状态的函数。
 
-更改`src\stores\todo.js`
+更改 `src\stores\todo.js`
 
 ```javascript showLineNumbers title="src\stores\todo.js"
-import { defineStore } from "pinia";
-import axios from "axios";
+import { defineStore } from "pinia"; 
+import axios from "axios"; 
 
-import { FASTAPI_BASE_URL } from "../constant";
+import { FASTAPI_BASE_URL } from "../constant"; 
 export const todoStore = defineStore("todo", {
   state: () => ({
+
     todos: [],
-  }),
+
+  }), 
   actions: {
+
     async loadTodos() {
       try {
-        const token = localStorage.getItem("access_token");
-        const response = await axios.get(`${FASTAPI_BASE_URL}/todos`, {
+        const token = localStorage.getItem("access_token"); 
+        const response = await axios.get( `${FASTAPI_BASE_URL}/todos` , {
           headers: {
-            accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        this.todos = response.data;
+            accept: "application/json", 
+            Authorization: `Bearer ${token}` , 
+          }, 
+        }); 
+        this.todos = response.data; 
       } catch (error) {
-        console.error(error);
+        console.error(error); 
       }
-    },
+    }, 
     async addTodo(content) {
-      const newTodo = { content: content, is_done: false };
+      const newTodo = { content: content, is_done: false }; 
       try {
-        const token = localStorage.getItem("access_token");
+        const token = localStorage.getItem("access_token"); 
+
         const response = await axios.post(
-          `${FASTAPI_BASE_URL}/todos`,
+
+`${FASTAPI_BASE_URL}/todos` , 
+
           newTodo,
           {
             headers: {
               accept: "application/json",
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${token}` ,
             },
           }
         );
@@ -606,10 +674,10 @@ export const todoStore = defineStore("todo", {
     async deleteTodo(id) {
       try {
         const token = localStorage.getItem("access_token");
-        await axios.delete(`${FASTAPI_BASE_URL}/todos/${id}`, {
+        await axios.delete( `${FASTAPI_BASE_URL}/todos/${id}` , {
           headers: {
             accept: "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}` ,
           },
         });
         this.todos = this.todos.filter((todo) => todo.id !== id);
@@ -617,8 +685,10 @@ export const todoStore = defineStore("todo", {
         console.error(error);
       }
     },
-  },
-});
+
+  }, 
+}); 
+
 ```
 
 通过后端的api格式，修改了前端的`axios`请求，需要将access_token添加到请求头中。
@@ -653,32 +723,33 @@ onMounted(() => {
 <style></style>
 ```
 
-通过调用`useTodoStore`的`loadTodos`函数，在组件挂载时加载todos列表，并在`deleteTodo`函数中调用`useTodoStore`的`deleteTodo`函数，删除todos列表中的todo。
+通过调用 `useTodoStore` 的 `loadTodos` 函数，在组件挂载时加载todos列表，并在 `deleteTodo` 函数中调用 `useTodoStore` 的 `deleteTodo` 函数，删除todos列表中的todo。
 
 ## 优化UI
 
 为了能在/todo页面看到导航栏，我们需要将NavBar进行组件化
 
-新建`src\components\NavBar.vue`
+新建 `src\components\NavBar.vue`
 
 ```vue showLineNumbers title="src\components\NavBar.vue"
 <script setup>
-import { RouterLink, useRouter } from "vue-router";
-import { computed } from "vue";
-import { authStore } from "../stores/auth";
+import { RouterLink, useRouter } from "vue-router"; 
+import { computed } from "vue"; 
+import { authStore } from "../stores/auth"; 
 
-const router = useRouter();
-const useAuthStore = authStore();
-const isAuthenticated = computed(() => useAuthStore.isAuthenticated);
+const router = useRouter(); 
+const useAuthStore = authStore(); 
+const isAuthenticated = computed(() => useAuthStore.isAuthenticated); 
 
 const handleLogOut = () => {
-  useAuthStore.logout();
-  router.push("/login");
-};
+  useAuthStore.logout(); 
+  router.push("/login"); 
+}; 
 </script>
 
 <template>
   <header class="bg-white">
+
     <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <div class="md:flex md:items-center md:gap-12">
@@ -750,8 +821,10 @@ const handleLogOut = () => {
         </div>
       </div>
     </div>
+
   </header>
 </template>
+
 ```
 
 修改`src\views\HomeView.vue`
@@ -766,28 +839,31 @@ import Navbar from "../components/Navbar.vue"; // 导入 Navbar 组件
 </template>
 ```
 
-修改`src\views\TodoView.vue`
+修改 `src\views\TodoView.vue`
 
 ```vue showLineNumbers title="src\views\TodoView.vue"
 <script setup>
-import { RouterLink } from "vue-router";
-import { authStore } from "../stores/auth";
-import TodoCreate from "../components/TodoCreate.vue";
-import TodoList from "../components/TodoList.vue";
-import Navbar from "../components/Navbar.vue";
+import { RouterLink } from "vue-router"; 
+import { authStore } from "../stores/auth"; 
+import TodoCreate from "../components/TodoCreate.vue"; 
+import TodoList from "../components/TodoList.vue"; 
+import Navbar from "../components/Navbar.vue"; 
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-300">
+
     <Navbar />
     <main class="container mx-auto px-6 md:max-w-xl">
       <TodoCreate />
       <TodoList />
     </main>
+
   </div>
 </template>
 
 <style></style>
+
 ```
 
 ## 补充home内容
@@ -826,9 +902,7 @@ import Navbar from "../components/Navbar.vue";
       </div>
     </section>
 
-    <section
-      class="bg-teal-50 rounded-xl p-8 shadow-xl border-2 border-teal-600"
-    >
+    <section class="bg-teal-50 rounded-xl p-8 shadow-xl border-2 border-teal-600">
       <h2 class="text-2xl font-semibold text-gray-800 mb-6">实验目标</h2>
       <ul class="space-y-4 text-gray-600">
         <li class="flex items-center">
